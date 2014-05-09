@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    pliny (0.0.1.pre)
+    pliny (0.0.1.pre2)
       activesupport (~> 4.1, >= 4.1.0)
       http_accept (~> 0.1, >= 0.1.5)
       multi_json (~> 1.9, >= 1.9.3)
