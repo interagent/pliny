@@ -1,0 +1,14 @@
+language: ruby
+rvm:
+  - 2.1.1
+  - 2.1.0
+  - 1.9.3
+cache: bundler
+notifications:
+  hipchat:
+    rooms:
+      - 5bc7785d2feb4f25901124279daede@API
+    template:
+      - '%{repository}#%{build_number} (%{branch} - %{commit} : %{author}): %{message} (<a href="%{build_url}">Details</a> | <a href="%{compare_url}">Change view</a>)'
+    format: html
+script: bundle exec rake
