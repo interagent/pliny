@@ -14,7 +14,7 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (4.1.0)
+    activesupport (4.1.1)
       i18n (~> 0.6, >= 0.6.9)
       json (~> 1.7, >= 1.7.7)
       minitest (~> 5.1)
@@ -25,17 +25,18 @@ GEM
     i18n (0.6.9)
     json (1.8.1)
     minitest (5.3.3)
-    multi_json (1.9.3)
+    multi_json (1.10.0)
     pg (0.17.1)
-    prmd (0.1.1)
+    prmd (0.2.0)
       erubis (~> 2.7)
     rack (1.5.2)
     rack-protection (1.5.3)
       rack
     rack-test (0.6.2)
       rack (>= 1.0)
+    rake (0.9.6)
     rr (1.1.2)
-    sequel (4.9.0)
+    sequel (4.10.0)
     sinatra (1.4.5)
       rack (~> 1.4)
       rack-protection (~> 1.4)
@@ -54,5 +55,6 @@ PLATFORMS
 DEPENDENCIES
   pliny!
   rack-test
+  rake (~> 0.8, >= 0.8.7)
   rr
   timecop
