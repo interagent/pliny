@@ -1,6 +1,9 @@
+$:.unshift File.expand_path("../lib", __FILE__)
+require "pliny/version"
+
 Gem::Specification.new do |gem|
   gem.name    = "pliny"
-  gem.version = "0.0.1"
+  gem.version = Pliny::VERSION
 
   gem.authors     = ["Brandur Leach", "Pedro Belo"]
   gem.email       = ["brandur@mutelight.org", "pedrobelo@gmail.com"]

@@ -1,8 +1,7 @@
 require "multi_json"
 require "sinatra/base"
 
-module Pliny ; end
-
+require "pliny/version"
 require "pliny/commands/generator"
 require "pliny/errors"
 require "pliny/extensions/instruments"
