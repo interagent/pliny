@@ -1,0 +1,49 @@
+module Endpoints
+  class <%= plural_class_name %> < Base
+    namespace "<%= url_path %>" do
+      before do
+        content_type :json
+      end
+
+      get do
+        MultiJson.encode <%= singular_class_name %>.all.map { |x| serialize(x) }
+      end
+
+      post do
+        # warning: not safe
+        <%= field_name %> = <%= singular_class_name %>.new(params)
+        <%= field_name %>.save
+        status 201
+        MultiJson.encode serialize(<%= field_name %>)
+      end
+
+      get "/:id" do |id|
+        <%= field_name %> = <%= singular_class_name %>.first(uuid: id) || halt(404)
+        MultiJson.encode serialize(<%= field_name %>)
+      end
+
+      patch "/:id" do |id|
+        <%= field_name %> = <%= singular_class_name %>.first(uuid: id) || halt(404)
+        # warning: not safe
+        #<%= field_name %>.update(params)
+        MultiJson.encode serialize(<%= field_name %>)
+      end
+
+      delete "/:id" do |id|
+        <%= field_name %> = <%= singular_class_name %>.first(uuid: id) || halt(404)
+        <%= field_name %>.destroy
+        MultiJson.encode serialize(<%= field_name %>)
+      end
+
+      private
+
+      def serialize(data)
+        {
+          created_at: data.created_at.try(:iso8601),
+          id:         data.uuid,
+          updated_at: data.updated_at.try(:iso8601),
+        }
+      end
+    end
+  end
+end

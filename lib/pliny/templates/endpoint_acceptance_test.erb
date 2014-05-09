@@ -1,0 +1,40 @@
+require "spec_helper"
+
+describe Endpoints::<%= plural_class_name %> do
+  include Committee::Test::Methods
+  include Rack::Test::Methods
+
+  def app
+    Routes
+  end
+
+  it "GET <%= url_path %>" do
+    get "<%= url_path %>"
+    last_response.status.should eq(200)
+    last_response.body.should eq("[]")
+  end
+
+  it "POST <%= url_path %>/:id" do
+    post "<%= url_path %>"
+    last_response.status.should eq(201)
+    last_response.body.should eq("{}")
+  end
+
+  it "GET <%= url_path %>/:id" do
+    get "<%= url_path %>/123"
+    last_response.status.should eq(200)
+    last_response.body.should eq("{}")
+  end
+
+  it "PATCH <%= url_path %>/:id" do
+    patch "<%= url_path %>/123"
+    last_response.status.should eq(200)
+    last_response.body.should eq("{}")
+  end
+
+  it "DELETE <%= url_path %>/:id" do
+    delete "<%= url_path %>/123"
+    last_response.status.should eq(200)
+    last_response.body.should eq("{}")
+  end
+end

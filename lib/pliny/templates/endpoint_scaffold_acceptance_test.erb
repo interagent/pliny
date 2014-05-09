@@ -1,0 +1,55 @@
+require "spec_helper"
+
+describe Endpoints::<%= plural_class_name %> do
+  include Committee::Test::Methods
+  include Rack::Test::Methods
+
+  def app
+    Routes
+  end
+
+  def schema_path
+    App.root + "/docs/schema.json"
+  end
+
+  before do
+    @<%= field_name %> = <%= singular_class_name %>.create
+
+    # temporarily touch #updated_at until we can fix prmd
+    @<%= field_name %>.updated_at
+    @<%= field_name %>.save
+  end
+
+  it "GET <%= url_path %>" do
+    get "<%= url_path %>"
+    last_response.status.should eq(200)
+    assert_schema_conform
+  end
+
+=begin
+  it "POST <%= url_path %>" do
+    post "<%= url_path %>", MultiJson.encode({})
+    last_response.status.should eq(201)
+    assert_schema_conform
+  end
+=end
+
+  it "GET <%= url_path %>/:id" do
+    get "<%= url_path %>/#{@<%= field_name %>.uuid}"
+    last_response.status.should eq(200)
+    assert_schema_conform
+  end
+
+  it "PATCH <%= url_path %>/:id" do
+    header "Content-Type", "application/json"
+    patch "<%= url_path %>/#{@<%= field_name %>.uuid}", MultiJson.encode({})
+    last_response.status.should eq(200)
+    assert_schema_conform
+  end
+
+  it "GET <%= url_path %>/:id" do
+    delete "<%= url_path %>/#{@<%= field_name %>.uuid}"
+    last_response.status.should eq(200)
+    assert_schema_conform
+  end
+end
