@@ -1,15 +1,15 @@
 PATH
   remote: .
   specs:
-    pliny (0.0.1)
-      activesupport
-      http_accept
-      multi_json
-      pg
-      prmd
-      sequel
-      sinatra
-      sinatra-router
+    pliny (0.0.1.pre)
+      activesupport (~> 4.1, >= 4.1.0)
+      http_accept (~> 0.1, >= 0.1.5)
+      multi_json (~> 1.9, >= 1.9.3)
+      pg (~> 0.17, >= 0.17.1)
+      prmd (~> 0.1, >= 0.1.1)
+      sequel (~> 4.9, >= 4.9.0)
+      sinatra (~> 1.4, >= 1.4.5)
+      sinatra-router (~> 0.2, >= 0.2.3)
 
 GEM
   remote: https://rubygems.org/
@@ -25,7 +25,7 @@ GEM
     i18n (0.6.9)
     json (1.8.1)
     minitest (5.3.3)
-    multi_json (1.9.2)
+    multi_json (1.9.3)
     pg (0.17.1)
     prmd (0.1.1)
       erubis (~> 2.7)

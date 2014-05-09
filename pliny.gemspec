@@ -15,12 +15,12 @@ Gem::Specification.new do |gem|
   gem.executables = %x{ git ls-files }.split("\n").select { |d| d =~ /^bin\// }.map { |d| d.gsub(/^bin\//, "") }
   gem.files = %x{ git ls-files }.split("\n").select { |d| d =~ %r{^(License|README|bin/|data/|ext/|lib/|spec/|test/)} }
 
-  gem.add_dependency "activesupport"
-  gem.add_dependency "multi_json"
-  gem.add_dependency "pg"
-  gem.add_dependency "prmd"
-  gem.add_dependency "sequel"
-  gem.add_dependency "sinatra"
-  gem.add_dependency "http_accept"
-  gem.add_dependency "sinatra-router"
+  gem.add_dependency "activesupport",  "~> 4.1",  ">= 4.1.0"
+  gem.add_dependency "multi_json",     "~> 1.9",  ">= 1.9.3"
+  gem.add_dependency "pg",             "~> 0.17", ">= 0.17.1"
+  gem.add_dependency "prmd",           "~> 0.1",  ">= 0.1.1"
+  gem.add_dependency "sequel",         "~> 4.9",  ">= 4.9.0"
+  gem.add_dependency "sinatra",        "~> 1.4",  ">= 1.4.5"
+  gem.add_dependency "http_accept",    "~> 0.1",  ">= 0.1.5"
+  gem.add_dependency "sinatra-router", "~> 0.2",  ">= 0.2.3"
 end
