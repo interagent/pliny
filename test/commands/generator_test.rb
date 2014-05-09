@@ -74,7 +74,7 @@ describe Pliny::Commands::Generator do
 
     describe "generating models" do
       before do
-        @gen.args = ["model", "artists"]
+        @gen.args = ["model", "artist"]
         @gen.run!
       end
 
