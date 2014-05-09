@@ -17,7 +17,12 @@ task :release do
     abort("ERROR: Missing VERSION. Currently at #{Pliny::VERSION}")
   end
 
+  current_version = Gem::Version.new(Pliny::VERSION)
   new_version = Gem::Version.new(ENV["VERSION"])
+
+  if current_version >= new_version
+    abort("ERROR: Invalid version, already at #{Pliny::VERSION}")
+  end
 
   sh "ruby", "-i", "-pe", "$_.gsub!(/VERSION = .*/, %{VERSION = \"#{new_version}\"})", "lib/pliny/version.rb"
   sh "bundle install"
