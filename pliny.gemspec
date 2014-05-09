@@ -24,5 +24,5 @@ Gem::Specification.new do |gem|
   gem.add_dependency "http_accept",    "~> 0.1",  ">= 0.1.5"
   gem.add_dependency "sinatra-router", "~> 0.2",  ">= 0.2.3"
 
-  gem.add_development_dependency "rake", "~> 0.8", ">= 0.8.7"
+  gem.add_development_dependency "rake", ">= 0.8.7"
 end
