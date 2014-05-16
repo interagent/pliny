@@ -8,14 +8,23 @@ describe "Pliny integration test" do
   end
 
   it "works" do
-    Pliny::Commands::Creator.run(["myapp"], StringIO.new)
-    bash "bin/setup"
+    bash "pliny-new myapp"
+    bash_app "bin/setup"
     assert File.exists?("./myapp/Gemfile.lock")
+    bash_app "pliny-generate model artist"
+    assert File.exists?("./myapp/lib/models/artist.rb")
   end
 
   def bash(cmd)
-    unless system("cd myapp && #{cmd} > /dev/null")
+    bin  = File.expand_path('../bin', File.dirname(__FILE__))
+    path = "#{bin}:#{ENV["PATH"]}"
+    env = { "PATH" => path }
+    unless system(env, "#{cmd} > /dev/null")
       raise "Failed to run #{cmd}"
     end
+  end
+
+  def bash_app(cmd)
+    bash "cd myapp && #{cmd}"
   end
 end
