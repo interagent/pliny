@@ -20,14 +20,15 @@ module Pliny::Commands
 
       FileUtils.copy_entry template_dir, app_dir
       FileUtils.rm_rf("#{app_dir}/.git")
-      initialize_template
-    end
-
-    def initialize_template
-      exec "cd #{app_dir} && ./bin/setup"
+      display "Pliny app created. To start, run:"
+      display "cd #{app_dir} && bin/setup"
     end
 
     protected
+
+    def display(msg)
+      stream.puts msg
+    end
 
     def name
       args.first

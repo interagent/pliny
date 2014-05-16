@@ -3,7 +3,6 @@ require "test_helper"
 describe Pliny::Commands::Creator do
   before do
     @gen = Pliny::Commands::Creator.new(["foobar"], StringIO.new)
-    stub(@gen).initialize_template # do not exec on tests
   end
 
   describe "#run!" do
