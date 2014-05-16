@@ -10,11 +10,6 @@ describe Pliny::Commands::Creator do
       FileUtils.rm_rf("/tmp/plinytest")
       FileUtils.mkdir_p("/tmp/plinytest")
       Dir.chdir("/tmp/plinytest")
-      Timecop.freeze(@t=Time.now)
-    end
-
-    after do
-      Timecop.return
     end
 
     it "copies the template app over" do
