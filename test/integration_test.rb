@@ -13,6 +13,7 @@ describe "Pliny integration test" do
     assert File.exists?("./myapp/Gemfile.lock")
     bash_app "pliny-generate model artist"
     assert File.exists?("./myapp/lib/models/artist.rb")
+    # could use something like bin/run in the template app to facilitate testing this
   end
 
   def bash(cmd)
