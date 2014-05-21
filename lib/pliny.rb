@@ -2,6 +2,7 @@ require "multi_json"
 require "sinatra/base"
 
 require "pliny/version"
+require "pliny/commands/creator"
 require "pliny/commands/generator"
 require "pliny/errors"
 require "pliny/extensions/instruments"
