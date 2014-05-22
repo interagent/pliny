@@ -1,8 +1,8 @@
 # Pliny
 
-[![Build Status](https://travis-ci.org/12-oz/pliny.svg?branch=master)](https://travis-ci.org/12-oz/pliny)
+Opinionated template Sinatra app for writing excellent APIs in Ruby.
 
-Opinionated Sinatra-based app for writing excellent APIs in Ruby.
+[![Build Status](https://travis-ci.org/12-oz/pliny.svg?branch=master)](https://travis-ci.org/12-oz/pliny)
 
 It bundles some of the patterns we like to develop these apps:
 
@@ -14,18 +14,18 @@ It bundles some of the patterns we like to develop these apps:
 
 And gems/helpers to tie these together and support operations:
 
-- [CORS middleware](vendor/pliny/lib/pliny/middleware/cors.rb) to allow JS developers to consume your API
+- [CORS middleware](https://github.com/12-oz/pliny-gem/tree/master/lib/pliny/middleware/cors.rb) to allow JS developers to consume your API
 - [Honeybadger](https://www.honeybadger.io/) for tracking exceptions
-- [Log helper](vendor/pliny/test/log_test.rb) that logs in [data format](https://www.youtube.com/watch?v=rpmc-wHFUBs) [to stdout](https://adam.heroku.com/past/2011/4/1/logs_are_streams_not_files)
+- [Log helper](https://github.com/12-oz/pliny-gem/tree/master/test/log_test.rb) that logs in [data format](https://www.youtube.com/watch?v=rpmc-wHFUBs) [to stdout](https://adam.heroku.com/past/2011/4/1/logs_are_streams_not_files)
 - [Rspec](https://github.com/rspec/rspec) for lean and fast testing
 - [Puma](http://puma.io/) as the web server, [configured for optimal performance on Heroku](config/puma.rb)
 - [Rack-test](https://github.com/brynary/rack-test) to test the API endpoints
-- [Request IDs](vendor/pliny/lib/pliny/middleware/request_id.rb)
+- [Request IDs](https://github.com/12-oz/pliny-gem/tree/master/lib/pliny/middleware/request_id.rb)
 - [RequestStore](http://brandur.org/antipatterns), thread safe option to store data with the current request
 - [RR](https://github.com/rr/rr/blob/master/doc/03_api_overview.md) for amazing mocks and stubs
 - [Sequel](http://sequel.jeremyevans.net/) for ORM
 - [Sequel-PG](https://github.com/jeremyevans/sequel_pg) because we don't like mysql
-- [Versioning](vendor/pliny/lib/pliny/middleware/versioning.rb) to allow versioning your API in the HTTP Accept header
+- [Versioning](https://github.com/12-oz/pliny-gem/tree/master/lib/pliny/middleware/versioning.rb) to allow versioning your API in the HTTP Accept header
 
 ## Getting started
 
@@ -72,7 +72,6 @@ rebuilt ./docs/schema.json
 To test your application:
 
 ```bash
-createdb pliny-test
 bundle exec rake
 ```
 
