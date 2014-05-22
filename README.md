@@ -34,14 +34,20 @@ First make sure the following is installed:
 * [Postgres](http://www.postgresql.org/)
     * The [uuid-ossp](http://www.postgresql.org/docs/9.3/static/uuid-ossp.html) module for Postgres
 
-Clone this repo, then:
+Then install the gem:
 
 ```bash
-$ bin/setup
-$ bundle exec foreman start web
+$ gem install pliny
 ```
 
-There are some generators to help you get started:
+And initialize a new app:
+
+```bash
+$ pliny-new myapp
+$ cd myapp && bin/setup
+```
+
+Pliny also bundles some generators to help you get started:
 
 ```bash
 $ bundle exec pliny-generate model artist
