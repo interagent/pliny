@@ -34,6 +34,11 @@ describe Pliny::Commands::Generator do
       @gen.args = ["model", "resource_history"]
       assert_equal "resource_histories", @gen.table_name
     end
+
+    it "handles hyphens as underscores" do
+      @gen.args = ["model", "resource-history"]
+      assert_equal "resource_histories", @gen.table_name
+    end
   end
 
   describe "#run!" do
