@@ -63,7 +63,7 @@ describe Pliny::Commands::Generator do
         @gen.run!
       end
 
-      it "creates a new endpoint module" do
+      it "creates a new mediator module" do
         assert File.exists?("lib/mediators/artists/creator.rb")
       end
 
@@ -88,6 +88,14 @@ describe Pliny::Commands::Generator do
 
       it "creates a test" do
         assert File.exists?("spec/models/artist_spec.rb")
+      end
+
+      it "creates a serializer" do
+        assert File.exists?("lib/serializers/artist_serializer.rb")
+      end
+
+      it "creates a serializer test" do
+        assert File.exists?("spec/serializers/artist_serializer_spec.rb")
       end
     end
 
@@ -124,6 +132,14 @@ describe Pliny::Commands::Generator do
       it "creates a schema" do
         assert File.exists?("docs/schema/schemata/artist.yaml")
       end
+
+      it "creates a new serializer module" do
+        assert File.exists?("lib/serializers/artist_serializer.rb")
+      end
+
+      it "creates a test" do
+        assert File.exists?("spec/serializers/artist_serializer_spec.rb")
+      end
     end
 
     describe "generating schemas" do
@@ -134,6 +150,21 @@ describe Pliny::Commands::Generator do
 
       it "creates a schema" do
         assert File.exists?("docs/schema/schemata/artist.yaml")
+      end
+    end
+
+    describe "generating serializers" do
+      before do
+        @gen.args = ["serializer", "artist"]
+        @gen.run!
+      end
+
+      it "creates a new serializer module" do
+        assert File.exists?("lib/serializers/artist_serializer.rb")
+      end
+
+      it "creates a test" do
+        assert File.exists?("spec/serializers/artist_serializer_spec.rb")
       end
     end
   end

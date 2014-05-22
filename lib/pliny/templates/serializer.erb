@@ -1,0 +1,19 @@
+<%
+  modules = singular_class_name.split("::")
+  modules[0] = "Serializers::#{modules[0]}"
+  ident = ""
+%>
+<% modules[0..-2].each do |m| %>
+<%=  "#{ident}module #{m}\n" %>
+<%   ident << "  " %>
+<% end %>
+<%=  ident %>class <%= modules.last %> < Serializers::Base
+<%=  ident %>  def structure(args) do |arg|
+<%=  ident %>    {
+<%=  ident %>    }
+<%=  ident %>  end
+<%=  ident %>end
+<% while ident.size > 0 do %>
+<%   ident.chop!.chop! %>
+<%=  "#{ident}end\n" %>
+<% end %>
