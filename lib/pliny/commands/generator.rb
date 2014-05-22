@@ -39,6 +39,8 @@ module Pliny::Commands
         create_model
         create_model_migration
         create_model_test
+        create_serializer
+        create_serializer_test
       when "scaffold"
         create_endpoint(scaffold: true)
         create_endpoint_test
@@ -48,9 +50,14 @@ module Pliny::Commands
         create_model_test
         create_schema
         rebuild_schema
+        create_serializer
+        create_serializer_test
       when "schema"
         create_schema
         rebuild_schema
+      when "serializer"
+        create_serializer
+        create_serializer_test
       else
         abort("Don't know how to generate '#{type}'.")
       end
@@ -172,6 +179,18 @@ module Pliny::Commands
         Prmd.combine("./docs/schema/schemata", meta: "./docs/schema/meta.json")
       end
       display "rebuilt #{schemata}"
+    end
+
+    def create_serializer
+      serializer = "./lib/serializers/#{name}.rb"
+      render_template("serializer.erb", serializer, singular_class_name: singular_class_name)
+      display "created serializer file #{serializer}"
+    end
+
+    def create_serializer_test
+      test = "./spec/serializers/#{name}_spec.rb"
+      render_template("serializer_test.erb", test, singular_class_name: singular_class_name)
+      display "created test #{test}"
     end
 
     def render_template(template_file, destination_path, vars={})
