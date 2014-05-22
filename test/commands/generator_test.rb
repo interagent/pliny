@@ -10,11 +10,21 @@ describe Pliny::Commands::Generator do
       @gen.args = ["model", "resource_histories"]
       assert_equal "ResourceHistories", @gen.plural_class_name
     end
+
+    it "handles hyphens as underscores" do
+      @gen.args = ["model", "resource-histories"]
+      assert_equal "ResourceHistories", @gen.plural_class_name
+    end
   end
 
   describe "#singular_class_name" do
     it "builds a class name for an endpoint" do
       @gen.args = ["model", "resource_histories"]
+      assert_equal "ResourceHistory", @gen.singular_class_name
+    end
+
+    it "handles hyphens as underscores" do
+      @gen.args = ["model", "resource-histories"]
       assert_equal "ResourceHistory", @gen.singular_class_name
     end
   end
