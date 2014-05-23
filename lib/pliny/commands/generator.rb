@@ -72,11 +72,11 @@ module Pliny::Commands
     end
 
     def singular_class_name
-      name.singularize.camelize
+      name.gsub(/-/, '_').singularize.camelize
     end
 
     def plural_class_name
-      name.pluralize.camelize
+      name.gsub(/-/, '_').pluralize.camelize
     end
 
     def field_name

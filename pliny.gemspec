@@ -7,7 +7,7 @@ Gem::Specification.new do |gem|
 
   gem.authors     = ["Brandur Leach", "Pedro Belo"]
   gem.email       = ["brandur@mutelight.org", "pedrobelo@gmail.com"]
-  gem.homepage    = "https://github.com/heroku/pliny"
+  gem.homepage    = "https://github.com/12-oz/pliny"
   gem.summary     = "Basic tooling to support API apps in Sinatra"
   gem.description = "Pliny is a set of base classes and helpers to help developers write excellent APIs in Sinatra"
   gem.license     = "MIT"
