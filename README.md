@@ -2,8 +2,6 @@
 
 Opinionated template Sinatra app for writing excellent APIs in Ruby.
 
-```
-=======
 [![Build Status](https://travis-ci.org/12-oz/pliny.svg?branch=master)](https://travis-ci.org/12-oz/pliny)
 
 It bundles some of the patterns we like to develop these apps:
