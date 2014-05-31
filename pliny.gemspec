@@ -13,7 +13,8 @@ Gem::Specification.new do |gem|
   gem.license     = "MIT"
 
   gem.executables = %x{ git ls-files }.split("\n").select { |d| d =~ /^bin\// }.map { |d| d.gsub(/^bin\//, "") }
-  gem.files = %x{ git ls-files }.split("\n").select { |d| d =~ %r{^(License|README|bin/|data/|ext/|lib/|spec/|template/|test/)} }
+  gem.files = %x{ git ls-files }.split("\n").select { |d| d =~ %r{^(License|README|bin/|data/|ext/|lib/|spec/|test/)} } +
+    %x{ cd template && git ls-files }.split("\n").map {|f| File.join("template", f) }
 
   gem.add_dependency "activesupport",  "~> 4.1",  ">= 4.1.0"
   gem.add_dependency "multi_json",     "~> 1.9",  ">= 1.9.3"
