@@ -5,6 +5,10 @@ module Pliny
       log_to_stream(stdout || $stdout, data, &block)
     end
 
+    def log_context
+      RequestStore.store[:log_context] || {}
+    end
+
     def stdout=(stream)
       @stdout = stream
     end
@@ -14,10 +18,6 @@ module Pliny
     end
 
     private
-
-    def log_context
-      RequestStore.store[:log_context] || {}
-    end
 
     def log_to_stream(stream, data, &block)
       unless block
