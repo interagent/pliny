@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    pliny (0.0.1)
+    pliny (0.0.3)
       activesupport (~> 4.1, >= 4.1.0)
       http_accept (~> 0.1, >= 0.1.5)
       multi_json (~> 1.9, >= 1.9.3)
@@ -25,7 +25,7 @@ GEM
     i18n (0.6.9)
     json (1.8.1)
     minitest (5.3.3)
-    multi_json (1.10.0)
+    multi_json (1.10.1)
     pg (0.17.1)
     prmd (0.2.0)
       erubis (~> 2.7)
