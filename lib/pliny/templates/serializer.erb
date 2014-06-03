@@ -7,7 +7,7 @@
 <%=  "#{ident}module #{m}\n" %>
 <%   ident << "  " %>
 <% end %>
-<%=  ident %>class <%= modules.last %> < Serializers::Base
+<%=  ident %>class <%= modules.last %>Serializer < Serializers::Base
 <%=  ident %>  def structure(args) do |arg|
 <%=  ident %>    {
 <%=  ident %>    }
