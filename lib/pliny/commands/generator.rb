@@ -71,6 +71,10 @@ module Pliny::Commands
       args[1]
     end
 
+    def paranoid
+      args[2] == "paranoid"
+    end
+
     def singular_class_name
       name.gsub(/-/, '_').singularize.camelize
     end
@@ -148,14 +152,17 @@ module Pliny::Commands
 
     def create_model
       model = "./lib/models/#{name}.rb"
-      render_template("model.erb", model, singular_class_name: singular_class_name)
+      render_template("model.erb", model,
+        singular_class_name: singular_class_name,
+        paranoid: paranoid)
       display "created model file #{model}"
     end
 
     def create_model_migration
       migration = "./db/migrate/#{Time.now.to_i}_create_#{table_name}.rb"
       render_template("model_migration.erb", migration,
-        table_name: table_name)
+        table_name: table_name,
+        paranoid: paranoid)
       display "created migration #{migration}"
     end
 
