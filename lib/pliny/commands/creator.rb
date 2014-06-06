@@ -20,11 +20,27 @@ module Pliny::Commands
 
       FileUtils.copy_entry template_dir, app_dir
       FileUtils.rm_rf("#{app_dir}/.git")
+      setup_database_urls
       display "Pliny app created. To start, run:"
       display "cd #{app_dir} && bin/setup"
     end
 
     protected
+
+    def setup_database_urls
+      db = URI.parse("postgres:///#{name}")
+      {
+        ".env.sample" => "development",
+        ".env.test"   => "test"
+      }.each do |env_file, db_env_suffix|
+        env_path = "#{app_dir}/#{env_file}"
+        db.path  = "/#{name}-#{db_env_suffix}"
+        env      = File.read(env_path)
+        File.open(env_path, "w") do |f|
+          f.puts env.sub(/DATABASE_URL=.*/, "DATABASE_URL=#{db}")
+        end
+      end
+    end
 
     def display(msg)
       stream.puts msg
