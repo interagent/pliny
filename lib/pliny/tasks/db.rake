@@ -41,7 +41,7 @@ namespace :db do
 
   desc "Create the database"
   task :create do
-    db = Sequel.connect("postgres://localhost/postgres")
+    db = Sequel.connect("postgres:///postgres")
     database_urls.each do |database_url|
       exists = false
       name = name_from_uri(database_url)
@@ -57,7 +57,7 @@ namespace :db do
 
   desc "Drop the database"
   task :drop do
-    db = Sequel.connect("postgres://localhost/postgres")
+    db = Sequel.connect("postgres:///postgres")
     database_urls.each do |database_url|
       name = name_from_uri(database_url)
       db.run(%{DROP DATABASE IF EXISTS "#{name}"})
