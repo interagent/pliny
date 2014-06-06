@@ -37,7 +37,10 @@ module Pliny::Commands
         db.path  = "/#{name}-#{db_env_suffix}"
         env      = File.read(env_path)
         File.open(env_path, "w") do |f|
-          f.puts env.sub(/DATABASE_URL=.*/, "DATABASE_URL=#{db}")
+          # ruby's URI#to_s renders foo:/bar when there's no host
+          # we want foo:///bar instead!
+          db_url = db.to_s.sub(":/", ":///")
+          f.puts env.sub(/DATABASE_URL=.*/, "DATABASE_URL=#{db_url}")
         end
       end
     end
