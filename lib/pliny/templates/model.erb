@@ -1,8 +1,8 @@
 class <%= singular_class_name %> < Sequel::Model
 
   plugin :timestamps
-<%= if paranoid %>
+<% if paranoid %>
   plugin :paranoid
-<%= end %>
+<% end %>
 
 end
