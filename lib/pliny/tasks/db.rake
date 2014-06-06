@@ -36,8 +36,18 @@ namespace :db do
     end
   end
 
+  desc "Seed the database with data"
+  task :seed do
+    if File.exist?('./db/seeds.rb')
+      database_urls.each do |database_url|
+        Sequel.connect(database_url)
+        load 'db/seeds.rb'
+      end
+    end
+  end
+
   desc "Reset the database"
-  task :reset => [:nuke, :migrate]
+  task :reset => [:nuke, :migrate, :seed]
 
   desc "Create the database"
   task :create do
