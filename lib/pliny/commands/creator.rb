@@ -2,14 +2,15 @@ require "fileutils"
 
 module Pliny::Commands
   class Creator
-    attr_accessor :args, :stream
+    attr_accessor :args, :opts, :stream
 
-    def self.run(args, stream=$stdout)
-      new(args, stream).run!
+    def self.run(args, opts={}, stream=$stdout)
+      new(args, opts, stream).run!
     end
 
     def initialize(args={}, stream=$stdout)
       @args = args
+      @opts = opts
       @stream = stream
     end
 

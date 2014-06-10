@@ -6,14 +6,15 @@ require "prmd"
 
 module Pliny::Commands
   class Generator
-    attr_accessor :args, :stream
+    attr_accessor :args, :opts, :stream
 
-    def self.run(args, stream=$stdout)
-      new(args).run!
+    def self.run(args, opts={}, stream=$stdout)
+      new(args, opts).run!
     end
 
-    def initialize(args={}, stream=$stdout)
+    def initialize(args={}, opts={}, stream=$stdout)
       @args = args
+      @opts = opts
       @stream = stream
     end
 
@@ -72,7 +73,7 @@ module Pliny::Commands
     end
 
     def paranoid
-      args[2] == "paranoid"
+      opts[:paranoid]
     end
 
     def singular_class_name
