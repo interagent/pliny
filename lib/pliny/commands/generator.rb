@@ -27,10 +27,10 @@ module Pliny::Commands
       end
 
       case type
-      when "endpoint"
-        create_endpoint(scaffold: false)
-        create_endpoint_test
-        create_endpoint_acceptance_test(scaffold: false)
+      when "resource"
+        create_resource(scaffold: false)
+        create_resource_test
+        create_resource_acceptance_test(scaffold: false)
       when "mediator"
         create_mediator
         create_mediator_test
@@ -41,9 +41,9 @@ module Pliny::Commands
         create_model_migration
         create_model_test
       when "scaffold"
-        create_endpoint(scaffold: true)
-        create_endpoint_test
-        create_endpoint_acceptance_test(scaffold: true)
+        create_resource(scaffold: true)
+        create_resource_test
+        create_resource_acceptance_test(scaffold: true)
         create_model
         create_model_migration
         create_model_test
@@ -94,23 +94,23 @@ module Pliny::Commands
       stream.puts msg
     end
 
-    def create_endpoint(options = {})
-      endpoint = "./lib/endpoints/#{table_name}.rb"
-      template = options[:scaffold] ? "endpoint_scaffold.erb" : "endpoint.erb"
-      render_template(template, endpoint, {
+    def create_resource(options = {})
+      resource = "./lib/resources/#{table_name}.rb"
+      template = options[:scaffold] ? "resource_scaffold.erb" : "resource.erb"
+      render_template(template, resource, {
         plural_class_name: plural_class_name,
         singular_class_name: singular_class_name,
         field_name: field_name,
         url_path:   url_path,
       })
-      display "created endpoint file #{endpoint}"
+      display "created resource file #{resource}"
       display "add the following to lib/routes.rb:"
-      display "  mount Endpoints::#{plural_class_name}"
+      display "  mount Resources::#{plural_class_name}"
     end
 
-    def create_endpoint_test
-      test = "./spec/endpoints/#{table_name}_spec.rb"
-      render_template("endpoint_test.erb", test, {
+    def create_resource_test
+      test = "./spec/resources/#{table_name}_spec.rb"
+      render_template("resource_test.erb", test, {
         plural_class_name: plural_class_name,
         singular_class_name: singular_class_name,
         url_path:   url_path,
@@ -118,10 +118,10 @@ module Pliny::Commands
       display "created test #{test}"
     end
 
-    def create_endpoint_acceptance_test(options = {})
+    def create_resource_acceptance_test(options = {})
       test = "./spec/acceptance/#{table_name}_spec.rb"
-      template = options[:scaffold] ? "endpoint_scaffold_acceptance_test.erb" :
-        "endpoint_acceptance_test.erb"
+      template = options[:scaffold] ? "resource_scaffold_acceptance_test.erb" :
+        "resource_acceptance_test.erb"
       render_template(template, test, {
         plural_class_name: plural_class_name,
         field_name: field_name,
