@@ -1,5 +1,12 @@
 #!/usr/bin/env ruby
 
+require "optparse"
 require "pliny"
 
-Pliny::Commands::Creator.run(ARGV.dup)
+ARGV.options do |options|
+  opts = {}
+
+  options.parse!
+
+  Pliny::Commands::Creator.run(ARGV.dup, opts)
+end

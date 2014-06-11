@@ -6,14 +6,15 @@ require "prmd"
 
 module Pliny::Commands
   class Generator
-    attr_accessor :args, :stream
+    attr_accessor :args, :opts, :stream
 
-    def self.run(args, stream=$stdout)
-      new(args).run!
+    def self.run(args, opts={}, stream=$stdout)
+      new(args, opts).run!
     end
 
-    def initialize(args={}, stream=$stdout)
+    def initialize(args={}, opts={}, stream=$stdout)
       @args = args
+      @opts = opts
       @stream = stream
     end
 
@@ -69,6 +70,10 @@ module Pliny::Commands
 
     def name
       args[1]
+    end
+
+    def paranoid
+      opts[:paranoid]
     end
 
     def singular_class_name
@@ -148,14 +153,17 @@ module Pliny::Commands
 
     def create_model
       model = "./lib/models/#{name}.rb"
-      render_template("model.erb", model, singular_class_name: singular_class_name)
+      render_template("model.erb", model,
+        singular_class_name: singular_class_name,
+        paranoid: paranoid)
       display "created model file #{model}"
     end
 
     def create_model_migration
       migration = "./db/migrate/#{Time.now.to_i}_create_#{table_name}.rb"
       render_template("model_migration.erb", migration,
-        table_name: table_name)
+        table_name: table_name,
+        paranoid: paranoid)
       display "created migration #{migration}"
     end
 

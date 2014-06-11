@@ -1,5 +1,16 @@
 #!/usr/bin/env ruby
 
+require "optparse"
 require "pliny"
 
-Pliny::Commands::Generator.run(ARGV.dup)
+ARGV.options do |options|
+  opts = {}
+
+  options.on("--paranoid", "Generate paranoid support in models") do
+    opts[:paranoid] = true
+  end
+
+  options.parse!
+
+  Pliny::Commands::Generator.run(ARGV.dup, opts)
+end
