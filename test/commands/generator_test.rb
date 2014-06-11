@@ -2,7 +2,7 @@ require "test_helper"
 
 describe Pliny::Commands::Generator do
   before do
-    @gen = Pliny::Commands::Generator.new({}, StringIO.new)
+    @gen = Pliny::Commands::Generator.new({}, {}, StringIO.new)
   end
 
   describe "#plural_class_name" do

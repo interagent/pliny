@@ -8,7 +8,7 @@ module Pliny::Commands
       new(args, opts, stream).run!
     end
 
-    def initialize(args={}, stream=$stdout)
+    def initialize(args={}, opts={}, stream=$stdout)
       @args = args
       @opts = opts
       @stream = stream
