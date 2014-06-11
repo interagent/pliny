@@ -104,14 +104,6 @@ describe Pliny::Commands::Generator do
       it "creates a test" do
         assert File.exists?("spec/models/artist_spec.rb")
       end
-
-      it "creates a serializer" do
-        assert File.exists?("lib/serializers/artist_serializer.rb")
-      end
-
-      it "creates a serializer test" do
-        assert File.exists?("spec/serializers/artist_serializer_spec.rb")
-      end
     end
 
     describe "generating scaffolds" do

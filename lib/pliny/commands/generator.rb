@@ -39,8 +39,6 @@ module Pliny::Commands
         create_model
         create_model_migration
         create_model_test
-        create_serializer
-        create_serializer_test
       when "scaffold"
         create_endpoint(scaffold: true)
         create_endpoint_test
