@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 require "optparse"
-require_relative "pliny"
+require_relative "../lib/pliny"
 
 ARGV.options do |options|
   opts = {}
