@@ -95,7 +95,7 @@ module Pliny::Commands
     end
 
     def create_endpoint(options = {})
-      endpoint = "./lib/endpoints/#{name.pluralize}.rb"
+      endpoint = "./lib/endpoints/#{table_name}.rb"
       template = options[:scaffold] ? "endpoint_scaffold.erb" : "endpoint.erb"
       render_template(template, endpoint, {
         plural_class_name: plural_class_name,
@@ -109,7 +109,7 @@ module Pliny::Commands
     end
 
     def create_endpoint_test
-      test = "./spec/endpoints/#{name.pluralize}_spec.rb"
+      test = "./spec/endpoints/#{table_name}_spec.rb"
       render_template("endpoint_test.erb", test, {
         plural_class_name: plural_class_name,
         singular_class_name: singular_class_name,
@@ -119,7 +119,7 @@ module Pliny::Commands
     end
 
     def create_endpoint_acceptance_test(options = {})
-      test = "./spec/acceptance/#{name.pluralize}_spec.rb"
+      test = "./spec/acceptance/#{table_name}_spec.rb"
       template = options[:scaffold] ? "endpoint_scaffold_acceptance_test.erb" :
         "endpoint_acceptance_test.erb"
       render_template(template, test, {
@@ -132,13 +132,13 @@ module Pliny::Commands
     end
 
     def create_mediator
-      mediator = "./lib/mediators/#{name}.rb"
+      mediator = "./lib/mediators/#{field_name}.rb"
       render_template("mediator.erb", mediator, plural_class_name: plural_class_name)
       display "created mediator file #{mediator}"
     end
 
     def create_mediator_test
-      test = "./spec/mediators/#{name}_spec.rb"
+      test = "./spec/mediators/#{field_name}_spec.rb"
       render_template("mediator_test.erb", test, plural_class_name: plural_class_name)
       display "created test #{test}"
     end
@@ -150,7 +150,7 @@ module Pliny::Commands
     end
 
     def create_model
-      model = "./lib/models/#{name}.rb"
+      model = "./lib/models/#{field_name}.rb"
       render_template("model.erb", model,
         singular_class_name: singular_class_name,
         paranoid: paranoid)
@@ -166,13 +166,13 @@ module Pliny::Commands
     end
 
     def create_model_test
-      test = "./spec/models/#{name}_spec.rb"
+      test = "./spec/models/#{field_name}_spec.rb"
       render_template("model_test.erb", test, singular_class_name: singular_class_name)
       display "created test #{test}"
     end
 
     def create_schema
-      schema = "./docs/schema/schemata/#{name.singularize}.yaml"
+      schema = "./docs/schema/schemata/#{field_name}.yaml"
       write_file(schema) do
         Prmd.init(name.singularize, yaml: true)
       end
