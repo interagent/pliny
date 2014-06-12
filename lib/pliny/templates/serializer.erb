@@ -8,7 +8,7 @@
 <%   ident << "  " %>
 <% end %>
 <%=  ident %>class <%= modules.last %> < Serializers::Base
-<%=  ident %>  structure(args) do |arg|
+<%=  ident %>  structure(:default) do |arg|
 <%=  ident %>    {
 <%=  ident %>    }
 <%=  ident %>  end
