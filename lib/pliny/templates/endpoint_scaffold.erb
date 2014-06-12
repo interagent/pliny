@@ -2,7 +2,7 @@ module Endpoints
   class <%= plural_class_name %> < Base
     namespace "<%= url_path %>" do
       before do
-        content_type :json
+        content_type :json, charset: 'utf-8'
       end
 
       get do
