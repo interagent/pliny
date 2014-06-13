@@ -1,7 +1,8 @@
 module Pliny::Middleware
   class RescueErrors
-    def initialize(app)
+    def initialize(app, options = {})
       @app = app
+      @raise = options[:raise]
     end
 
     def call(env)
@@ -9,8 +10,12 @@ module Pliny::Middleware
     rescue Pliny::Errors::Error => e
       render(e, env)
     rescue Exception => e
-    # Pliny.log_exception(e)
-      render(Pliny::Errors::InternalServerError.new, env)
+      if @raise
+        raise
+      else
+        # Pliny.log_exception(e)
+        render(Pliny::Errors::InternalServerError.new, env)
+      end
     end
 
     private
