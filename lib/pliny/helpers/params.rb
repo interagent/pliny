@@ -1,12 +1,12 @@
 module Pliny::Helpers
   module Params
-    def params
-      @params ||= parse_params
+    def body_params
+      @body_params ||= parse_body_params
     end
 
     private
 
-    def parse_params
+    def parse_body_params
       if request.content_type == "application/json"
         p = indifferent_params(MultiJson.decode(request.body.read))
         request.body.rewind
