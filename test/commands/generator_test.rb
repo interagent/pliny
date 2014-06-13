@@ -5,6 +5,18 @@ describe Pliny::Commands::Generator do
     @gen = Pliny::Commands::Generator.new({}, {}, StringIO.new)
   end
 
+  describe "#field_name" do
+    it "uses the singular form" do
+      @gen.args = ["model", "resource_histories"]
+      assert_equal "resource_history", @gen.field_name
+    end
+
+    it "handles hyphens as underscores" do
+      @gen.args = ["model", "resource-histories"]
+      assert_equal "resource_history", @gen.field_name
+    end
+  end
+
   describe "#plural_class_name" do
     it "builds a class name for a model" do
       @gen.args = ["model", "resource_histories"]
