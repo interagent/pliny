@@ -30,7 +30,7 @@ describe Pliny::Commands::Generator do
   end
 
   describe "#singular_class_name" do
-    it "builds a class name for an endpoint" do
+    it "builds a class name in the plural" do
       @gen.args = ["model", "resource_histories"]
       assert_equal "ResourceHistory", @gen.singular_class_name
     end
@@ -65,21 +65,21 @@ describe Pliny::Commands::Generator do
       Timecop.return
     end
 
-    describe "generating endpoints" do
+    describe "generating resources" do
       before do
-        @gen.args = ["endpoint", "artists"]
+        @gen.args = ["resource", "artists"]
         @gen.run!
       end
 
-      it "creates a new endpoint module" do
-        assert File.exists?("lib/endpoints/artists.rb")
+      it "creates a new resource module" do
+        assert File.exists?("lib/resources/artists.rb")
       end
 
-      it "creates an endpoint test" do
-        assert File.exists?("spec/endpoints/artists_spec.rb")
+      it "creates an resource test" do
+        assert File.exists?("spec/resources/artists_spec.rb")
       end
 
-      it "creates an endpoint acceptance test" do
+      it "creates an resource acceptance test" do
         assert File.exists?("spec/acceptance/artists_spec.rb")
       end
     end
@@ -124,15 +124,15 @@ describe Pliny::Commands::Generator do
         @gen.run!
       end
 
-      it "creates a new endpoint module" do
-        assert File.exists?("lib/endpoints/artists.rb")
+      it "creates a new resource module" do
+        assert File.exists?("lib/resources/artists.rb")
       end
 
-      it "creates an endpoint test" do
-        assert File.exists?("spec/endpoints/artists_spec.rb")
+      it "creates an resource test" do
+        assert File.exists?("spec/resources/artists_spec.rb")
       end
 
-      it "creates an endpoint acceptance test" do
+      it "creates an resource acceptance test" do
         assert File.exists?("spec/acceptance/artists_spec.rb")
       end
 
@@ -190,7 +190,7 @@ describe Pliny::Commands::Generator do
 
   describe "#url_path" do
     it "builds a URL path" do
-      @gen.args = ["endpoint", "resource_history"]
+      @gen.args = ["resource", "resource_history"]
       assert_equal "/resource-histories", @gen.url_path
     end
   end
