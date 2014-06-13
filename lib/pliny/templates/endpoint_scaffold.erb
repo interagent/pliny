@@ -11,7 +11,7 @@ module Endpoints
 
       post do
         # warning: not safe
-        <%= field_name %> = <%= singular_class_name %>.new(params)
+        <%= field_name %> = <%= singular_class_name %>.new(body_params)
         <%= field_name %>.save
         status 201
         MultiJson.encode serialize(<%= field_name %>)
@@ -25,7 +25,7 @@ module Endpoints
       patch "/:id" do |id|
         <%= field_name %> = <%= singular_class_name %>.first(uuid: id) || halt(404)
         # warning: not safe
-        #<%= field_name %>.update(params)
+        #<%= field_name %>.update(body_params)
         MultiJson.encode serialize(<%= field_name %>)
       end
 
