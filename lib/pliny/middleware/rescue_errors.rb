@@ -13,12 +13,18 @@ module Pliny::Middleware
       if @raise
         raise
       else
-        # Pliny.log_exception(e)
+        dump_error(e, env)
         render(Pliny::Errors::InternalServerError.new, env)
       end
     end
 
     private
+
+    # pulled from Sinatra
+    def dump_error(e, env)
+      message = ["#{e.class} - #{e.message}:", *e.backtrace].join("\n\t")
+      env['rack.errors'].puts(message)
+    end
 
     def render(e, env)
       headers = { "Content-Type" => "application/json; charset=utf-8" }
