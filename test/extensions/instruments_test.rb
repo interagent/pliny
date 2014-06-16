@@ -10,6 +10,10 @@ describe Pliny::Extensions::Instruments do
           status 201
           "hi"
         end
+
+        get "/error" do
+          raise Pliny::Errors::NotFound
+        end
       }
     end
   end
@@ -30,5 +34,13 @@ describe Pliny::Extensions::Instruments do
       status:          201
     ))
     get "/apps/123"
+  end
+
+  it "respects Pliny error status codes" do
+    mock(Pliny).log.with_any_args
+    mock(Pliny).log(hash_including(
+      status: 404
+    ))
+    get "/error"
   end
 end
