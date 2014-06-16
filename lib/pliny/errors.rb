@@ -12,6 +12,9 @@ module Pliny
     class HTTPStatusError < Error
       attr_reader :status
 
+      # so that Sinatra respects are status code when catching an exception
+      alias :http_status :status
+
       def initialize(message = nil, id = nil, status = nil)
         meta    = Pliny::Errors::META[self.class]
         message = message || meta[1] + "."
