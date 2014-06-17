@@ -3,7 +3,7 @@ module Pliny::Helpers
     def paginator(count, options = {})
       options =
         {
-          accepted_ranges: :id,
+          accepted_ranges: [:id],
           order: :id,
           start: 0,
           max: 200
