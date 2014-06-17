@@ -1,3 +1,4 @@
+desc "Rebuild schema.json"
 task :schema do
   require "prmd"
   schemata = "./docs/schema.json"
