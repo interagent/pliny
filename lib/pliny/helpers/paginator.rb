@@ -19,7 +19,7 @@ module Pliny::Helpers
         status 206
         headers \
           'Content-Range' => "#{options[:order]} #{options[:start]}..#{options[:end]}/#{count}; max=#{options[:max]}",
-          'Next-Range' => "#{options[:order]} #{options[:end] + 1}..#{options[:end] + options[:max]}; max=#{options[:max]}"
+          'Next-Range' => "#{options[:order]} #{options[:end] + 1}..#{[options[:end] + options[:max], count].min}; max=#{options[:max]}"
       else
         status 200
       end
