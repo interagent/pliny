@@ -28,6 +28,7 @@ describe Endpoints::<%= plural_class_name %> do
 
 =begin
   it "POST <%= url_path %>" do
+    header "Content-Type", "application/json"
     post "<%= url_path %>", MultiJson.encode({})
     last_response.status.should eq(201)
     assert_schema_conform
