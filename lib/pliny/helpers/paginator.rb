@@ -75,7 +75,7 @@ module Pliny::Helpers
       def validate_options
         return if res[:accepted_ranges].include?(res[:sort_by].to_sym)
 
-        sinatra.halt(400)
+        sinatra.halt(416)
       end
 
       def set_headers
