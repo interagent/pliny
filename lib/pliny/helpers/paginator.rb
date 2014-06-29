@@ -5,7 +5,7 @@ module Pliny::Helpers
     end
 
     class Paginator
-      RANGE = /\A(?<sort_by>\S*)\s+(?<start>\d+)(\.{2}(?<end>\d+))?(;\s*(?<args>.*))?;\z/
+      RANGE = /\A(?<sort_by>\S*)\s+(?<start>\d+)(\.{2}(?<end>\d+))?(;\s*(?<args>.*))?\z/
 
       attr_reader :sinatra, :count, :options
       attr_accessor :res
