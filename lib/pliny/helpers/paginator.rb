@@ -5,7 +5,7 @@ module Pliny::Helpers
     end
 
     class Paginator
-      RANGE = /\A(?<sort_by>\S*)\s+(?<start>\d+)(\.{2}(?<end>\d+))?(;\s*(?<args>.*))?\z/
+      RANGE = /\A(?<sort_by>\S*)\s+(?<start>[0-9a-f-]+)(\.{2}(?<end>[0-9a-f-]+))?(;\s*(?<args>.*))?\z/
 
       attr_reader :sinatra, :count, :options
       attr_accessor :res
@@ -48,33 +48,42 @@ module Pliny::Helpers
       end
 
       def request_options
-        return @request_options if @request_options
+        range = sinatra.request.env['Range']
+        return {} if range.nil? || range.empty?
 
         match =
-          RANGE.match(sinatra.request.env['Range'])
+          RANGE.match(range)
 
-        @request_options = {}
-        [:sort_by, :start, :end].each do |key|
-          @request_options[key] = match[key] if match[key]
+        if match
+          request_options = {}
+
+          [:sort_by, :start, :end].each do |key|
+            request_options[key] = match[key] if match[key]
+          end
+
+          if match[:args]
+            args =
+              match[:args]
+                .split(/\s*,\s*/)
+                .map do |value|
+                  k, v = value.split('=', 2)
+                  [k.to_sym, v]
+                end
+
+            request_options[:args] = Hash[args]
+          end
+
+          request_options
+        else
+          halt
         end
-        if match[:args]
-          args =
-            match[:args]
-              .split(/\s*,\s*/)
-              .map do |value|
-                k, v = value.split('=', 2)
-                [k.to_sym, v]
-              end
-
-          @request_options[:args] = Hash[args]
-        end
-
-        @request_options
       end
 
       def validate_options
-        return if res[:accepted_ranges].include?(res[:sort_by].to_sym)
+        halt unless res[:accepted_ranges].include?(res[:sort_by].to_sym)
+      end
 
+      def halt
         sinatra.halt(416)
       end
 
