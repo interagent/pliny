@@ -1,34 +1,107 @@
 module Pliny::Helpers
   module Paginator
     def paginator(count, options = {})
-      options =
-        {
-          accepted_ranges: [:id],
-          order: :id,
-          start: 0,
-          max: 200
-        }.merge(options)
+      Paginator.run(self, count, options)
+    end
 
-      options[:end] = options[:start] + options[:max] - 1
+    class Paginator
+      RANGE = /\A(?<sort_by>\S*)\s+(?<start>\d+)(\.{2}(?<end>\d+))?(;\s*(?<args>.*))?;\z/
 
-      halt(400) unless options[:accepted_ranges].include?(options[:order].to_sym)
+      attr_reader :sinatra, :count, :options
+      attr_accessor :res
 
-      headers 'Accept-Ranges' => options[:accepted_ranges].join(',')
-
-      if count > options[:max]
-        status 206
-        headers \
-          'Content-Range' => "#{options[:order]} #{options[:start]}..#{options[:end]}/#{count}; max=#{options[:max]}",
-          'Next-Range' => "#{options[:order]} #{options[:end] + 1}..#{[options[:end] + options[:max], count].min}; max=#{options[:max]}"
-      else
-        status 200
+      class << self
+        def run(*args)
+          new(*args).run
+        end
       end
 
-      {
-        order: options[:order],
-        start: options[:start],
-        limit: options[:max]
-      }
+      def initialize(sinatra, count, options = {})
+        @sinatra = sinatra
+        @count   = count
+        @options = options
+      end
+
+      def run
+        validate_options
+        set_headers
+
+        {
+          sort_by: res[:sort_by],
+          start: res[:start],
+          limit: res[:max]
+        }
+      end
+
+      def res
+        return @res if @res
+
+        @res =
+          {
+            accepted_ranges: [:id],
+            sort_by: :id,
+            start: 0,
+            args: { max: 200 }
+          }
+          .merge(options)
+          .merge(request_options)
+      end
+
+      def request_options
+        return @request_options if @request_options
+
+        match =
+          RANGE.match(sinatra.request.env['Range'])
+
+        @request_options = {}
+        @request_options[:sort_by] = match[:sort_by] if match[:sort_by]
+        @request_options[:start] = match[:start].to_i if match[:start]
+        @request_options[:end] = match[:end].to_i if match[:end]
+        if match[:args]
+          args =
+            match[:args]
+              .split(/\s*,\s*/)
+              .map do |value|
+                k, v = value.split('=', 2)
+                [k.to_sym, v]
+              end
+
+          @request_options[:args] = Hash[args]
+        end
+
+        @request_options
+      end
+
+      def validate_options
+        return if res[:accepted_ranges].include?(res[:sort_by].to_sym)
+
+        sinatra.halt(400)
+      end
+
+      def set_headers
+        sinatra.header 'Accept-Ranges', res[:accepted_ranges].join(',')
+
+        if count > res[:args][:max]
+          sinatra.status 206
+          sinatra.headers \
+            'Content-Range' => "#{res[:sort_by]} #{res[:start]}..#{res[:end]}/#{count}; #{args_encoded}",
+            'Next-Range' => "#{res[:sort_by]} #{res[:end] + 1}..#{limit}; #{args_encoded}"
+        else
+          sinatra.status 200
+        end
+      end
+
+      def args_encoded
+        @args_encoded ||= res[:args].map { |key, value| "#{key}=#{value}" }.join(',')
+      end
+
+      def limit
+        [
+          res[:end] + res[:args][:max],
+          count
+        ]
+        .min
+      end
     end
   end
 end
