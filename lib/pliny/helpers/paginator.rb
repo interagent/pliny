@@ -54,9 +54,9 @@ module Pliny::Helpers
           RANGE.match(sinatra.request.env['Range'])
 
         @request_options = {}
-        @request_options[:sort_by] = match[:sort_by] if match[:sort_by]
-        @request_options[:start] = match[:start].to_i if match[:start]
-        @request_options[:end] = match[:end].to_i if match[:end]
+        [:sort_by, :start, :end].each do |key|
+          @request_options[key] = match[key] if match[key]
+        end
         if match[:args]
           args =
             match[:args]
