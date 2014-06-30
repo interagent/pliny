@@ -125,7 +125,7 @@ module Pliny::Helpers
       end
 
       def will_paginate?
-        count > res[:args][:max]
+        count > res[:args][:max].to_i
       end
 
       def [](key)
