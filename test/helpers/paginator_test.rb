@@ -194,7 +194,7 @@ describe Pliny::Helpers::Paginator::Paginator do
     it 'converts max to integer' do
       subject.instance_variable_set(:@res, { args: { max: '1000' } })
       stub(subject).count { 2000 }
-      assert_equal true, subject.will_paginate?
+      assert subject.will_paginate?
     end
   end
 
