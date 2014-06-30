@@ -22,7 +22,7 @@ describe Pliny::Helpers::Paginator::Paginator do
     it 'returns Hash' do
       mock(subject).validate_options
       mock(subject).set_headers
-      stub(subject).res { {} }
+      stub(subject).res { { args: {} } }
 
       assert_kind_of Hash, subject.run
     end
@@ -75,8 +75,8 @@ describe Pliny::Helpers::Paginator::Paginator do
           result =
             {
               sort_by: 'id',
-              start: '01234567-89ab-cdef-0123-456789abcdef',
-              end: '01234567-89ab-cdef-0123-456789abcdef'
+              first: '01234567-89ab-cdef-0123-456789abcdef',
+              last: '01234567-89ab-cdef-0123-456789abcdef'
             }
           assert_equal subject.request_options, result
         end
@@ -90,8 +90,8 @@ describe Pliny::Helpers::Paginator::Paginator do
           result =
             {
               sort_by: 'id',
-              start: '01234567-89ab-cdef-0123-456789abcdef',
-              end: '01234567-89ab-cdef-0123-456789abcdef',
+              first: '01234567-89ab-cdef-0123-456789abcdef',
+              last: '01234567-89ab-cdef-0123-456789abcdef',
               args: { max: '200' }
             }
           assert_equal subject.request_options, result
@@ -106,8 +106,8 @@ describe Pliny::Helpers::Paginator::Paginator do
           result =
             {
               sort_by: 'id',
-              start: '01234567-89ab-cdef-0123-456789abcdef',
-              end: '01234567-89ab-cdef-0123-456789abcdef',
+              first: '01234567-89ab-cdef-0123-456789abcdef',
+              last: '01234567-89ab-cdef-0123-456789abcdef',
               args: { max: '200', order: 'desc' }
             }
           assert_equal subject.request_options, result
