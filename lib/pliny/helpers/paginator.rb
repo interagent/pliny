@@ -31,7 +31,7 @@ module Pliny::Helpers
         {
           sort_by: res[:sort_by],
           start: res[:start],
-          limit: res[:max]
+          limit: res[:args][:max]
         }
       end
 
