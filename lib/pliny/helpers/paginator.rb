@@ -11,8 +11,8 @@ module Pliny::Helpers
       attr_accessor :res
 
       class << self
-        def run(*args)
-          new(*args).run
+        def run(*args, &block)
+          new(*args).run(&block)
         end
       end
 
@@ -23,6 +23,8 @@ module Pliny::Helpers
       end
 
       def run
+        yield(self) if block_given?
+        
         validate_options
         set_headers
 
