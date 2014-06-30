@@ -30,7 +30,7 @@ module Pliny::Helpers
 
         {
           sort_by: res[:sort_by],
-          start: res[:start],
+          first: res[:first],
           limit: res[:args][:max]
         }
       end
@@ -42,11 +42,23 @@ module Pliny::Helpers
           {
             accepted_ranges: [:id],
             sort_by: :id,
-            start: 0,
+            first: 0,
             args: { max: 200 }
           }
           .merge(options)
           .merge(request_options)
+        unless @res[:first].kind_of?(String)
+          @res[:last] ||= @res[:first] + @res[:args][:max]
+          @res[:next_first] ||= @res[:last] + 1
+          @res[:next_last] ||=
+            [
+              @res[:next_first] + @res[:args][:max],
+              count - 1
+            ]
+            .min
+        end
+
+        @res
       end
 
       def request_options
@@ -59,7 +71,7 @@ module Pliny::Helpers
         if match
           request_options = {}
 
-          [:sort_by, :start, :end].each do |key|
+          [:sort_by, :first, :last].each do |key|
             request_options[key] = match[key] if match[key]
           end
 
@@ -95,8 +107,8 @@ module Pliny::Helpers
         if will_paginate?
           sinatra.status 206
           sinatra.headers \
-            'Content-Range' => "#{res[:sort_by]} #{res[:start]}..#{res[:end]}/#{count}; #{args_encoded}",
-            'Next-Range' => "#{res[:sort_by]} #{res[:end] + 1}..#{limit}; #{args_encoded}"
+            'Content-Range' => "#{res[:sort_by]} #{res[:first]}..#{res[:last]}/#{count}; #{args_encoded}",
+            'Next-Range' => "#{res[:sort_by]} #{res[:next_first]}..#{res[:next_last]}; #{args_encoded}"
         else
           sinatra.status 200
         end
@@ -106,12 +118,6 @@ module Pliny::Helpers
         @args_encoded ||= res[:args].map { |key, value| "#{key}=#{value}" }.join(',')
       end
 
-      def limit
-        [
-          res[:end] + res[:args][:max],
-          count
-        ]
-        .min
       def will_paginate?
         count > res[:args][:max]
       end
