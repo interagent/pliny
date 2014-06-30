@@ -26,6 +26,19 @@ describe Pliny::Helpers::Paginator::Paginator do
 
       assert_kind_of Hash, subject.run
     end
+
+    it 'evaluates block' do
+      mock(subject).validate_options
+      mock(subject).set_headers
+      subject.instance_variable_set(:@res, { args: { max: 200 } })
+
+      result =
+        subject.run do |paginator|
+          paginator[:first] = 42
+        end
+
+      assert_equal 42, result[:first]
+    end
   end
 
   describe '#request_options' do
