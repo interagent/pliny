@@ -92,7 +92,7 @@ module Pliny::Helpers
       def set_headers
         sinatra.header 'Accept-Ranges', res[:accepted_ranges].join(',')
 
-        if count > res[:args][:max]
+        if will_paginate?
           sinatra.status 206
           sinatra.headers \
             'Content-Range' => "#{res[:sort_by]} #{res[:start]}..#{res[:end]}/#{count}; #{args_encoded}",
@@ -112,6 +112,9 @@ module Pliny::Helpers
           count
         ]
         .min
+      def will_paginate?
+        count > res[:args][:max]
+      end
       end
     end
   end
