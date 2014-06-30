@@ -115,4 +115,40 @@ describe Pliny::Helpers::Paginator::Paginator do
       end
     end
   end
+
+  describe '#[]' do
+    describe 'allows to read #res with a convinience method' do
+      before :each do
+        mock(subject).res { { first: 1 } }
+      end
+
+      it 'with symbol key' do
+        assert_equal subject[:first], 1
+      end
+
+      it 'with string key' do
+        assert_equal subject['first'], 1
+      end
+    end
+  end
+
+  describe '#[]=' do
+    describe 'allows to read #res with a convinience method' do
+      before :each do
+        subject.instance_variable_set(:@res, {})
+      end
+
+      it 'with symbol key' do
+        assert_equal nil, subject.res[:first]
+        subject[:first] = 1
+        assert_equal 1, subject.res[:first]
+      end
+
+      it 'with string key' do
+        assert_equal nil, subject.res[:first]
+        subject['first'] = 1
+        assert_equal 1, subject.res[:first]
+      end
+    end
+  end
 end

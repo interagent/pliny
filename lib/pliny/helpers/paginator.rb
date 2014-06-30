@@ -121,6 +121,13 @@ module Pliny::Helpers
       def will_paginate?
         count > res[:args][:max]
       end
+
+      def [](key)
+        res[key.to_sym]
+      end
+
+      def []=(key, value)
+        res[key.to_sym] = value
       end
     end
   end
