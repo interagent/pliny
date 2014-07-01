@@ -10,7 +10,7 @@ module Endpoints
           paginator(<%= singular_class_name %>.count) do |paginator|
             resources = <%= singular_class_name %>.order(paginator[:sort_by])
 
-            If paginator.will_paginate?
+            if paginator.will_paginate?
               next_resources = resources = resources.limit(paginator[:args][:max].to_i)
 
               resources = resources.where { uuid >= Sequel.cast(paginator[:first], :uuid) }
