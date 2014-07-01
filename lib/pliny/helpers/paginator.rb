@@ -120,10 +120,14 @@ module Pliny::Helpers
 
         if will_paginate?
           sinatra.status 206
+
           cnt = build_range(options[:sort_by], options[:first], options[:last], options[:args], count)
-          nxt = build_range(options[:sort_by], options[:next_first], options[:next_last], options[:args])
-          sinatra.headers 'Content-Range' => cnt,
-                          'Next-Range' => nxt
+          sinatra.headers 'Content-Range' => cnt
+
+          if options[:next_first]
+            nxt = build_range(options[:sort_by], options[:next_first], options[:next_last], options[:args])
+            sinatra.headers 'Next-Range' => nxt
+          end
         else
           sinatra.status 200
         end
