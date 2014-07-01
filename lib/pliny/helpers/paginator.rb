@@ -13,7 +13,7 @@ module Pliny::Helpers
       ARGS = /(?<args>.*)/
       RANGE = /\A#{SORT_BY}\s+#{FIRST}(\.{2}#{LAST})?#{COUNT}?(;\s*#{ARGS})?\z/
 
-      attr_reader :sinatra, :count, :options
+      attr_reader :sinatra, :count
       attr_accessor :res
 
       class << self
@@ -25,7 +25,14 @@ module Pliny::Helpers
       def initialize(sinatra, count, options = {})
         @sinatra = sinatra
         @count   = count
-        @options = options
+        @options =
+          {
+            accepted_ranges: [:id],
+            sort_by: :id,
+            first: 0,
+            args: { max: 200 }
+          }
+          .merge(options)
       end
 
       def run
@@ -44,15 +51,7 @@ module Pliny::Helpers
       def res
         return @res if @res
 
-        @res =
-          {
-            accepted_ranges: [:id],
-            sort_by: :id,
-            first: 0,
-            args: { max: 200 }
-          }
-          .merge(options)
-          .merge(request_options)
+        @res = @options.merge(request_options)
         calculate_pages unless @res[:first].is_a?(String)
 
         @res
