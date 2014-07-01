@@ -190,6 +190,53 @@ describe Pliny::Helpers::Paginator::Paginator do
     end
   end
 
+  describe '#build_range' do
+    it 'only sort_by' do
+      assert_equal 'id',
+                   subject.build_range(:id, nil, nil, nil)
+    end
+
+    it 'only sort_by, first' do
+      assert_equal 'id 100',
+                   subject.build_range(:id, 100, nil, nil)
+    end
+
+    it 'only sort_by, first, last' do
+      assert_equal 'id 100..200',
+                   subject.build_range(:id, 100, 200, nil)
+    end
+
+    it 'only sort_by, last' do
+      assert_equal 'id',
+                   subject.build_range(:id, nil, 200, nil)
+    end
+
+    it 'only sort_by, first, args' do
+      assert_equal 'id 100; max=300,order=desc',
+                   subject.build_range(:id, 100, nil, max: 300, order: 'desc')
+    end
+
+    it 'only sort_by, first, last, args' do
+      assert_equal 'id 100..200; max=300,order=desc',
+                   subject.build_range(:id, 100, 200, max: 300, order: 'desc')
+    end
+
+    it 'only sort_by, first, count' do
+      assert_equal 'id 100/1200',
+                   subject.build_range(:id, 100, nil, nil, 1200)
+    end
+
+    it 'only sort_by, first, last, count' do
+      assert_equal 'id 100..200/1200',
+                   subject.build_range(:id, 100, 200, nil, 1200)
+    end
+
+    it 'only sort_by, first, args, count' do
+      assert_equal 'id 100/1200; max=300,order=desc',
+                   subject.build_range(:id, 100, nil, { max: 300, order: 'desc' }, 1200)
+    end
+  end
+
   describe '#will_paginate?' do
     it 'converts max to integer' do
       subject.instance_variable_set(:@res, args: { max: '1000' })

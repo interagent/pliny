@@ -115,18 +115,25 @@ module Pliny::Helpers
         if will_paginate?
           sinatra.status 206
           sinatra.headers \
-            'Content-Range' => "#{res[:sort_by]} #{res[:first]}..#{res[:last]}/#{count}; #{args_encoded}",
-            'Next-Range' => "#{res[:sort_by]} #{res[:next_first]}..#{res[:next_last]}; #{args_encoded}"
+            'Content-Range' => build_range(res[:sort_by], res[:first], res[:last], res[:args], count),
+            'Next-Range' => build_range(res[:sort_by], res[:next_first], res[:next_last], res[:args], nil)
         else
           sinatra.status 200
         end
       end
 
-      def args_encoded
-        @args_encoded ||=
-          res[:args]
-            .map { |key, value| "#{key}=#{value}" }
-            .join(',')
+      def build_range(sort_by, first, last, args, count = nil)
+        range = sort_by.to_s
+        range << " #{[first, last].compact.join('..')}" if first
+        range << "/#{count}" if count
+        range << "; #{encode_args(args)}" if args
+        range
+      end
+
+      def encode_args(args)
+        args
+          .map { |key, value| "#{key}=#{value}" }
+          .join(',')
       end
 
       def will_paginate?
