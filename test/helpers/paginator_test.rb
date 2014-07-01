@@ -132,40 +132,33 @@ describe Pliny::Helpers::Paginator::Paginator do
       end
     end
 
-    describe 'when Range is valid (UUIDs)' do
-      describe 'with first only' do
-        it 'returns Hash' do
-          stub(sinatra).request do |klass|
-            stub(klass).env { { 'Range' => 'id 01234567-89ab-cdef-0123-456789abcdef' } }
+    describe 'when Range is valid' do
+      before :each do
+        stub(sinatra).request do |klass|
+          stub(klass).env do
+            { 'Range' => range }
           end
-          result =
-            {
-              sort_by: 'id',
-              first: '01234567-89ab-cdef-0123-456789abcdef'
-            }
-          assert_equal result, subject.request_options
         end
       end
 
-      describe 'without args' do
-        it 'returns Hash' do
-          stub(sinatra).request do |klass|
-            stub(klass).env { { 'Range' => 'id 01234567-89ab-cdef-0123-456789abcdef..01234567-89ab-cdef-0123-456789abcdef' } }
+      describe 'UUID' do
+        describe 'with first only' do
+          let(:range) { 'id 01234567-89ab-cdef-0123-456789abcdef' }
+
+          it 'returns Hash' do
+            result =
+              {
+                sort_by: 'id',
+                first: '01234567-89ab-cdef-0123-456789abcdef'
+              }
+            assert_equal result, subject.request_options
           end
-          result =
-            {
-              sort_by: 'id',
-              first: '01234567-89ab-cdef-0123-456789abcdef',
-              last: '01234567-89ab-cdef-0123-456789abcdef'
-            }
-          assert_equal result, subject.request_options
         end
 
-        describe 'with count' do
+        describe 'without args' do
+          let(:range) { 'id 01234567-89ab-cdef-0123-456789abcdef..01234567-89ab-cdef-0123-456789abcdef' }
+
           it 'returns Hash' do
-            stub(sinatra).request do |klass|
-              stub(klass).env { { 'Range' => 'id 01234567-89ab-cdef-0123-456789abcdef..01234567-89ab-cdef-0123-456789abcdef/400' } }
-            end
             result =
               {
                 sort_by: 'id',
@@ -174,29 +167,26 @@ describe Pliny::Helpers::Paginator::Paginator do
               }
             assert_equal result, subject.request_options
           end
-        end
-      end
 
-      describe 'with one arg' do
-        it 'returns Hash' do
-          stub(sinatra).request do |klass|
-            stub(klass).env { { 'Range' => 'id 01234567-89ab-cdef-0123-456789abcdef..01234567-89ab-cdef-0123-456789abcdef; max=1000' } }
-          end
-          result =
-            {
-              sort_by: 'id',
-              first: '01234567-89ab-cdef-0123-456789abcdef',
-              last: '01234567-89ab-cdef-0123-456789abcdef',
-              args: { max: '1000' }
-            }
-          assert_equal result, subject.request_options
-        end
+          describe 'with count' do
+            let(:range) { 'id 01234567-89ab-cdef-0123-456789abcdef..01234567-89ab-cdef-0123-456789abcdef/400' }
 
-        describe 'with count' do
-          it 'returns Hash' do
-            stub(sinatra).request do |klass|
-              stub(klass).env { { 'Range' => 'id 01234567-89ab-cdef-0123-456789abcdef..01234567-89ab-cdef-0123-456789abcdef/400; max=1000' } }
+            it 'returns Hash' do
+              result =
+                {
+                  sort_by: 'id',
+                  first: '01234567-89ab-cdef-0123-456789abcdef',
+                  last: '01234567-89ab-cdef-0123-456789abcdef'
+                }
+              assert_equal result, subject.request_options
             end
+          end
+        end
+
+        describe 'with one arg' do
+          let(:range) { 'id 01234567-89ab-cdef-0123-456789abcdef..01234567-89ab-cdef-0123-456789abcdef; max=1000' }
+
+          it 'returns Hash' do
             result =
               {
                 sort_by: 'id',
@@ -206,29 +196,27 @@ describe Pliny::Helpers::Paginator::Paginator do
               }
             assert_equal result, subject.request_options
           end
-        end
-      end
 
-      describe 'with more args' do
-        it 'returns Hash' do
-          stub(sinatra).request do |klass|
-            stub(klass).env { { 'Range' => 'id 01234567-89ab-cdef-0123-456789abcdef..01234567-89ab-cdef-0123-456789abcdef; max=1000,order=desc' } }
-          end
-          result =
-            {
-              sort_by: 'id',
-              first: '01234567-89ab-cdef-0123-456789abcdef',
-              last: '01234567-89ab-cdef-0123-456789abcdef',
-              args: { max: '1000', order: 'desc' }
-            }
-          assert_equal result, subject.request_options
-        end
+          describe 'with count' do
+            let(:range) { 'id 01234567-89ab-cdef-0123-456789abcdef..01234567-89ab-cdef-0123-456789abcdef/400; max=1000' }
 
-        describe 'with count' do
-          it 'returns Hash' do
-            stub(sinatra).request do |klass|
-              stub(klass).env { { 'Range' => 'id 01234567-89ab-cdef-0123-456789abcdef..01234567-89ab-cdef-0123-456789abcdef/400; max=1000,order=desc' } }
+            it 'returns Hash' do
+              result =
+                {
+                  sort_by: 'id',
+                  first: '01234567-89ab-cdef-0123-456789abcdef',
+                  last: '01234567-89ab-cdef-0123-456789abcdef',
+                  args: { max: '1000' }
+                }
+              assert_equal result, subject.request_options
             end
+          end
+        end
+
+        describe 'with more args' do
+          let(:range) { 'id 01234567-89ab-cdef-0123-456789abcdef..01234567-89ab-cdef-0123-456789abcdef; max=1000,order=desc' }
+
+          it 'returns Hash' do
             result =
               {
                 sort_by: 'id',
@@ -238,20 +226,26 @@ describe Pliny::Helpers::Paginator::Paginator do
               }
             assert_equal result, subject.request_options
           end
-        end
-      end
-    end
 
-    describe 'when Range is valid (arbitrary)' do
-      before :each do
-        stub(sinatra).request do |klass|
-          stub(klass).env do
-            { 'Range' => "#{sort_by} #{first}..#{last}/400; max=1000,order=desc" }
+          describe 'with count' do
+            let(:range) { 'id 01234567-89ab-cdef-0123-456789abcdef..01234567-89ab-cdef-0123-456789abcdef/400; max=1000,order=desc' }
+
+            it 'returns Hash' do
+              result =
+                {
+                  sort_by: 'id',
+                  first: '01234567-89ab-cdef-0123-456789abcdef',
+                  last: '01234567-89ab-cdef-0123-456789abcdef',
+                  args: { max: '1000', order: 'desc' }
+                }
+              assert_equal result, subject.request_options
+            end
           end
         end
       end
 
       describe 'timestamp in iso8601' do
+        let(:range) { "#{sort_by} #{first}..#{last}/400; max=1000,order=desc" }
         let(:sort_by) { 'created_at' }
         let(:first) { '1985-09-24T00:00:00+00:00' }
         let(:last) { '2014-07-01T15:54:32+02:00' }
@@ -269,6 +263,7 @@ describe Pliny::Helpers::Paginator::Paginator do
       end
 
       describe 'fruits' do
+        let(:range) { "#{sort_by} #{first}..#{last}/400; max=1000,order=desc" }
         let(:sort_by) { 'fruit' }
         let(:first) { 'Apple' }
         let(:last) { 'Banana' }
