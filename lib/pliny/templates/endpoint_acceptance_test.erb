@@ -8,6 +8,10 @@ describe Endpoints::<%= plural_class_name %> do
     Routes
   end
 
+  def schema_path
+    "./docs/schema.json"
+  end
+
   describe 'GET <%= url_path %>' do
     it 'returns correct status code and conforms to schema' do
       get '<%= url_path %>'
