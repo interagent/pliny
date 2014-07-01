@@ -27,9 +27,9 @@ module Pliny::Helpers
         @count   = count
         @opts =
           {
-            accepted_ranges: [:id],
-            sort_by: :id,
-            first: 0,
+            accepted_ranges: [:uuid],
+            sort_by: :uuid,
+            first: nil,
             args: { max: 200 }
           }
           .merge(options)
