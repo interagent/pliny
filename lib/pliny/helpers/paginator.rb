@@ -36,16 +36,20 @@ module Pliny::Helpers
       end
 
       def run
-        yield(self) if block_given?
+        result = yield(self) if block_given?
 
         validate_options
         set_headers
 
-        {
-          sort_by: options[:sort_by],
-          first: options[:first],
-          limit: options[:args][:max]
-        }
+        if block_given?
+          result
+        else
+          {
+            sort_by: options[:sort_by],
+            first: options[:first],
+            limit: options[:args][:max]
+          }
+        end
       end
 
       def options
