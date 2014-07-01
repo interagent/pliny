@@ -109,13 +109,14 @@ module Pliny::Helpers
       end
 
       def set_headers
-        sinatra.header 'Accept-Ranges', options[:accepted_ranges].join(',')
+        sinatra.headers 'Accept-Ranges' => options[:accepted_ranges].join(',')
 
         if will_paginate?
           sinatra.status 206
-          sinatra.headers \
-            'Content-Range' => build_range(options[:sort_by], options[:first], options[:last], options[:args], count),
-            'Next-Range' => build_range(options[:sort_by], options[:next_first], options[:next_last], options[:args], nil)
+          cnt = build_range(options[:sort_by], options[:first], options[:last], options[:args], count)
+          nxt = build_range(options[:sort_by], options[:next_first], options[:next_last], options[:args], nil)
+          sinatra.headers 'Content-Range' => cnt,
+                          'Next-Range' => nxt
         else
           sinatra.status 200
         end
