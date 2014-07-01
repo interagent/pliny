@@ -141,7 +141,19 @@ describe Pliny::Helpers::Paginator::Paginator do
       end
 
       describe 'UUID' do
-        describe 'with first only' do
+        describe 'only sort_by' do
+          let(:range) { 'id' }
+
+          it 'returns Hash' do
+            result =
+              {
+                sort_by: 'id'
+              }
+            assert_equal result, subject.request_options
+          end
+        end
+
+        describe 'only sort_by, first' do
           let(:range) { 'id 01234567-89ab-cdef-0123-456789abcdef' }
 
           it 'returns Hash' do
@@ -154,8 +166,21 @@ describe Pliny::Helpers::Paginator::Paginator do
           end
         end
 
-        describe 'without first' do
-          let(:range) { 'id' }
+        describe 'only sort_by, args' do
+          let(:range) { 'id; max=1000' }
+
+          it 'returns Hash' do
+            result =
+              {
+                sort_by: 'id',
+                args: { max: '1000' }
+              }
+            assert_equal result, subject.request_options
+          end
+        end
+
+        describe 'only sort_by, count' do
+          let(:range) { 'id/400' }
 
           it 'returns Hash' do
             result =
@@ -164,34 +189,9 @@ describe Pliny::Helpers::Paginator::Paginator do
               }
             assert_equal result, subject.request_options
           end
-
-          describe 'with args' do
-            let(:range) { 'id; max=1000' }
-
-            it 'returns Hash' do
-              result =
-                {
-                  sort_by: 'id',
-                  args: { max: '1000' }
-                }
-              assert_equal result, subject.request_options
-            end
-          end
-
-          describe 'with count' do
-            let(:range) { 'id/400' }
-
-            it 'returns Hash' do
-              result =
-                {
-                  sort_by: 'id'
-                }
-              assert_equal result, subject.request_options
-            end
-          end
         end
 
-        describe 'without args' do
+        describe 'only sort_by, first, last' do
           let(:range) { 'id 01234567-89ab-cdef-0123-456789abcdef..01234567-89ab-cdef-0123-456789abcdef' }
 
           it 'returns Hash' do
@@ -203,37 +203,48 @@ describe Pliny::Helpers::Paginator::Paginator do
               }
             assert_equal result, subject.request_options
           end
+        end
 
-          describe 'with count' do
-            let(:range) { 'id 01234567-89ab-cdef-0123-456789abcdef..01234567-89ab-cdef-0123-456789abcdef/400' }
+        describe 'only sort_by, first, args' do
+        end
+
+        describe 'only sort_by, first, count' do
+        end
+
+        describe 'only sort_by, first, last, args' do
+          describe 'one arg' do
+            let(:range) { 'id 01234567-89ab-cdef-0123-456789abcdef..01234567-89ab-cdef-0123-456789abcdef; max=1000' }
 
             it 'returns Hash' do
               result =
                 {
                   sort_by: 'id',
                   first: '01234567-89ab-cdef-0123-456789abcdef',
-                  last: '01234567-89ab-cdef-0123-456789abcdef'
+                  last: '01234567-89ab-cdef-0123-456789abcdef',
+                  args: { max: '1000' }
+                }
+              assert_equal result, subject.request_options
+            end
+          end
+
+          describe 'more args' do
+            let(:range) { 'id 01234567-89ab-cdef-0123-456789abcdef..01234567-89ab-cdef-0123-456789abcdef; max=1000,order=desc' }
+
+            it 'returns Hash' do
+              result =
+                {
+                  sort_by: 'id',
+                  first: '01234567-89ab-cdef-0123-456789abcdef',
+                  last: '01234567-89ab-cdef-0123-456789abcdef',
+                  args: { max: '1000', order: 'desc' }
                 }
               assert_equal result, subject.request_options
             end
           end
         end
 
-        describe 'with one arg' do
-          let(:range) { 'id 01234567-89ab-cdef-0123-456789abcdef..01234567-89ab-cdef-0123-456789abcdef; max=1000' }
-
-          it 'returns Hash' do
-            result =
-              {
-                sort_by: 'id',
-                first: '01234567-89ab-cdef-0123-456789abcdef',
-                last: '01234567-89ab-cdef-0123-456789abcdef',
-                args: { max: '1000' }
-              }
-            assert_equal result, subject.request_options
-          end
-
-          describe 'with count' do
+        describe 'only sort_by, first, last, args, count' do
+          describe 'one arg' do
             let(:range) { 'id 01234567-89ab-cdef-0123-456789abcdef..01234567-89ab-cdef-0123-456789abcdef/400; max=1000' }
 
             it 'returns Hash' do
@@ -247,23 +258,8 @@ describe Pliny::Helpers::Paginator::Paginator do
               assert_equal result, subject.request_options
             end
           end
-        end
 
-        describe 'with more args' do
-          let(:range) { 'id 01234567-89ab-cdef-0123-456789abcdef..01234567-89ab-cdef-0123-456789abcdef; max=1000,order=desc' }
-
-          it 'returns Hash' do
-            result =
-              {
-                sort_by: 'id',
-                first: '01234567-89ab-cdef-0123-456789abcdef',
-                last: '01234567-89ab-cdef-0123-456789abcdef',
-                args: { max: '1000', order: 'desc' }
-              }
-            assert_equal result, subject.request_options
-          end
-
-          describe 'with count' do
+          describe 'more args' do
             let(:range) { 'id 01234567-89ab-cdef-0123-456789abcdef..01234567-89ab-cdef-0123-456789abcdef/400; max=1000,order=desc' }
 
             it 'returns Hash' do
@@ -276,6 +272,72 @@ describe Pliny::Helpers::Paginator::Paginator do
                 }
               assert_equal result, subject.request_options
             end
+          end
+        end
+
+        describe 'only sort_by, first, last, count' do
+          let(:range) { 'id 01234567-89ab-cdef-0123-456789abcdef..01234567-89ab-cdef-0123-456789abcdef/400' }
+
+          it 'returns Hash' do
+            result =
+              {
+                sort_by: 'id',
+                first: '01234567-89ab-cdef-0123-456789abcdef',
+                last: '01234567-89ab-cdef-0123-456789abcdef'
+              }
+            assert_equal result, subject.request_options
+          end
+        end
+
+        describe 'only sort_by, first, args, count' do
+          let(:range) { 'id 01234567-89ab-cdef-0123-456789abcdef/400; max=1000,order=desc' }
+
+          it 'returns Hash' do
+            result =
+              {
+                sort_by: 'id',
+                first: '01234567-89ab-cdef-0123-456789abcdef',
+                args: { max: '1000', order: 'desc' }
+              }
+            assert_equal result, subject.request_options
+          end
+        end
+
+        describe 'only sort_by, args' do
+          let(:range) { 'id; max=1000,order=desc' }
+
+          it 'returns Hash' do
+            result =
+              {
+                sort_by: 'id',
+                args: { max: '1000', order: 'desc' }
+              }
+            assert_equal result, subject.request_options
+          end
+        end
+
+        describe 'only sort_by, args, count' do
+          let(:range) { 'id/400; max=1000,order=desc' }
+
+          it 'returns Hash' do
+            result =
+              {
+                sort_by: 'id',
+                args: { max: '1000', order: 'desc' }
+              }
+            assert_equal result, subject.request_options
+          end
+        end
+
+        describe 'only sort_by, count' do
+          let(:range) { 'id/400' }
+
+          it 'returns Hash' do
+            result =
+              {
+                sort_by: 'id'
+              }
+            assert_equal result, subject.request_options
           end
         end
       end
@@ -339,7 +401,7 @@ describe Pliny::Helpers::Paginator::Paginator do
                    subject.build_range(:id, nil, nil, max: 300, order: 'desc')
     end
 
-    it 'only sort_by, args' do
+    it 'only sort_by, count' do
       assert_equal 'id/1200',
                    subject.build_range(:id, nil, nil, nil, 1200)
     end
@@ -354,14 +416,14 @@ describe Pliny::Helpers::Paginator::Paginator do
                    subject.build_range(:id, 100, nil, max: 300, order: 'desc')
     end
 
-    it 'only sort_by, first, last, args' do
-      assert_equal 'id 100..200; max=300,order=desc',
-                   subject.build_range(:id, 100, 200, max: 300, order: 'desc')
-    end
-
     it 'only sort_by, first, count' do
       assert_equal 'id 100/1200',
                    subject.build_range(:id, 100, nil, nil, 1200)
+    end
+
+    it 'only sort_by, first, last, args' do
+      assert_equal 'id 100..200; max=300,order=desc',
+                   subject.build_range(:id, 100, 200, max: 300, order: 'desc')
     end
 
     it 'only sort_by, first, last, count' do
@@ -372,6 +434,21 @@ describe Pliny::Helpers::Paginator::Paginator do
     it 'only sort_by, first, args, count' do
       assert_equal 'id 100/1200; max=300,order=desc',
                    subject.build_range(:id, 100, nil, { max: 300, order: 'desc' }, 1200)
+    end
+
+    it 'only sort_by, args' do
+      assert_equal 'id; max=300,order=desc',
+                   subject.build_range(:id, nil, nil, { max: 300, order: 'desc' })
+    end
+
+    it 'only sort_by, args, count' do
+      assert_equal 'id/1200; max=300,order=desc',
+                   subject.build_range(:id, nil, nil, { max: 300, order: 'desc' }, 1200)
+    end
+
+    it 'only sort_by, count' do
+      assert_equal 'id/1200',
+                   subject.build_range(:id, nil, nil, nil, 1200)
     end
   end
 
