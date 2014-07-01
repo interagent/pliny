@@ -56,7 +56,7 @@ module Pliny::Helpers
         return @options if @options
 
         @options = @opts.merge(request_options)
-        calculate_pages unless @options[:first].is_a?(String)
+        calculate_pages unless @options[:first].nil? || @options[:first].is_a?(String)
 
         @options
       end
