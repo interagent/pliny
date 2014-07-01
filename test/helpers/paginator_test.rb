@@ -41,6 +41,59 @@ describe Pliny::Helpers::Paginator::Paginator do
     end
   end
 
+  describe '#calculate_pages' do
+    let(:opts) { { first: 100, args: { max: 300 } } }
+
+    before :each do
+      subject.instance_variable_set(:@options, opts)
+      subject.calculate_pages
+    end
+
+    describe 'when count < max in current range' do
+      let(:count) { 200 }
+
+      it 'calculates :last' do
+        assert_equal 199, subject[:last]
+      end
+
+      it 'calculates :next_first' do
+        assert_equal nil, subject[:next_first]
+      end
+
+      it 'calculates :next_last' do
+        assert_equal nil, subject[:next_last]
+      end
+    end
+
+    describe 'when count > max in current range' do
+      let(:count) { 3000 }
+
+      it 'calculates :last' do
+        assert_equal 399, subject[:last]
+      end
+
+      it 'calculates :next_first' do
+        assert_equal 400, subject[:next_first]
+      end
+
+      describe 'when count < max in next range' do
+        let(:count) { 600 }
+
+        it 'calculates :next_last' do
+          assert_equal 599, subject[:next_last]
+        end
+      end
+
+      describe 'when count > max in next range' do
+        let(:count) { 3000 }
+
+        it 'calculates :next_last' do
+          assert_equal 699, subject[:next_last]
+        end
+      end
+    end
+  end
+
   describe '#request_options' do
     it 'returns Hash' do
       stub(sinatra).request do |klass|

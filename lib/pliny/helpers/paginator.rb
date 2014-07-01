@@ -58,14 +58,21 @@ module Pliny::Helpers
       end
 
       def calculate_pages
-        @options[:last] ||= @options[:first] + @options[:args][:max]
-        @options[:next_first] ||= @options[:last] + 1
-        @options[:next_last] ||=
-          [
-            @options[:next_first] + @options[:args][:max],
-            count - 1
-          ]
-          .min
+        options[:last] ||= options[:first] + options[:args][:max] - 1
+
+        if options[:last] >= count - 1
+          options[:last] = count - 1
+          options[:next_first] = nil
+          options[:next_last] = nil
+        else
+          options[:next_first] ||= options[:last] + 1
+          options[:next_last] ||=
+            [
+              options[:next_first] + options[:args][:max] - 1,
+              count - 1
+            ]
+            .min
+        end
       end
 
       def request_options
