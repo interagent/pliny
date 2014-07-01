@@ -14,7 +14,7 @@ module Pliny::Helpers
       RANGE = /\A#{SORT_BY}\s+#{FIRST}(\.{2}#{LAST})?#{COUNT}?(;\s*#{ARGS})?\z/
 
       attr_reader :sinatra, :count
-      attr_accessor :res
+      attr_writer :options
 
       class << self
         def run(*args, &block)
@@ -25,7 +25,7 @@ module Pliny::Helpers
       def initialize(sinatra, count, options = {})
         @sinatra = sinatra
         @count   = count
-        @options =
+        @opts =
           {
             accepted_ranges: [:id],
             sort_by: :id,
@@ -42,27 +42,27 @@ module Pliny::Helpers
         set_headers
 
         {
-          sort_by: res[:sort_by],
-          first: res[:first],
-          limit: res[:args][:max]
+          sort_by: options[:sort_by],
+          first: options[:first],
+          limit: options[:args][:max]
         }
       end
 
-      def res
-        return @res if @res
+      def options
+        return @options if @options
 
-        @res = @options.merge(request_options)
-        calculate_pages unless @res[:first].is_a?(String)
+        @options = @opts.merge(request_options)
+        calculate_pages unless @options[:first].is_a?(String)
 
-        @res
+        @options
       end
 
       def calculate_pages
-        @res[:last] ||= @res[:first] + @res[:args][:max]
-        @res[:next_first] ||= @res[:last] + 1
-        @res[:next_last] ||=
+        @options[:last] ||= @options[:first] + @options[:args][:max]
+        @options[:next_first] ||= @options[:last] + 1
+        @options[:next_last] ||=
           [
-            @res[:next_first] + @res[:args][:max],
+            @options[:next_first] + @options[:args][:max],
             count - 1
           ]
           .min
@@ -101,7 +101,7 @@ module Pliny::Helpers
       end
 
       def validate_options
-        halt unless res[:sort_by] && res[:accepted_ranges].include?(res[:sort_by].to_sym)
+        halt unless options[:sort_by] && options[:accepted_ranges].include?(options[:sort_by].to_sym)
       end
 
       def halt
@@ -109,13 +109,13 @@ module Pliny::Helpers
       end
 
       def set_headers
-        sinatra.header 'Accept-Ranges', res[:accepted_ranges].join(',')
+        sinatra.header 'Accept-Ranges', options[:accepted_ranges].join(',')
 
         if will_paginate?
           sinatra.status 206
           sinatra.headers \
-            'Content-Range' => build_range(res[:sort_by], res[:first], res[:last], res[:args], count),
-            'Next-Range' => build_range(res[:sort_by], res[:next_first], res[:next_last], res[:args], nil)
+            'Content-Range' => build_range(options[:sort_by], options[:first], options[:last], options[:args], count),
+            'Next-Range' => build_range(options[:sort_by], options[:next_first], options[:next_last], options[:args], nil)
         else
           sinatra.status 200
         end
@@ -136,15 +136,15 @@ module Pliny::Helpers
       end
 
       def will_paginate?
-        count > res[:args][:max].to_i
+        count > options[:args][:max].to_i
       end
 
       def [](key)
-        res[key.to_sym]
+        options[key.to_sym]
       end
 
       def []=(key, value)
-        res[key.to_sym] = value
+        options[key.to_sym] = value
       end
     end
   end

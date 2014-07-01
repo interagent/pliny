@@ -22,7 +22,7 @@ describe Pliny::Helpers::Paginator::Paginator do
     it 'returns Hash' do
       mock(subject).validate_options
       mock(subject).set_headers
-      stub(subject).res { { args: {} } }
+      stub(subject).options { { args: {} } }
 
       assert_kind_of Hash, subject.run
     end
@@ -30,7 +30,7 @@ describe Pliny::Helpers::Paginator::Paginator do
     it 'evaluates block' do
       mock(subject).validate_options
       mock(subject).set_headers
-      subject.instance_variable_set(:@res, args: { max: 200 })
+      subject.instance_variable_set(:@options, args: { max: 200 })
 
       result =
         subject.run do |paginator|
@@ -239,16 +239,16 @@ describe Pliny::Helpers::Paginator::Paginator do
 
   describe '#will_paginate?' do
     it 'converts max to integer' do
-      subject.instance_variable_set(:@res, args: { max: '1000' })
+      subject.instance_variable_set(:@options, args: { max: '1000' })
       stub(subject).count { 2000 }
       assert subject.will_paginate?
     end
   end
 
   describe '#[]' do
-    describe 'allows to read #res with a convenience method' do
+    describe 'allows to read #options with a convenience method' do
       before :each do
-        mock(subject).res { { first: 1 } }
+        mock(subject).options { { first: 1 } }
       end
 
       it 'with symbol key' do
@@ -262,21 +262,21 @@ describe Pliny::Helpers::Paginator::Paginator do
   end
 
   describe '#[]=' do
-    describe 'allows to read #res with a convenience method' do
+    describe 'allows to read #options with a convenience method' do
       before :each do
-        subject.instance_variable_set(:@res, {})
+        subject.instance_variable_set(:@options, {})
       end
 
       it 'with symbol key' do
-        assert_equal nil, subject.res[:first]
+        assert_equal nil, subject.options[:first]
         subject[:first] = 1
-        assert_equal 1, subject.res[:first]
+        assert_equal 1, subject.options[:first]
       end
 
       it 'with string key' do
-        assert_equal nil, subject.res[:first]
+        assert_equal nil, subject.options[:first]
         subject['first'] = 1
-        assert_equal 1, subject.res[:first]
+        assert_equal 1, subject.options[:first]
       end
     end
   end
