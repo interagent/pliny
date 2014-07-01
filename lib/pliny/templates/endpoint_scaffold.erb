@@ -19,7 +19,9 @@ module Endpoints
 
               next_resources = next_resources.where { uuid > Sequel.cast(paginator[:last], :uuid) }
               paginator[:next_first] = next_resources.get(:uuid)
-              paginator[:next_last] = next_resources.offset(paginator[:args][:max].to_i - 1).get(:uuid)
+              paginator[:next_last] =
+                next_resources.offset(paginator[:args][:max].to_i - 1).get(:uuid) ||
+                  next_resources.select(:uuid).last.uuid
             end
 
             resources
