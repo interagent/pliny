@@ -102,7 +102,7 @@ module Pliny::Helpers
       end
 
       def validate_options
-        halt unless res[:accepted_ranges].include?(res[:sort_by].to_sym)
+        halt unless res[:sort_by] && res[:accepted_ranges].include?(res[:sort_by].to_sym)
       end
 
       def halt
