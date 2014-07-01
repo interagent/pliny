@@ -1,4 +1,3 @@
-require 'pliny/helpers/paginator'
 require 'test_helper'
 
 describe Pliny::Helpers::Paginator do
