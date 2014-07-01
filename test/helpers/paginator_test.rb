@@ -199,7 +199,7 @@ describe Pliny::Helpers::Paginator::Paginator do
   end
 
   describe '#[]' do
-    describe 'allows to read #res with a convinience method' do
+    describe 'allows to read #res with a convenience method' do
       before :each do
         mock(subject).res { { first: 1 } }
       end
@@ -215,7 +215,7 @@ describe Pliny::Helpers::Paginator::Paginator do
   end
 
   describe '#[]=' do
-    describe 'allows to read #res with a convinience method' do
+    describe 'allows to read #res with a convenience method' do
       before :each do
         subject.instance_variable_set(:@res, {})
       end
