@@ -8,33 +8,45 @@ describe Endpoints::<%= plural_class_name %> do
     Routes
   end
 
-  it "GET <%= url_path %>" do
-    get "<%= url_path %>"
-    last_response.status.should eq(200)
-    last_response.body.should eq("[]")
+  describe 'GET <%= url_path %>' do
+    it 'returns correct status code and conforms to schema' do
+      get '<%= url_path %>'
+      last_response.status.should eq(200)
+      assert_schema_conform
+    end
   end
 
-  it "POST <%= url_path %>/:id" do
-    post "<%= url_path %>"
-    last_response.status.should eq(201)
-    last_response.body.should eq("{}")
+  describe 'POST <%= url_path %>/:id' do
+    it 'returns correct status code and conforms to schema' do
+      header "Content-Type", "application/json"
+      post '<%= url_path %>', MultiJson.encode({})
+      last_response.status.should eq(201)
+      assert_schema_conform
+    end
   end
 
-  it "GET <%= url_path %>/:id" do
-    get "<%= url_path %>/123"
-    last_response.status.should eq(200)
-    last_response.body.should eq("{}")
+  describe 'GET <%= url_path %>/:id' do
+    it 'returns correct status code and conforms to schema' do
+      get "<%= url_path %>/123"
+      last_response.status.should eq(200)
+      assert_schema_conform
+    end
   end
 
-  it "PATCH <%= url_path %>/:id" do
-    patch "<%= url_path %>/123"
-    last_response.status.should eq(200)
-    last_response.body.should eq("{}")
+  describe 'PATCH <%= url_path %>/:id' do
+    it 'returns correct status code and conforms to schema' do
+      header "Content-Type", "application/json"
+      patch '<%= url_path %>/123', MultiJson.encode({})
+      last_response.status.should eq(200)
+      assert_schema_conform
+    end
   end
 
-  it "DELETE <%= url_path %>/:id" do
-    delete "<%= url_path %>/123"
-    last_response.status.should eq(200)
-    last_response.body.should eq("{}")
+  describe 'DELETE <%= url_path %>/:id' do
+    it 'returns correct status code and conforms to schema' do
+      delete '<%= url_path %>/123'
+      last_response.status.should eq(200)
+      assert_schema_conform
+    end
   end
 end
