@@ -132,7 +132,7 @@ describe Pliny::Helpers::Paginator::Paginator do
       end
     end
 
-    describe 'when Range is valid' do
+    describe 'when Range is valid (UUIDs)' do
       describe 'with first only' do
         it 'returns Hash' do
           stub(sinatra).request do |klass|
@@ -238,6 +238,50 @@ describe Pliny::Helpers::Paginator::Paginator do
               }
             assert_equal result, subject.request_options
           end
+        end
+      end
+    end
+
+    describe 'when Range is valid (arbitrary)' do
+      before :each do
+        stub(sinatra).request do |klass|
+          stub(klass).env do
+            { 'Range' => "#{sort_by} #{first}..#{last}/400; max=1000,order=desc" }
+          end
+        end
+      end
+
+      describe 'timestamp in iso8601' do
+        let(:sort_by) { 'created_at' }
+        let(:first) { '1985-09-24T00:00:00+00:00' }
+        let(:last) { '2014-07-01T15:54:32+02:00' }
+
+        it 'returns Hash' do
+          result =
+            {
+              sort_by: sort_by,
+              first: first,
+              last: last,
+              args: { max: '1000', order: 'desc' }
+            }
+          assert_equal result, subject.request_options
+        end
+      end
+
+      describe 'fruits' do
+        let(:sort_by) { 'fruit' }
+        let(:first) { 'Apple' }
+        let(:last) { 'Banana' }
+
+        it 'returns Hash' do
+          result =
+            {
+              sort_by: sort_by,
+              first: first,
+              last: last,
+              args: { max: '1000', order: 'desc' }
+            }
+          assert_equal result, subject.request_options
         end
       end
     end

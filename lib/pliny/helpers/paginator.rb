@@ -5,10 +5,10 @@ module Pliny::Helpers
     end
 
     class Paginator
-      SORT_BY = /(?<sort_by>\S*)/
-      UUID = /[0-9a-f-]+/i
-      FIRST = /(?<first>#{UUID})/
-      LAST = /(?<last>#{UUID})/
+      SORT_BY = /(?<sort_by>\w+)/
+      VALUE = /[^\.\s;\/]+/
+      FIRST = /(?<first>#{VALUE})/
+      LAST = /(?<last>#{VALUE})/
       COUNT = /(?:\/\d+)/
       ARGS = /(?<args>.*)/
       RANGE = /\A#{SORT_BY}\s+#{FIRST}(\.{2}#{LAST})?#{COUNT}?(;\s*#{ARGS})?\z/
