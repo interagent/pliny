@@ -4,6 +4,29 @@ module Pliny::Helpers
       Paginator.run(self, count, options, &block)
     end
 
+    def uuid_paginator(resource, options = {})
+      paginator(resource.count, options) do |paginator|
+        sort_by_conversion = { id: :uuid }
+        resources = resource.order(sort_by_conversion[paginator[:sort_by].to_sym])
+
+        if paginator.will_paginate?
+          next_resources = resources = resources.limit(paginator[:args][:max].to_i)
+
+          resources = resources.where { uuid >= Sequel.cast(paginator[:first], :uuid) } if paginator[:first]
+          paginator[:first] = resources.get(:uuid)
+          paginator[:last] = resources.offset(paginator[:args][:max].to_i - 1).get(:uuid)
+
+          next_resources = next_resources.where { uuid > Sequel.cast(paginator[:last], :uuid) }
+          paginator[:next_first] = next_resources.get(:uuid)
+          paginator[:next_last] =
+            next_resources.offset(paginator[:args][:max].to_i - 1).get(:uuid) ||
+              next_resources.select(:uuid).last.uuid
+        end
+
+        resources
+      end
+    end
+
     class Paginator
       SORT_BY = /(?<sort_by>\w+)/
       VALUE = /[^\.\s;\/]+/
