@@ -1,7 +1,7 @@
 module Pliny::Helpers
   module Paginator
-    def paginator(count, options = {})
-      Paginator.run(self, count, options)
+    def paginator(count, options = {}, &block)
+      Paginator.run(self, count, options, &block)
     end
 
     class Paginator
