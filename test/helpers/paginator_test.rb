@@ -131,16 +131,6 @@ describe Pliny::Helpers::Paginator::Paginator do
       end
     end
 
-    describe 'when Range is an invalid string' do
-      it 'halts' do
-        stub(sinatra).request do |klass|
-          stub(klass).env { { 'Range' => 'foo' } }
-        end
-        mock(subject).halt
-        subject.request_options
-      end
-    end
-
     describe 'when Range is valid' do
       before :each do
         stub(sinatra).request do |klass|
@@ -161,6 +151,43 @@ describe Pliny::Helpers::Paginator::Paginator do
                 first: '01234567-89ab-cdef-0123-456789abcdef'
               }
             assert_equal result, subject.request_options
+          end
+        end
+
+        describe 'without first' do
+          let(:range) { 'id' }
+
+          it 'returns Hash' do
+            result =
+              {
+                sort_by: 'id'
+              }
+            assert_equal result, subject.request_options
+          end
+
+          describe 'with args' do
+            let(:range) { 'id; max=1000' }
+
+            it 'returns Hash' do
+              result =
+                {
+                  sort_by: 'id',
+                  args: { max: '1000' }
+                }
+              assert_equal result, subject.request_options
+            end
+          end
+
+          describe 'with count' do
+            let(:range) { 'id/400' }
+
+            it 'returns Hash' do
+              result =
+                {
+                  sort_by: 'id'
+                }
+              assert_equal result, subject.request_options
+            end
           end
         end
 
@@ -302,14 +329,24 @@ describe Pliny::Helpers::Paginator::Paginator do
                    subject.build_range(:id, 100, nil, nil)
     end
 
-    it 'only sort_by, first, last' do
-      assert_equal 'id 100..200',
-                   subject.build_range(:id, 100, 200, nil)
-    end
-
     it 'only sort_by, last' do
       assert_equal 'id',
                    subject.build_range(:id, nil, 200, nil)
+    end
+
+    it 'only sort_by, args' do
+      assert_equal 'id; max=300,order=desc',
+                   subject.build_range(:id, nil, nil, max: 300, order: 'desc')
+    end
+
+    it 'only sort_by, args' do
+      assert_equal 'id/1200',
+                   subject.build_range(:id, nil, nil, nil, 1200)
+    end
+
+    it 'only sort_by, first, last' do
+      assert_equal 'id 100..200',
+                   subject.build_range(:id, 100, 200, nil)
     end
 
     it 'only sort_by, first, args' do

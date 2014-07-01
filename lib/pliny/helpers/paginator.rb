@@ -34,7 +34,7 @@ module Pliny::Helpers
       LAST = /(?<last>#{VALUE})/
       COUNT = /(?:\/\d+)/
       ARGS = /(?<args>.*)/
-      RANGE = /\A#{SORT_BY}\s+#{FIRST}(\.{2}#{LAST})?#{COUNT}?(;\s*#{ARGS})?\z/
+      RANGE = /\A#{SORT_BY}(?:\s+#{FIRST})?(\.{2}#{LAST})?#{COUNT}?(;\s*#{ARGS})?\z/
 
       attr_reader :sinatra, :count
       attr_writer :options
