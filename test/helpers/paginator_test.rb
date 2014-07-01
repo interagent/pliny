@@ -24,7 +24,17 @@ describe Pliny::Helpers::Paginator::Paginator do
       mock(subject).set_headers
       stub(subject).options { { args: {} } }
 
-      assert_kind_of Hash, subject.run
+      result = subject.run
+      assert_kind_of Hash, result
+
+      exp =
+        {
+          order_by: nil,
+          offset: nil,
+          limit: nil
+        }
+
+      assert_equal exp, result
     end
 
     it 'evaluates block' do
@@ -37,7 +47,7 @@ describe Pliny::Helpers::Paginator::Paginator do
           paginator[:first] = 42
         end
 
-      assert_equal 42, result[:first]
+      assert_equal 42, result
     end
   end
 
