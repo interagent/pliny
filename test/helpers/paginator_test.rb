@@ -206,9 +206,30 @@ describe Pliny::Helpers::Paginator::Paginator do
         end
 
         describe 'only sort_by, first, args' do
+          let(:range) { 'id 01234567-89ab-cdef-0123-456789abcdef; max=1000' }
+
+          it 'returns Hash' do
+            result =
+              {
+                sort_by: 'id',
+                first: '01234567-89ab-cdef-0123-456789abcdef',
+                args: { max: '1000' }
+              }
+            assert_equal result, subject.request_options
+          end
         end
 
         describe 'only sort_by, first, count' do
+          let(:range) { 'id 01234567-89ab-cdef-0123-456789abcdef/400' }
+
+          it 'returns Hash' do
+            result =
+              {
+                sort_by: 'id',
+                first: '01234567-89ab-cdef-0123-456789abcdef'
+              }
+            assert_equal result, subject.request_options
+          end
         end
 
         describe 'only sort_by, first, last, args' do
