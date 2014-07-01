@@ -45,8 +45,8 @@ module Pliny::Helpers
           result
         else
           {
-            sort_by: options[:sort_by],
-            first: options[:first],
+            order_by: options[:sort_by],
+            offset: options[:first],
             limit: options[:args][:max]
           }
         end
