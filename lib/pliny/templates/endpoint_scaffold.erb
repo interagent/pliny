@@ -8,7 +8,8 @@ module Endpoints
       get do
         resources =
           paginator(<%= singular_class_name %>.count) do |paginator|
-            resources = <%= singular_class_name %>.order(paginator[:sort_by])
+            sort_by_conversion = { id: :uuid }
+            resources = <%= singular_class_name %>.order(sort_by_conversion[paginator[:sort_by].to_sym])
 
             if paginator.will_paginate?
               next_resources = resources = resources.limit(paginator[:args][:max].to_i)
