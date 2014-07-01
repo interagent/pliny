@@ -30,7 +30,7 @@ module Pliny::Helpers
 
       def run
         yield(self) if block_given?
-        
+
         validate_options
         set_headers
 
@@ -53,18 +53,20 @@ module Pliny::Helpers
           }
           .merge(options)
           .merge(request_options)
-        unless @res[:first].kind_of?(String)
-          @res[:last] ||= @res[:first] + @res[:args][:max]
-          @res[:next_first] ||= @res[:last] + 1
-          @res[:next_last] ||=
-            [
-              @res[:next_first] + @res[:args][:max],
-              count - 1
-            ]
-            .min
-        end
+        calculate_pages unless @res[:first].is_a?(String)
 
         @res
+      end
+
+      def calculate_pages
+        @res[:last] ||= @res[:first] + @res[:args][:max]
+        @res[:next_first] ||= @res[:last] + 1
+        @res[:next_last] ||=
+          [
+            @res[:next_first] + @res[:args][:max],
+            count - 1
+          ]
+          .min
       end
 
       def request_options
@@ -74,29 +76,29 @@ module Pliny::Helpers
         match =
           RANGE.match(range)
 
-        if match
-          request_options = {}
+        match ? parse_request_options(match) : halt
+      end
 
-          [:sort_by, :first, :last].each do |key|
-            request_options[key] = match[key] if match[key]
-          end
+      def parse_request_options(match)
+        request_options = {}
 
-          if match[:args]
-            args =
-              match[:args]
-                .split(/\s*,\s*/)
-                .map do |value|
-                  k, v = value.split('=', 2)
-                  [k.to_sym, v]
-                end
-
-            request_options[:args] = Hash[args]
-          end
-
-          request_options
-        else
-          halt
+        [:sort_by, :first, :last].each do |key|
+          request_options[key] = match[key] if match[key]
         end
+
+        if match[:args]
+          args =
+            match[:args]
+              .split(/\s*,\s*/)
+              .map do |value|
+                k, v = value.split('=', 2)
+                [k.to_sym, v]
+              end
+
+          request_options[:args] = Hash[args]
+        end
+
+        request_options
       end
 
       def validate_options
@@ -121,7 +123,10 @@ module Pliny::Helpers
       end
 
       def args_encoded
-        @args_encoded ||= res[:args].map { |key, value| "#{key}=#{value}" }.join(',')
+        @args_encoded ||=
+          res[:args]
+            .map { |key, value| "#{key}=#{value}" }
+            .join(',')
       end
 
       def will_paginate?

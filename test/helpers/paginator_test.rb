@@ -30,7 +30,7 @@ describe Pliny::Helpers::Paginator::Paginator do
     it 'evaluates block' do
       mock(subject).validate_options
       mock(subject).set_headers
-      subject.instance_variable_set(:@res, { args: { max: 200 } })
+      subject.instance_variable_set(:@res, args: { max: 200 })
 
       result =
         subject.run do |paginator|
@@ -192,7 +192,7 @@ describe Pliny::Helpers::Paginator::Paginator do
 
   describe '#will_paginate?' do
     it 'converts max to integer' do
-      subject.instance_variable_set(:@res, { args: { max: '1000' } })
+      subject.instance_variable_set(:@res, args: { max: '1000' })
       stub(subject).count { 2000 }
       assert subject.will_paginate?
     end
