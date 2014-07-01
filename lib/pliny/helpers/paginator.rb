@@ -29,7 +29,7 @@ module Pliny::Helpers
           {
             accepted_ranges: [:id],
             sort_by: :id,
-            first: 0,
+            first: nil,
             args: { max: 200 }
           }
           .merge(options)
