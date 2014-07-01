@@ -6,7 +6,26 @@ module Endpoints
       end
 
       get do
-        encode serialize(<%= singular_class_name %>.all)
+        resources =
+          paginator(<%= singular_class_name %>.count) do |paginator|
+            resources = <%= singular_class_name %>.order(paginator[:sort_by])
+
+            If paginator.will_paginate?
+              next_resources = resources = resources.limit(paginator[:args][:max].to_i)
+
+              resources = resources.where { uuid >= Sequel.cast(paginator[:first], :uuid) }
+              paginator[:first] = resources.get(:uuid)
+              paginator[:last] = resources.offset(paginator[:args][:max].to_i - 1).get(:uuid)
+
+              next_resources = next_resources.where { uuid > Sequel.cast(paginator[:last], :uuid) }
+              paginator[:next_first] = next_resources.get(:uuid)
+              paginator[:next_last] = next_resources.offset(paginator[:args][:max].to_i - 1).get(:uuid)
+            end
+
+            resources
+          end
+
+        encode serialize(resources)
       end
 
       post do
