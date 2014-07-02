@@ -14,7 +14,7 @@ module Pliny::Helpers
           resources = resources.limit(max)
           resources = resources.where { uuid >= Sequel.cast(paginator[:first], :uuid) } if paginator[:first]
 
-          paginator.options.merge \
+          paginator.options.merge! \
             first: resources.get(:uuid),
             last: resources.offset(max - 1).get(:uuid),
             next_first: resources.offset(max).get(:uuid),
