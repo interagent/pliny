@@ -459,7 +459,7 @@ describe Pliny::Helpers::Paginator::Paginator do
 
     it 'only sort_by, args' do
       assert_equal 'id; max=300,order=desc',
-                   subject.build_range(:id, nil, nil, { max: 300, order: 'desc' })
+                   subject.build_range(:id, nil, nil, max: 300, order: 'desc')
     end
 
     it 'only sort_by, args, count' do
