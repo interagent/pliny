@@ -51,6 +51,9 @@ module Pliny::Helpers
             accepted_ranges: [:id],
             sort_by: :id,
             first: nil,
+            last: nil,
+            next_first: nil,
+            next_last: nil,
             args: { max: 200 }
           }
           .merge(options)
