@@ -4,9 +4,11 @@ describe Pliny::Helpers::Paginator do
   let(:dummy_class) { Class.new { include Pliny::Helpers::Paginator } }
   let(:sinatra) { dummy_class.new }
 
-  it 'calls Pagiantor.run' do
-    mock(Pliny::Helpers::Paginator::Paginator).run(sinatra, 12, sort_by: :foo)
-    sinatra.paginator(12, sort_by: :foo)
+  describe '#paginator' do
+    it 'calls Pagiantor.run' do
+      mock(Pliny::Helpers::Paginator::Paginator).run(sinatra, 12, sort_by: :foo)
+      sinatra.paginator(12, sort_by: :foo)
+    end
   end
 end
 
