@@ -25,6 +25,10 @@ module Pliny::Helpers
       end
     end
 
+    def integer_paginator(count, options = {})
+      IntegerPaginator.run(self, count, options)
+    end
+
     class Paginator
       SORT_BY = /(?<sort_by>\w+)/
       VALUE = /[^\.\s;\/]+/
@@ -65,42 +69,11 @@ module Pliny::Helpers
         validate_options
         set_headers
 
-        if block_given?
-          result
-        else
-          {
-            order_by: options[:sort_by],
-            offset: options[:first],
-            limit: options[:args][:max]
-          }
-        end
+        result
       end
 
       def options
-        return @options if @options
-
-        @options = @opts.merge(request_options)
-        calculate_pages unless @options[:first].nil? || @options[:first].is_a?(String)
-
-        @options
-      end
-
-      def calculate_pages
-        options[:last] ||= options[:first] + options[:args][:max] - 1
-
-        if options[:last] >= count - 1
-          options[:last] = count - 1
-          options[:next_first] = nil
-          options[:next_last] = nil
-        else
-          options[:next_first] ||= options[:last] + 1
-          options[:next_last] ||=
-            [
-              options[:next_first] + options[:args][:max] - 1,
-              count - 1
-            ]
-            .min
-        end
+        @options ||= @opts.merge(request_options)
       end
 
       def request_options
@@ -185,6 +158,61 @@ module Pliny::Helpers
 
       def []=(key, value)
         options[key.to_sym] = value
+      end
+    end
+
+    class IntegerPaginator
+      attr_reader :sinatra, :count
+      attr_writer :options
+
+      class << self
+        def run(*args, &block)
+          new(*args).run(&block)
+        end
+      end
+
+      def initialize(sinatra, count, options = {})
+        @sinatra = sinatra
+        @count   = count
+        @opts    = options
+      end
+
+      def run
+        {
+          order_by: options[:sort_by],
+          offset: options[:first],
+          limit: options[:args][:max]
+        }
+      end
+
+      def options
+        @options ||= calculate_pages
+      end
+
+      def calculate_pages
+        Paginator.run(self, count, @opts) do |paginator|
+          max = paginator[:args][:max].to_i
+          paginator[:last] =
+            paginator[:first].to_i + max - 1
+  
+          if paginator[:last] >= count - 1
+            paginator.options.merge! \
+              last: count - 1,
+              next_first: nil,
+              next_last: nil
+          else
+            paginator[:next_first] =
+              paginator[:last] + 1
+            paginator[:next_last] =
+              [
+                paginator[:next_first] + max - 1,
+                count - 1
+              ]
+              .min
+          end
+
+          paginator.options
+        end
       end
     end
   end
