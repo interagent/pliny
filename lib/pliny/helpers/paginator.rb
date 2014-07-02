@@ -7,11 +7,13 @@ module Pliny::Helpers
     def uuid_paginator(resource, options = {})
       paginator(resource.count, options) do |paginator|
         sort_by_conversion = { id: :uuid }
-        resources = resource.order(sort_by_conversion[paginator[:sort_by].to_sym])
+        max = paginator[:args][:max].to_i
+        resources =
+          resource
+            .order(sort_by_conversion[paginator[:sort_by].to_sym])
+            .limit(max)
 
         if paginator.will_paginate?
-          max = paginator[:args][:max].to_i
-          resources = resources.limit(max)
           resources = resources.where { uuid >= Sequel.cast(paginator[:first], :uuid) } if paginator[:first]
 
           paginator.options.merge! \
