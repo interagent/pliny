@@ -10,17 +10,18 @@ module Pliny::Helpers
         resources = resource.order(sort_by_conversion[paginator[:sort_by].to_sym])
 
         if paginator.will_paginate?
-          next_resources = resources = resources.limit(paginator[:args][:max].to_i)
-
+          max = paginator[:args][:max].to_i
+          resources = resources.limit(max)
           resources = resources.where { uuid >= Sequel.cast(paginator[:first], :uuid) } if paginator[:first]
-          paginator[:first] = resources.get(:uuid)
-          paginator[:last] = resources.offset(paginator[:args][:max].to_i - 1).get(:uuid)
 
-          next_resources = next_resources.where { uuid > Sequel.cast(paginator[:last], :uuid) }
-          paginator[:next_first] = next_resources.get(:uuid)
+          paginator[:first] =
+            resources.get(:uuid)
+          paginator[:last] =
+            resources.offset(max - 1).get(:uuid)
+          paginator[:next_first] =
+            resources.offset(max).get(:uuid)
           paginator[:next_last] =
-            next_resources.offset(paginator[:args][:max].to_i - 1).get(:uuid) ||
-              next_resources.select(:uuid).last.uuid
+            resources.offset(2 * max - 1).get(:uuid) || resources.select(:uuid).last.uuid
         end
 
         resources
