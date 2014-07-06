@@ -37,7 +37,7 @@ module Pliny::Helpers
       def run
         result = yield(self) if block_given?
 
-        validate_options
+        halt unless valid_options?
         set_headers
 
         result
@@ -79,8 +79,8 @@ module Pliny::Helpers
         request_options
       end
 
-      def validate_options
-        halt unless options[:sort_by] && options[:accepted_ranges].include?(options[:sort_by].to_sym)
+      def valid_options?
+        options[:sort_by] && options[:accepted_ranges].include?(options[:sort_by].to_sym)
       end
 
       def halt

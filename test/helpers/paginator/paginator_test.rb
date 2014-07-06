@@ -9,7 +9,7 @@ describe Pliny::Helpers::Paginator::Paginator do
 
   describe '#run' do
     it 'evaluates block' do
-      mock(subject).validate_options
+      mock(subject).valid_options? { true }
       mock(subject).set_headers
       subject.instance_variable_set(:@options, args: { max: 200 })
 
