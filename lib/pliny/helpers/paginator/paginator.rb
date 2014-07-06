@@ -9,8 +9,8 @@ module Pliny::Helpers
       ARGS = /(?<args>.*)/
       RANGE = /\A#{SORT_BY}(?:\s+#{FIRST})?(\.{2}#{LAST})?#{COUNT}?(;\s*#{ARGS})?\z/
 
+      attr_accessor :options
       attr_reader :sinatra, :count
-      attr_writer :options
 
       class << self
         def run(*args, &block)
@@ -21,7 +21,7 @@ module Pliny::Helpers
       def initialize(sinatra, count, options = {})
         @sinatra = sinatra
         @count   = count
-        @opts =
+        @options =
           {
             accepted_ranges: [:id],
             sort_by: :id,
@@ -35,16 +35,14 @@ module Pliny::Helpers
       end
 
       def run
+        options.merge!(request_options)
+
         result = yield(self) if block_given?
 
         halt unless valid_options?
         set_headers
 
         result
-      end
-
-      def options
-        @options ||= @opts.merge(request_options)
       end
 
       def request_options

@@ -2,7 +2,7 @@ module Pliny::Helpers
   module Paginator
     class IntegerPaginator
       attr_reader :sinatra, :count
-      attr_writer :options
+      attr_accessor :options
 
       class << self
         def run(*args, &block)
@@ -13,10 +13,12 @@ module Pliny::Helpers
       def initialize(sinatra, count, options = {})
         @sinatra = sinatra
         @count   = count
-        @opts    = options
+        @options = options
       end
 
       def run
+        options = calculate_pages
+
         {
           order_by: options[:sort_by],
           offset: options[:first],
@@ -24,12 +26,8 @@ module Pliny::Helpers
         }
       end
 
-      def options
-        @options ||= calculate_pages
-      end
-
       def calculate_pages
-        Paginator.run(self, count, @opts) do |paginator|
+        Paginator.run(self, count, options) do |paginator|
           max = paginator[:args][:max].to_i
           paginator[:last] =
             paginator[:first].to_i + max - 1
