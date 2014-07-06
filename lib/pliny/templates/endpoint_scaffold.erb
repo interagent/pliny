@@ -6,9 +6,8 @@ module Endpoints
       end
 
       get do
-        resources = uuid_paginator(<%= singular_class_name %>, args: { max: 10 })
-
-        encode serialize(resources)
+        <%= fields_name %> = uuid_paginator(<%= singular_class_name %>, args: { max: 10 })
+       encode serialize(%= fields_name %)
       end
 
       post do

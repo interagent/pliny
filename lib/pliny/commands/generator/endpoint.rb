@@ -10,6 +10,7 @@ module Pliny::Commands
                         plural_class_name: plural_class_name,
                         singular_class_name: singular_class_name,
                         field_name: field_name,
+                        fields_name: fields_name,
                         url_path: url_path)
         display "created endpoint file #{endpoint}"
         display 'add the following to lib/routes.rb:'
