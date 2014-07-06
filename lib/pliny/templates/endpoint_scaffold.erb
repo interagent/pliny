@@ -37,12 +37,8 @@ module Endpoints
 
       private
 
-      def serialize(data)
-        {
-          created_at: data.created_at.try(:iso8601),
-          id:         data.uuid,
-          updated_at: data.updated_at.try(:iso8601),
-        }
+      def serialize(data, structure = :default)
+        Serializers::<%= singular_class_name %>.new(structure).serialize(data)
       end
     end
   end
