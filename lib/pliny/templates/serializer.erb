@@ -10,6 +10,9 @@
 <%=  ident %>class <%= modules.last %> < Serializers::Base
 <%=  ident %>  structure(:default) do |arg|
 <%=  ident %>    {
+<%=  ident %>      created_at: arg.created_at.try(:iso8601),
+<%=  ident %>      id:         arg.uuid,
+<%=  ident %>      updated_at: arg.updated_at.try(:iso8601),
 <%=  ident %>    }
 <%=  ident %>  end
 <%=  ident %>end
