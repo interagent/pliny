@@ -88,9 +88,19 @@ namespace :db do
 
     desc "Dump the database schema"
     task :dump do
+      file = File.join("db", "schema.sql")
       database_url = database_urls.first
-      `pg_dump -i -s -x -O -f ./db/schema.sql #{database_url}`
-      puts "Dumped `#{name_from_uri(database_url)}` to db/schema.sql"
+      `pg_dump -i -s -x -O -f #{file} #{database_url}`
+
+      schema = File.read(file)
+      # filter all COMMENT ON EXTENSION, only owners and the db
+      # superuser can execute these, making it impossible to just
+      # replay such statements in certain production databases
+      schema.gsub!(/^COMMENT ON EXTENSION.*\n/, "")
+
+      File.open(file, "w") { |f| f.puts schema }
+
+      puts "Dumped `#{name_from_uri(database_url)}` to #{file}"
     end
 
     desc "Merges migrations into schema and removes them"
