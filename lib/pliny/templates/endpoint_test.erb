@@ -10,7 +10,7 @@ describe Endpoints::<%= plural_class_name %> do
   describe "GET <%= url_path %>" do
     it "succeeds" do
       get "<%= url_path %>"
-      last_response.status.should eq(200)
+      expect(last_response.status).to eq(200)
     end
   end
 end
