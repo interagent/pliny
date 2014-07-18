@@ -7,6 +7,8 @@ describe Pliny::Middleware::RescueErrors do
     def call(env)
       if env["PATH_INFO"] == "/api-error"
         raise Pliny::Errors::ServiceUnavailable
+      elsif env["PATH_INFO"] == "/api-custom-error"
+        raise Pliny::Errors::ServiceUnavailable, "cats ate my server"
       else
         raise "Omg!"
       end
@@ -26,6 +28,17 @@ describe Pliny::Middleware::RescueErrors do
     assert_equal "Service unavailable.", error_json["message"]
     assert_equal 503, error_json["status"]
   end
+
+  it "intercepts Pliny errors with custom messages and renders" do
+    @app = new_rack_app
+    get "/api-error"
+    assert_equal 503, last_response.status
+    error_json = MultiJson.decode(last_response.body)
+    assert_equal "service_unavailable", error_json["id"]
+    assert_equal "cats ate my server", error_json["message"]
+    assert_equal 503, error_json["status"]
+  end
+
 
   it "intercepts exceptions and renders" do
     @app = new_rack_app
