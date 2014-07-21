@@ -6,6 +6,10 @@ describe Pliny::Extensions::Instruments do
       run Sinatra.new {
         register Pliny::Extensions::Instruments
 
+        error Pliny::Errors::Error do
+          Pliny::Errors::Error.render(env["sinatra.error"])
+        end
+
         get "/apps/:id" do
           status 201
           "hi"
