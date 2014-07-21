@@ -25,8 +25,8 @@ Gem::Specification.new do |gem|
   gem.add_dependency "http_accept",    "~> 0.1",  ">= 0.1.5"
   gem.add_dependency "sinatra-router", "~> 0.2",  ">= 0.2.3"
 
-  gem.add_development_dependency "rake", ">= 0.8.7"
-  gem.add_development_dependency "rack-test", ">= 0.6.2"
-  gem.add_development_dependency "rr", ">= 1.1.2"
-  gem.add_development_dependency "timecop", ">= 0.7.1"
+  gem.add_development_dependency "rake", "~> 0.8", ">= 0.8.7"
+  gem.add_development_dependency "rack-test", "~> 0.6", ">= 0.6.2"
+  gem.add_development_dependency "rr", "~> 1.1", ">= 1.1.2"
+  gem.add_development_dependency "timecop", "~> 0.7", ">= 0.7.1"
 end
