@@ -3,6 +3,12 @@ module Pliny
     class Error < StandardError
       attr_accessor :id
 
+      def self.render(error)
+        headers = { "Content-Type" => "application/json; charset=utf-8" }
+        data = { id: error.id, message: error.message, status: error.status }
+        [error.status, headers, [MultiJson.encode(data)]]
+      end
+
       def initialize(message, id)
         @id = id
         super(message)
@@ -10,10 +16,7 @@ module Pliny
     end
 
     class HTTPStatusError < Error
-      attr_reader :status
-
-      # so that Sinatra respects are status code when catching an exception
-      alias :http_status :status
+      attr_accessor :status
 
       def initialize(message = nil, id = nil, status = nil)
         meta    = Pliny::Errors::META[self.class]

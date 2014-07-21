@@ -8,13 +8,13 @@ module Pliny::Middleware
     def call(env)
       @app.call(env)
     rescue Pliny::Errors::Error => e
-      render(e, env)
+      Pliny::Errors::Error.render(e)
     rescue Exception => e
       if @raise
         raise
       else
         dump_error(e, env)
-        render(Pliny::Errors::InternalServerError.new, env)
+        Pliny::Errors::Error.render(Pliny::Errors::InternalServerError.new)
       end
     end
 
@@ -24,12 +24,6 @@ module Pliny::Middleware
     def dump_error(e, env)
       message = ["#{e.class} - #{e.message}:", *e.backtrace].join("\n\t")
       env['rack.errors'].puts(message)
-    end
-
-    def render(e, env)
-      headers = { "Content-Type" => "application/json; charset=utf-8" }
-      error = { id: e.id, message: e.message, status: e.status }
-      [e.status, headers, [MultiJson.encode(error)]]
     end
   end
 end
