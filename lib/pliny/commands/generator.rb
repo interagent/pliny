@@ -188,13 +188,13 @@ module Pliny::Commands
     end
 
     def create_serializer
-      serializer = "./lib/serializers/#{name}_serializer.rb"
+      serializer = "./lib/serializers/#{name}.rb"
       render_template("serializer.erb", serializer, singular_class_name: singular_class_name)
       display "created serializer file #{serializer}"
     end
 
     def create_serializer_test
-      test = "./spec/serializers/#{name}_serializer_spec.rb"
+      test = "./spec/serializers/#{name}_spec.rb"
       render_template("serializer_test.erb", test, singular_class_name: singular_class_name)
       display "created test #{test}"
     end

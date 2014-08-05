@@ -1,6 +1,6 @@
 <%
   modules = singular_class_name.split("::")
-  modules[0] = "Serializers::#{modules[0]}Serializer"
+  modules[0] = "Serializers::#{modules[0]}"
   ident = ""
 %>
 <% modules[0..-2].each do |m| %>
