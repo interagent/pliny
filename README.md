@@ -87,6 +87,24 @@ Or to run a single test suite:
 bundle exec rspec spec/acceptance/artists_spec.rb
 ```
 
+Pliny comes with several rake tasks:
+
+```bash
+rake db:create        # Create the database
+rake db:drop          # Drop the database
+rake db:migrate       # Run database migrations
+rake db:nuke          # Nuke the database (drop all tables)
+rake db:reset         # Reset the database
+rake db:rollback      # Rollback the database
+rake db:schema:dump   # Dump the database schema
+rake db:schema:load   # Load the database schema
+rake db:schema:merge  # Merges migrations into schema and removes them
+rake db:seed          # Seed the database with data
+rake db:setup         # Setup the database
+rake schema           # Rebuild schema.json
+rake test             # Run tests
+```
+
 ## Development
 
 Run tests:
