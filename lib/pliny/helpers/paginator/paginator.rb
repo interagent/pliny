@@ -18,6 +18,18 @@ module Pliny::Helpers
         end
       end
 
+      # Initializes an instance of Paginator
+      #
+      # @param [Sinatra::Base] the controller calling the paginator
+      # @param [Integer] count the count of resources
+      # @param [Hash] options for the paginator
+      # @option options [Array<Symbol>] :accepted_ranges ([:id]) fields allowed to sort the listing
+      # @option options [Symbol] :sort_by (:id) field to sort the listing
+      # @option options [String] :first ID or name of the first element of the current page
+      # @option options [String] :last ID or name of the last element of the current page
+      # @option options [String] :next_first ID or name of the first element of the next page
+      # @option options [String] :next_last ID or name of the last element of the next page
+      # @option options [Hash] :args ({max: 200}) arguments for the HTTP Range header
       def initialize(sinatra, count, options = {})
         @sinatra = sinatra
         @count   = count
@@ -34,6 +46,11 @@ module Pliny::Helpers
           .merge(options)
       end
 
+      # executes the paginator and sets the HTTP headers if necessary
+      #
+      # @yieldparam paginator [Paginator]
+      # @yieldreturn [Object]
+      # @return [Object] the result of the block yielded
       def run
         options.merge!(request_options)
 
