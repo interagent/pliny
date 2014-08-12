@@ -24,4 +24,11 @@ describe Pliny::Log do
     mock(@io).puts "app=pliny foo=bar"
     Pliny.log(foo: "bar")
   end
+
+  it "supports a context" do
+    mock(@io).puts "app=pliny foo=bar"
+    Pliny.context(app: "pliny") do
+      Pliny.log(foo: "bar")
+    end
+  end
 end

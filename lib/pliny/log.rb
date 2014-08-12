@@ -5,6 +5,13 @@ module Pliny
       log_to_stream(stdout || $stdout, data, &block)
     end
 
+    def context(data, &block)
+      old = log_context
+      RequestStore.store[:log_context] = log_context.merge(data)
+      block.call
+      RequestStore.store[:log_context] = old
+    end
+
     def stdout=(stream)
       @stdout = stream
     end
