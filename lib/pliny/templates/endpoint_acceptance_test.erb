@@ -20,7 +20,7 @@ describe Endpoints::<%= plural_class_name %> do
     end
   end
 
-  describe 'POST <%= url_path %>/:id' do
+  describe 'POST <%= url_path %>' do
     it 'returns correct status code and conforms to schema' do
       header "Content-Type", "application/json"
       post '<%= url_path %>', MultiJson.encode({})
