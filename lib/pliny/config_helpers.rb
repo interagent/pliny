@@ -27,6 +27,14 @@ module Pliny
       ->(v) { v.to_s=='true'}
     end
 
+    def string
+      nil
+    end
+
+    def symbol
+      ->(v) { v.to_sym }
+    end
+
     private
 
     def cast(value, method)
