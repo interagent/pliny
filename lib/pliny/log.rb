@@ -1,8 +1,17 @@
 module Pliny
   module Log
     def log(data, &block)
-      data = log_context.merge(data)
+      data = log_context.merge(local_context.merge(data))
       log_to_stream(stdout || $stdout, data, &block)
+    end
+
+    def context(data, &block)
+      old = local_context
+      self.local_context = old.merge(data)
+      res = block.call
+    ensure
+      local_context = old
+      res
     end
 
     def stdout=(stream)
@@ -14,6 +23,14 @@ module Pliny
     end
 
     private
+
+    def local_context
+      RequestStore.store[:local_context] ||= {}
+    end
+
+    def local_context=(h)
+      RequestStore.store[:local_context] = h
+    end
 
     def log_context
       RequestStore.store[:log_context] || {}

@@ -24,4 +24,20 @@ describe Pliny::Log do
     mock(@io).puts "app=pliny foo=bar"
     Pliny.log(foo: "bar")
   end
+
+  it "supports a context" do
+    mock(@io).puts "app=pliny foo=bar"
+    Pliny.context(app: "pliny") do
+      Pliny.log(foo: "bar")
+    end
+  end
+
+  it "local context does not overwrite global" do
+    Pliny::RequestStore.store[:log_context] = { app: "pliny" }
+    mock(@io).puts "app=not_pliny foo=bar"
+    Pliny.context(app: "not_pliny") do
+      Pliny.log(foo: "bar")
+    end
+    assert Pliny::RequestStore.store[:log_context][:app] = "pliny"
+  end
 end
