@@ -1,6 +1,5 @@
 module Pliny
-
-  module TypedConfigHelpers
+  module CastingConfigHelpers
     def mandatory(name, method=nil)
       value = cast(ENV.fetch(name.to_s.upcase), method)
       create(name, value)
