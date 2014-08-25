@@ -52,13 +52,12 @@ Pliny also bundles some generators to help you get started:
 ```bash
 $ bundle exec pliny-generate model artist
 created model file ./lib/models/artist.rb
-created migration ./db/migrate/1395873224_create_artist.rb
-created test ./test/models/artist_test.rb
+created migration ./db/migrate/1408995997_create_artists.rb
+created test ./spec/models/artist_spec.rb
 
 $ bundle exec pliny-generate mediator artists/creator
-created base mediator ./lib/mediators/base.rb
 created mediator file ./lib/mediators/artists/creator.rb
-created test ./test/mediators/artists/creator_test.rb
+created test ./spec/mediators/artists/creator_spec.rb
 
 $ bundle exec pliny-generate endpoint artists
 created endpoint file ./lib/endpoints/artists.rb
@@ -78,13 +77,13 @@ rebuilt ./docs/schema.json
 To test your application:
 
 ```bash
-bundle exec rake
+$ bundle exec rake
 ```
 
 Or to run a single test suite:
 
 ```bash
-bundle exec rspec spec/acceptance/artists_spec.rb
+$ bundle exec rspec spec/acceptance/artists_spec.rb
 ```
 
 Pliny comes with several rake tasks:
@@ -105,14 +104,23 @@ rake schema           # Rebuild schema.json
 rake test             # Run tests
 ```
 
+and with the following commands
+
+```bash
+$ foreman run bin/console                   # IRB/Pry console
+$ foreman run bin/run 'puts "hello world"'  # Run automated code
+```
+
+(hint: don't forget `foreman run` in development)
+
 ## Development
 
 Run tests:
 
 ```
-bundle install
-git submodule update --init
-rake
+$ bundle install
+$ git submodule update --init
+$ rake
 ```
 
 ## Meta
