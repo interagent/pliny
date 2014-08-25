@@ -3,6 +3,8 @@ rvm:
   - 2.1.2
   - 2.1.0
   - 1.9.3
+addons:
+  postgresql: '9.3'
 cache: bundler
 notifications:
   hipchat:
