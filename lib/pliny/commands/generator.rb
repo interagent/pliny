@@ -9,7 +9,7 @@ module Pliny::Commands
     attr_accessor :args, :opts, :stream
 
     def self.run(args, opts={}, stream=$stdout)
-      new(args, opts).run!
+      new(args, opts, stream).run!
     end
 
     def initialize(args={}, opts={}, stream=$stdout)
