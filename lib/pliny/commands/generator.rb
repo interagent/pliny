@@ -19,12 +19,8 @@ module Pliny::Commands
     end
 
     def run!
-      unless type
-        raise "Missing type of object to generate"
-      end
-      unless name
-        raise "Missing #{type} name"
-      end
+      raise 'Missing type of object to generate' unless type
+      raise "Missing #{type} name" unless name
 
       case type
       when "endpoint"

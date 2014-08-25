@@ -47,7 +47,7 @@ $ pliny-new myapp
 $ cd myapp && bin/setup
 ```
 
-Pliny also bundles some generators to help you get started:
+Pliny also bundles [some generators](#generators) to help you get started:
 
 ```bash
 $ bundle exec pliny-generate model artist
@@ -86,6 +86,24 @@ Or to run a single test suite:
 $ bundle exec rspec spec/acceptance/artists_spec.rb
 ```
 
+### Generators
+
+```bash
+$ bundle exec pliny-generate TYPE NAME
+```
+
+Available generator types:
+
+* endpoint
+* mediator
+* migration
+* model
+* scaffold (includes endpoint, model, schema and serializer)
+* schema
+* serializer
+
+### Rake tasks
+
 Pliny comes with several rake tasks:
 
 ```bash
@@ -104,7 +122,9 @@ rake schema           # Rebuild schema.json
 rake test             # Run tests
 ```
 
-and with the following commands
+### Commands
+
+And provides the following commands:
 
 ```bash
 $ foreman run bin/console                   # IRB/Pry console
