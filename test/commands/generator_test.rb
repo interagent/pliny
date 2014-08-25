@@ -41,6 +41,23 @@ describe Pliny::Commands::Generator do
     end
   end
 
+  describe "#pluralized_file_name" do
+    it "uses the plural form" do
+      @gen.args = ["model", "resource_history"]
+      assert_equal "resource_histories", @gen.pluralized_file_name
+    end
+
+    it "handles hyphens as underscores" do
+      @gen.args = ["model", "resource-history"]
+      assert_equal "resource_histories", @gen.pluralized_file_name
+    end
+
+    it "handles slashs as directory" do
+      @gen.args = ["model", "resource/history"]
+      assert_equal "resource/histories", @gen.pluralized_file_name
+    end
+  end
+
   describe "#table_name" do
     it "uses the plural form" do
       @gen.args = ["model", "resource_history"]
@@ -49,6 +66,11 @@ describe Pliny::Commands::Generator do
 
     it "handles hyphens as underscores" do
       @gen.args = ["model", "resource-history"]
+      assert_equal "resource_histories", @gen.table_name
+    end
+
+    it "handles slashs as underscores" do
+      @gen.args = ["model", "resource/history"]
       assert_equal "resource_histories", @gen.table_name
     end
   end
@@ -100,21 +122,42 @@ describe Pliny::Commands::Generator do
     end
 
     describe "generating models" do
-      before do
-        @gen.args = ["model", "artist"]
-        @gen.run!
+      describe 'simple model' do
+        before do
+          @gen.args = ["model", "artist"]
+          @gen.run!
+        end
+
+        it "creates a migration" do
+          assert File.exists?("db/migrate/#{@t.to_i}_create_artists.rb")
+        end
+
+        it "creates the actual model" do
+          assert File.exists?("lib/models/artist.rb")
+        end
+
+        it "creates a test" do
+          assert File.exists?("spec/models/artist_spec.rb")
+        end
       end
 
-      it "creates a migration" do
-        assert File.exists?("db/migrate/#{@t.to_i}_create_artists.rb")
-      end
+      describe 'model in nested class' do
+        before do
+          @gen.args = ["model", "administration/user"]
+          @gen.run!
+        end
 
-      it "creates the actual model" do
-        assert File.exists?("lib/models/artist.rb")
-      end
+        it "creates a migration" do
+          assert File.exists?("db/migrate/#{@t.to_i}_create_administration_users.rb")
+        end
 
-      it "creates a test" do
-        assert File.exists?("spec/models/artist_spec.rb")
+        it "creates the actual model" do
+          assert File.exists?("lib/models/administration/user.rb")
+        end
+
+        it "creates a test" do
+          assert File.exists?("spec/models/administration/user_spec.rb")
+        end
       end
     end
 
