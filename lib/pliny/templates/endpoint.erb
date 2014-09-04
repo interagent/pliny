@@ -6,24 +6,24 @@ module Endpoints
       end
 
       get do
-        "[]"
+        encode []
       end
 
       post do
         status 201
-        "{}"
+        encode {}
       end
 
       get "/:id" do
-        "{}"
+        encode {}
       end
 
       patch "/:id" do |id|
-        "{}"
+        encode {}
       end
 
       delete "/:id" do |id|
-        "{}"
+        encode {}
       end
     end
   end

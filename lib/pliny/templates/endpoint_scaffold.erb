@@ -6,7 +6,7 @@ module Endpoints
       end
 
       get do
-        MultiJson.encode serialize(<%= singular_class_name %>.all)
+        encode serialize(<%= singular_class_name %>.all)
       end
 
       post do
@@ -14,25 +14,25 @@ module Endpoints
         <%= field_name %> = <%= singular_class_name %>.new(body_params)
         <%= field_name %>.save
         status 201
-        MultiJson.encode serialize(<%= field_name %>)
+        encode serialize(<%= field_name %>)
       end
 
       get "/:id" do |id|
         <%= field_name %> = <%= singular_class_name %>.first(uuid: id) || halt(404)
-        MultiJson.encode serialize(<%= field_name %>)
+        encode serialize(<%= field_name %>)
       end
 
       patch "/:id" do |id|
         <%= field_name %> = <%= singular_class_name %>.first(uuid: id) || halt(404)
         # warning: not safe
         #<%= field_name %>.update(body_params)
-        MultiJson.encode serialize(<%= field_name %>)
+        encode serialize(<%= field_name %>)
       end
 
       delete "/:id" do |id|
         <%= field_name %> = <%= singular_class_name %>.first(uuid: id) || halt(404)
         <%= field_name %>.destroy
-        MultiJson.encode serialize(<%= field_name %>)
+        encode serialize(<%= field_name %>)
       end
 
       private
