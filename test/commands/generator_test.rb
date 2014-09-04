@@ -1,240 +1,240 @@
-require "test_helper"
+require 'test_helper'
 
 describe Pliny::Commands::Generator do
   before do
     @gen = Pliny::Commands::Generator.new({}, {}, StringIO.new)
   end
 
-  describe "#field_name" do
-    it "uses the singular form" do
-      @gen.args = ["model", "resource_histories"]
-      assert_equal "resource_history", @gen.field_name
+  describe '#field_name' do
+    it 'uses the singular form' do
+      @gen.args = %w(model resource_histories)
+      assert_equal 'resource_history', @gen.field_name
     end
 
-    it "handles hyphens as underscores" do
-      @gen.args = ["model", "resource-histories"]
-      assert_equal "resource_history", @gen.field_name
-    end
-  end
-
-  describe "#plural_class_name" do
-    it "builds a class name for a model" do
-      @gen.args = ["model", "resource_histories"]
-      assert_equal "ResourceHistories", @gen.plural_class_name
-    end
-
-    it "handles hyphens as underscores" do
-      @gen.args = ["model", "resource-histories"]
-      assert_equal "ResourceHistories", @gen.plural_class_name
+    it 'handles hyphens as underscores' do
+      @gen.args = ['model', 'resource-histories']
+      assert_equal 'resource_history', @gen.field_name
     end
   end
 
-  describe "#singular_class_name" do
-    it "builds a class name for an endpoint" do
-      @gen.args = ["model", "resource_histories"]
-      assert_equal "ResourceHistory", @gen.singular_class_name
+  describe '#plural_class_name' do
+    it 'builds a class name for a model' do
+      @gen.args = %w(model resource_histories)
+      assert_equal 'ResourceHistories', @gen.plural_class_name
     end
 
-    it "handles hyphens as underscores" do
-      @gen.args = ["model", "resource-histories"]
-      assert_equal "ResourceHistory", @gen.singular_class_name
-    end
-  end
-
-  describe "#pluralized_file_name" do
-    it "uses the plural form" do
-      @gen.args = ["model", "resource_history"]
-      assert_equal "resource_histories", @gen.pluralized_file_name
-    end
-
-    it "handles hyphens as underscores" do
-      @gen.args = ["model", "resource-history"]
-      assert_equal "resource_histories", @gen.pluralized_file_name
-    end
-
-    it "handles slashs as directory" do
-      @gen.args = ["model", "resource/history"]
-      assert_equal "resource/histories", @gen.pluralized_file_name
+    it 'handles hyphens as underscores' do
+      @gen.args = ['model', 'resource-histories']
+      assert_equal 'ResourceHistories', @gen.plural_class_name
     end
   end
 
-  describe "#table_name" do
-    it "uses the plural form" do
-      @gen.args = ["model", "resource_history"]
-      assert_equal "resource_histories", @gen.table_name
+  describe '#singular_class_name' do
+    it 'builds a class name for an endpoint' do
+      @gen.args = %w(model resource_histories)
+      assert_equal 'ResourceHistory', @gen.singular_class_name
     end
 
-    it "handles hyphens as underscores" do
-      @gen.args = ["model", "resource-history"]
-      assert_equal "resource_histories", @gen.table_name
-    end
-
-    it "handles slashs as underscores" do
-      @gen.args = ["model", "resource/history"]
-      assert_equal "resource_histories", @gen.table_name
+    it 'handles hyphens as underscores' do
+      @gen.args = ['model', 'resource-histories']
+      assert_equal 'ResourceHistory', @gen.singular_class_name
     end
   end
 
-  describe "#run!" do
+  describe '#pluralized_file_name' do
+    it 'uses the plural form' do
+      @gen.args = %w(model resource_history)
+      assert_equal 'resource_histories', @gen.pluralized_file_name
+    end
+
+    it 'handles hyphens as underscores' do
+      @gen.args = ['model', 'resource-history']
+      assert_equal 'resource_histories', @gen.pluralized_file_name
+    end
+
+    it 'handles slashs as directory' do
+      @gen.args = ['model', 'resource/history']
+      assert_equal 'resource/histories', @gen.pluralized_file_name
+    end
+  end
+
+  describe '#table_name' do
+    it 'uses the plural form' do
+      @gen.args = %w(model resource_history)
+      assert_equal 'resource_histories', @gen.table_name
+    end
+
+    it 'handles hyphens as underscores' do
+      @gen.args = ['model', 'resource-history']
+      assert_equal 'resource_histories', @gen.table_name
+    end
+
+    it 'handles slashs as underscores' do
+      @gen.args = ['model', 'resource/history']
+      assert_equal 'resource_histories', @gen.table_name
+    end
+  end
+
+  describe '#run!' do
     before do
-      FileUtils.mkdir_p("/tmp/plinytest")
-      Dir.chdir("/tmp/plinytest")
-      Timecop.freeze(@t=Time.now)
+      FileUtils.mkdir_p('/tmp/plinytest')
+      Dir.chdir('/tmp/plinytest')
+      Timecop.freeze(@t = Time.now)
     end
 
     after do
-      FileUtils.rmdir("/tmp/plinytest")
+      FileUtils.rmdir('/tmp/plinytest')
       Timecop.return
     end
 
-    describe "generating endpoints" do
+    describe 'generating endpoints' do
       before do
-        @gen.args = ["endpoint", "artists"]
+        @gen.args = %w(endpoint artists)
         @gen.run!
       end
 
-      it "creates a new endpoint module" do
-        assert File.exists?("lib/endpoints/artists.rb")
+      it 'creates a new endpoint module' do
+        assert File.exist?('lib/endpoints/artists.rb')
       end
 
-      it "creates an endpoint test" do
-        assert File.exists?("spec/endpoints/artists_spec.rb")
+      it 'creates an endpoint test' do
+        assert File.exist?('spec/endpoints/artists_spec.rb')
       end
 
-      it "creates an endpoint acceptance test" do
-        assert File.exists?("spec/acceptance/artists_spec.rb")
+      it 'creates an endpoint acceptance test' do
+        assert File.exist?('spec/acceptance/artists_spec.rb')
       end
     end
 
-    describe "generating mediators" do
+    describe 'generating mediators' do
       before do
-        @gen.args = ["mediator", "artists/creator"]
+        @gen.args = ['mediator', 'artists/creator']
         @gen.run!
       end
 
-      it "creates a new mediator module" do
-        assert File.exists?("lib/mediators/artists/creator.rb")
+      it 'creates a new mediator module' do
+        assert File.exist?('lib/mediators/artists/creator.rb')
       end
 
-      it "creates a test" do
-        assert File.exists?("spec/mediators/artists/creator_spec.rb")
+      it 'creates a test' do
+        assert File.exist?('spec/mediators/artists/creator_spec.rb')
       end
     end
 
-    describe "generating models" do
+    describe 'generating models' do
       describe 'simple model' do
         before do
-          @gen.args = ["model", "artist"]
+          @gen.args = %w(model artist)
           @gen.run!
         end
 
-        it "creates a migration" do
-          assert File.exists?("db/migrate/#{@t.to_i}_create_artists.rb")
+        it 'creates a migration' do
+          assert File.exist?("db/migrate/#{@t.to_i}_create_artists.rb")
         end
 
-        it "creates the actual model" do
-          assert File.exists?("lib/models/artist.rb")
+        it 'creates the actual model' do
+          assert File.exist?('lib/models/artist.rb')
         end
 
-        it "creates a test" do
-          assert File.exists?("spec/models/artist_spec.rb")
+        it 'creates a test' do
+          assert File.exist?('spec/models/artist_spec.rb')
         end
       end
 
       describe 'model in nested class' do
         before do
-          @gen.args = ["model", "administration/user"]
+          @gen.args = ['model', 'administration/user']
           @gen.run!
         end
 
-        it "creates a migration" do
-          assert File.exists?("db/migrate/#{@t.to_i}_create_administration_users.rb")
+        it 'creates a migration' do
+          assert File.exist?("db/migrate/#{@t.to_i}_create_administration_users.rb")
         end
 
-        it "creates the actual model" do
-          assert File.exists?("lib/models/administration/user.rb")
+        it 'creates the actual model' do
+          assert File.exist?('lib/models/administration/user.rb')
         end
 
-        it "creates a test" do
-          assert File.exists?("spec/models/administration/user_spec.rb")
+        it 'creates a test' do
+          assert File.exist?('spec/models/administration/user_spec.rb')
         end
       end
     end
 
-    describe "generating scaffolds" do
+    describe 'generating scaffolds' do
       before do
-        @gen.args = ["scaffold", "artist"]
+        @gen.args = %w(scaffold artist)
         @gen.run!
       end
 
-      it "creates a new endpoint module" do
-        assert File.exists?("lib/endpoints/artists.rb")
+      it 'creates a new endpoint module' do
+        assert File.exist?('lib/endpoints/artists.rb')
       end
 
-      it "creates an endpoint test" do
-        assert File.exists?("spec/endpoints/artists_spec.rb")
+      it 'creates an endpoint test' do
+        assert File.exist?('spec/endpoints/artists_spec.rb')
       end
 
-      it "creates an endpoint acceptance test" do
-        assert File.exists?("spec/acceptance/artists_spec.rb")
+      it 'creates an endpoint acceptance test' do
+        assert File.exist?('spec/acceptance/artists_spec.rb')
       end
 
-      it "creates a migration" do
-        assert File.exists?("db/migrate/#{@t.to_i}_create_artists.rb")
+      it 'creates a migration' do
+        assert File.exist?("db/migrate/#{@t.to_i}_create_artists.rb")
       end
 
-      it "creates the actual model" do
-        assert File.exists?("lib/models/artist.rb")
+      it 'creates the actual model' do
+        assert File.exist?('lib/models/artist.rb')
       end
 
-      it "creates a test" do
-        assert File.exists?("spec/models/artist_spec.rb")
+      it 'creates a test' do
+        assert File.exist?('spec/models/artist_spec.rb')
       end
 
-      it "creates a schema" do
-        assert File.exists?("docs/schema/schemata/artist.yaml")
+      it 'creates a schema' do
+        assert File.exist?('docs/schema/schemata/artist.yaml')
       end
 
-      it "creates a new serializer module" do
-        assert File.exists?("lib/serializers/artist.rb")
+      it 'creates a new serializer module' do
+        assert File.exist?('lib/serializers/artist.rb')
       end
 
-      it "creates a test" do
-        assert File.exists?("spec/serializers/artist_spec.rb")
+      it 'creates a test' do
+        assert File.exist?('spec/serializers/artist_spec.rb')
       end
     end
 
-    describe "generating schemas" do
+    describe 'generating schemas' do
       before do
-        @gen.args = ["schema", "artist"]
+        @gen.args = %w(schema artist)
         @gen.run!
       end
 
-      it "creates a schema" do
-        assert File.exists?("docs/schema/schemata/artist.yaml")
+      it 'creates a schema' do
+        assert File.exist?('docs/schema/schemata/artist.yaml')
       end
     end
 
-    describe "generating serializers" do
+    describe 'generating serializers' do
       before do
-        @gen.args = ["serializer", "artist"]
+        @gen.args = %w(serializer artist)
         @gen.run!
       end
 
-      it "creates a new serializer module" do
-        assert File.exists?("lib/serializers/artist.rb")
+      it 'creates a new serializer module' do
+        assert File.exist?('lib/serializers/artist.rb')
       end
 
-      it "creates a test" do
-        assert File.exists?("spec/serializers/artist_spec.rb")
+      it 'creates a test' do
+        assert File.exist?('spec/serializers/artist_spec.rb')
       end
     end
   end
 
-  describe "#url_path" do
-    it "builds a URL path" do
-      @gen.args = ["endpoint", "resource_history"]
-      assert_equal "/resource-histories", @gen.url_path
+  describe '#url_path' do
+    it 'builds a URL path' do
+      @gen.args = %w(endpoint resource_history)
+      assert_equal '/resource-histories', @gen.url_path
     end
   end
 end
