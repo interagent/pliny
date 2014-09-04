@@ -1,3 +1,4 @@
+require 'pliny/version'
 require 'fileutils'
 
 module Pliny::Commands
