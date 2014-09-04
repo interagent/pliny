@@ -2,6 +2,7 @@ require 'active_support/inflector'
 require 'ostruct'
 require 'erb'
 require 'fileutils'
+require 'pliny'
 
 module Pliny::Commands
   class Generator

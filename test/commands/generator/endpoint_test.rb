@@ -1,3 +1,5 @@
+require 'pliny/commands/generator'
+require 'pliny/commands/generator/endpoint'
 require 'test_helper'
 
 describe Pliny::Commands::Generator::Endpoint do

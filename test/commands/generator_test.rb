@@ -1,3 +1,4 @@
+require 'pliny/commands/generator'
 require 'test_helper'
 
 describe Pliny::Commands::Generator do

@@ -1,3 +1,5 @@
+require_relative 'base'
+
 module Pliny::Commands
   class Generator
     class Mediator < Base

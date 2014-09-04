@@ -1,3 +1,4 @@
+require_relative 'base'
 require 'prmd'
 
 module Pliny::Commands

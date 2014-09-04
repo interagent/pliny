@@ -1,4 +1,4 @@
 #!/usr/bin/env ruby
 
-require_relative '../lib/pliny'
+require_relative '../lib/pliny/commands/generator'
 Pliny::Commands::Generator.start
