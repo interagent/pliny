@@ -26,7 +26,6 @@ module Pliny::Commands
     desc 'model NAME', 'generates a model'
     method_options \
       paranoid: :boolean,
-      aliases: '-p',
       default: false,
       desc: 'adds paranoid support to model'
     def model(name)
