@@ -1,4 +1,5 @@
 require 'pliny/commands/generator'
+require 'pliny/commands/generator/base'
 require 'test_helper'
 
 describe Pliny::Commands::Generator do
@@ -8,6 +9,10 @@ subject { Pliny::Commands::Generator.new }
     FileUtils.mkdir_p('/tmp/plinytest')
     Dir.chdir('/tmp/plinytest')
     Timecop.freeze(@t = Time.now)
+
+    any_instance_of(Pliny::Commands::Generator::Base) do |klass|
+      stub(klass).display
+    end
   end
 
   after do
