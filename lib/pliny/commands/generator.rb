@@ -27,44 +27,44 @@ module Pliny::Commands
       case type
       when 'endpoint'
         opts[:scaffold] = false
-        ep = Endpoint.new(name, opts)
+        ep = Endpoint.new(name, stream, opts)
         ep.create_endpoint
         ep.create_endpoint_test
         ep.create_endpoint_acceptance_test
       when 'mediator'
-        md = Mediator.new(name, opts)
+        md = Mediator.new(name, stream, opts)
         md.create_mediator
         md.create_mediator_test
       when 'migration'
-        mg = Migration.new(name, opts)
+        mg = Migration.new(name, stream, opts)
         mg.create_migration
       when 'model'
-        md = Model.new(name, opts)
+        md = Model.new(name, stream, opts)
         md.create_model
         md.create_model_migration
         md.create_model_test
       when 'scaffold'
         opts[:scaffold] = true
-        ep = Endpoint.new(name, opts)
+        ep = Endpoint.new(name, stream, opts)
         ep.create_endpoint
         ep.create_endpoint_test
         ep.create_endpoint_acceptance_test
-        md = Model.new(name, opts)
+        md = Model.new(name, stream, opts)
         md.create_model
         md.create_model_migration
         md.create_model_test
-        sc = Schema.new(name, opts)
+        sc = Schema.new(name, stream, opts)
         sc.create_schema
         sc.rebuild_schema
-        se = Serializer.new(name, opts)
+        se = Serializer.new(name, stream, opts)
         se.create_serializer
         se.create_serializer_test
       when 'schema'
-        sc = Schema.new(name, opts)
+        sc = Schema.new(name, stream, opts)
         sc.create_schema
         sc.rebuild_schema
       when 'serializer'
-        se = Serializer.new(name, opts)
+        se = Serializer.new(name, stream, opts)
         se.create_serializer
         se.create_serializer_test
       else

@@ -6,10 +6,11 @@ require 'fileutils'
 module Pliny::Commands
   class Generator
     class Base
-      attr_reader :name, :options
+      attr_reader :name, :stream, :options
 
-      def initialize(name, options = {})
+      def initialize(name, stream = $stdout, options = {})
         @name = name
+        @stream = stream
         @options = options
       end
 
