@@ -3,7 +3,7 @@ require 'prmd'
 module Pliny::Commands
   class Generator
     class Schema < Base
-      def create_schema
+      def create
         schema = "./docs/schema/schemata/#{field_name}.yaml"
         write_file(schema) do
           Prmd.init(name.singularize, yaml: true)
@@ -11,7 +11,7 @@ module Pliny::Commands
         display "created schema file #{schema}"
       end
 
-      def rebuild_schema
+      def rebuild
         schemata = './docs/schema.json'
         write_file(schemata) do
           Prmd.combine('./docs/schema/schemata', meta: './docs/schema/meta.json')

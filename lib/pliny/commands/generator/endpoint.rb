@@ -1,7 +1,7 @@
 module Pliny::Commands
   class Generator
     class Endpoint < Base
-      def create_endpoint
+      def create
         endpoint = "./lib/endpoints/#{pluralized_file_name}.rb"
         template = options[:scaffold] ? 'endpoint_scaffold.erb' : 'endpoint.erb'
         render_template(template, endpoint,
@@ -14,7 +14,7 @@ module Pliny::Commands
         display "  mount Endpoints::#{plural_class_name}"
       end
 
-      def create_endpoint_test
+      def create_test
         test = "./spec/endpoints/#{pluralized_file_name}_spec.rb"
         render_template('endpoint_test.erb', test,
                         plural_class_name: plural_class_name,
@@ -23,7 +23,7 @@ module Pliny::Commands
         display "created test #{test}"
       end
 
-      def create_endpoint_acceptance_test
+      def create_acceptance_test
         test = "./spec/acceptance/#{pluralized_file_name}_spec.rb"
         template = options[:scaffold] ? 'endpoint_scaffold_acceptance_test.erb' : 'endpoint_acceptance_test.erb'
         render_template(template, test,
