@@ -1,7 +1,7 @@
 require 'test_helper'
 
 describe Pliny::Commands::Generator::Base do
-  subject { Pliny::Commands::Generator::Base.new(model_name, StringIO.new, {}) }
+  subject { Pliny::Commands::Generator::Base.new(model_name, {}, StringIO.new) }
 
   describe '#singular_class_name' do
     let(:model_name) { 'resource_histories' }

@@ -38,7 +38,6 @@ module Pliny::Commands
     method_option :scaffold, type: :boolean, default: true, hide: true
     def scaffold(name)
       puts options.class
-      options = options.merge(options)
       ep = Endpoint.new(name, options)
       ep.create_endpoint
       ep.create_endpoint_test
