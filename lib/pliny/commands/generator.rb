@@ -1,11 +1,4 @@
 require 'thor'
-require_relative 'generator/base'
-require_relative 'generator/endpoint'
-require_relative 'generator/mediator'
-require_relative 'generator/migration'
-require_relative 'generator/model'
-require_relative 'generator/schema'
-require_relative 'generator/serializer'
 
 module Pliny::Commands
   class Generator < Thor
@@ -76,3 +69,11 @@ module Pliny::Commands
     end
   end
 end
+
+require_relative 'generator/base'
+require_relative 'generator/endpoint'
+require_relative 'generator/mediator'
+require_relative 'generator/migration'
+require_relative 'generator/model'
+require_relative 'generator/schema'
+require_relative 'generator/serializer'
