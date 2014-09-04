@@ -1,42 +1,42 @@
-require "erb"
-require "fileutils"
-require "ostruct"
-require "active_support/inflector"
-require "prmd"
+require 'erb'
+require 'fileutils'
+require 'ostruct'
+require 'active_support/inflector'
+require 'prmd'
 
 module Pliny::Commands
   class Generator
     attr_accessor :args, :opts, :stream
 
-    def self.run(args, opts={}, stream=$stdout)
+    def self.run(args, opts = {}, stream = $stdout)
       new(args, opts, stream).run!
     end
 
-    def initialize(args={}, opts={}, stream=$stdout)
+    def initialize(args = {}, opts = {}, stream = $stdout)
       @args = args
       @opts = opts
       @stream = stream
     end
 
     def run!
-      raise 'Missing type of object to generate' unless type
-      raise "Missing #{type} name" unless name
+      fail 'Missing type of object to generate' unless type
+      fail "Missing #{type} name" unless name
 
       case type
-      when "endpoint"
+      when 'endpoint'
         create_endpoint(scaffold: false)
         create_endpoint_test
         create_endpoint_acceptance_test(scaffold: false)
-      when "mediator"
+      when 'mediator'
         create_mediator
         create_mediator_test
-      when "migration"
+      when 'migration'
         create_migration
-      when "model"
+      when 'model'
         create_model
         create_model_migration
         create_model_test
-      when "scaffold"
+      when 'scaffold'
         create_endpoint(scaffold: true)
         create_endpoint_test
         create_endpoint_acceptance_test(scaffold: true)
@@ -47,10 +47,10 @@ module Pliny::Commands
         rebuild_schema
         create_serializer
         create_serializer_test
-      when "schema"
+      when 'schema'
         create_schema
         rebuild_schema
-      when "serializer"
+      when 'serializer'
         create_serializer
         create_serializer_test
       else
@@ -96,78 +96,77 @@ module Pliny::Commands
 
     def create_endpoint(options = {})
       endpoint = "./lib/endpoints/#{pluralized_file_name}.rb"
-      template = options[:scaffold] ? "endpoint_scaffold.erb" : "endpoint.erb"
-      render_template(template, endpoint, {
-        plural_class_name: plural_class_name,
-        singular_class_name: singular_class_name,
-        field_name: field_name,
-        url_path:   url_path,
-      })
+      template = options[:scaffold] ? 'endpoint_scaffold.erb' : 'endpoint.erb'
+      render_template(template, endpoint,
+                      plural_class_name: plural_class_name,
+                      singular_class_name: singular_class_name,
+                      field_name: field_name,
+                      url_path: url_path)
       display "created endpoint file #{endpoint}"
-      display "add the following to lib/routes.rb:"
+      display 'add the following to lib/routes.rb:'
       display "  mount Endpoints::#{plural_class_name}"
     end
 
     def create_endpoint_test
       test = "./spec/endpoints/#{pluralized_file_name}_spec.rb"
-      render_template("endpoint_test.erb", test, {
-        plural_class_name: plural_class_name,
-        singular_class_name: singular_class_name,
-        url_path:   url_path,
-      })
+      render_template('endpoint_test.erb', test,
+                      plural_class_name: plural_class_name,
+                      singular_class_name: singular_class_name,
+                      url_path: url_path)
       display "created test #{test}"
     end
 
     def create_endpoint_acceptance_test(options = {})
       test = "./spec/acceptance/#{pluralized_file_name}_spec.rb"
-      template = options[:scaffold] ? "endpoint_scaffold_acceptance_test.erb" :
-        "endpoint_acceptance_test.erb"
-      render_template(template, test, {
-        plural_class_name: plural_class_name,
-        field_name: field_name,
-        singular_class_name: singular_class_name,
-        url_path:   url_path,
-      })
+      template = options[:scaffold] ? 'endpoint_scaffold_acceptance_test.erb' : 'endpoint_acceptance_test.erb'
+      render_template(template, test,
+                      plural_class_name: plural_class_name,
+                      field_name: field_name,
+                      singular_class_name: singular_class_name,
+                      url_path: url_path)
       display "created test #{test}"
     end
 
     def create_mediator
       mediator = "./lib/mediators/#{field_name}.rb"
-      render_template("mediator.erb", mediator, singular_class_name: singular_class_name)
+      render_template('mediator.erb', mediator,
+                      singular_class_name: singular_class_name)
       display "created mediator file #{mediator}"
     end
 
     def create_mediator_test
       test = "./spec/mediators/#{field_name}_spec.rb"
-      render_template("mediator_test.erb", test, singular_class_name: singular_class_name)
+      render_template('mediator_test.erb', test,
+                      singular_class_name: singular_class_name)
       display "created test #{test}"
     end
 
     def create_migration
       migration = "./db/migrate/#{Time.now.to_i}_#{name}.rb"
-      render_template("migration.erb", migration)
+      render_template('migration.erb', migration)
       display "created migration #{migration}"
     end
 
     def create_model
       model = "./lib/models/#{field_name}.rb"
-      render_template("model.erb", model,
-        singular_class_name: singular_class_name,
-        paranoid: paranoid)
+      render_template('model.erb', model,
+                      singular_class_name: singular_class_name,
+                      paranoid: paranoid)
       display "created model file #{model}"
     end
 
     def create_model_migration
       migration = "./db/migrate/#{Time.now.to_i}_create_#{table_name}.rb"
-      render_template("model_migration.erb", migration,
-        table_name: table_name,
-        paranoid: paranoid)
+      render_template('model_migration.erb', migration,
+                      table_name: table_name,
+                      paranoid: paranoid)
       display "created migration #{migration}"
     end
 
     def create_model_test
       test = "./spec/models/#{field_name}_spec.rb"
-      render_template("model_test.erb", test, singular_class_name: singular_class_name)
+      render_template('model_test.erb', test,
+                      singular_class_name: singular_class_name)
       display "created test #{test}"
     end
 
@@ -180,28 +179,30 @@ module Pliny::Commands
     end
 
     def rebuild_schema
-      schemata = "./docs/schema.json"
+      schemata = './docs/schema.json'
       write_file(schemata) do
-        Prmd.combine("./docs/schema/schemata", meta: "./docs/schema/meta.json")
+        Prmd.combine('./docs/schema/schemata', meta: './docs/schema/meta.json')
       end
       display "rebuilt #{schemata}"
     end
 
     def create_serializer
       serializer = "./lib/serializers/#{name}.rb"
-      render_template("serializer.erb", serializer, singular_class_name: singular_class_name)
+      render_template('serializer.erb', serializer,
+                      singular_class_name: singular_class_name)
       display "created serializer file #{serializer}"
     end
 
     def create_serializer_test
       test = "./spec/serializers/#{name}_spec.rb"
-      render_template("serializer_test.erb", test, singular_class_name: singular_class_name)
+      render_template('serializer_test.erb', test,
+                      singular_class_name: singular_class_name)
       display "created test #{test}"
     end
 
-    def render_template(template_file, destination_path, vars={})
+    def render_template(template_file, destination_path, vars = {})
       template_path = File.dirname(__FILE__) + "/../templates/#{template_file}"
-      template = ERB.new(File.read(template_path), 0, ">")
+      template = ERB.new(File.read(template_path), 0, '>')
       context = OpenStruct.new(vars)
       write_file(destination_path) do
         template.result(context.instance_eval { binding })
@@ -209,12 +210,12 @@ module Pliny::Commands
     end
 
     def url_path
-      "/" + name.pluralize.gsub(/_/, '-')
+      '/' + name.pluralize.gsub(/_/, '-')
     end
 
     def write_file(destination_path)
       FileUtils.mkdir_p(File.dirname(destination_path))
-      File.open(destination_path, "w") do |f|
+      File.open(destination_path, 'w') do |f|
         f.puts yield
       end
     end
