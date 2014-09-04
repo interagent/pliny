@@ -37,7 +37,6 @@ module Pliny::Commands
     method_option :paranoid, type: :boolean, default: false, desc: 'adds paranoid support to model'
     method_option :scaffold, type: :boolean, default: true, hide: true
     def scaffold(name)
-      puts options.class
       ep = Endpoint.new(name, options)
       ep.create_endpoint
       ep.create_endpoint_test
