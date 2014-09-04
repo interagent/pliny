@@ -14,10 +14,6 @@ module Pliny::Commands
         @stream = stream
       end
 
-      def paranoid
-        options[:paranoid]
-      end
-
       def singular_class_name
         name.gsub(/-/, '_').singularize.camelize
       end
