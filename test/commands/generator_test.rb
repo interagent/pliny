@@ -5,76 +5,6 @@ describe Pliny::Commands::Generator do
     @gen = Pliny::Commands::Generator.new({}, {}, StringIO.new)
   end
 
-  describe '#field_name' do
-    it 'uses the singular form' do
-      @gen.args = %w(model resource_histories)
-      assert_equal 'resource_history', @gen.field_name
-    end
-
-    it 'handles hyphens as underscores' do
-      @gen.args = ['model', 'resource-histories']
-      assert_equal 'resource_history', @gen.field_name
-    end
-  end
-
-  describe '#plural_class_name' do
-    it 'builds a class name for a model' do
-      @gen.args = %w(model resource_histories)
-      assert_equal 'ResourceHistories', @gen.plural_class_name
-    end
-
-    it 'handles hyphens as underscores' do
-      @gen.args = ['model', 'resource-histories']
-      assert_equal 'ResourceHistories', @gen.plural_class_name
-    end
-  end
-
-  describe '#singular_class_name' do
-    it 'builds a class name for an endpoint' do
-      @gen.args = %w(model resource_histories)
-      assert_equal 'ResourceHistory', @gen.singular_class_name
-    end
-
-    it 'handles hyphens as underscores' do
-      @gen.args = ['model', 'resource-histories']
-      assert_equal 'ResourceHistory', @gen.singular_class_name
-    end
-  end
-
-  describe '#pluralized_file_name' do
-    it 'uses the plural form' do
-      @gen.args = %w(model resource_history)
-      assert_equal 'resource_histories', @gen.pluralized_file_name
-    end
-
-    it 'handles hyphens as underscores' do
-      @gen.args = ['model', 'resource-history']
-      assert_equal 'resource_histories', @gen.pluralized_file_name
-    end
-
-    it 'handles slashs as directory' do
-      @gen.args = ['model', 'resource/history']
-      assert_equal 'resource/histories', @gen.pluralized_file_name
-    end
-  end
-
-  describe '#table_name' do
-    it 'uses the plural form' do
-      @gen.args = %w(model resource_history)
-      assert_equal 'resource_histories', @gen.table_name
-    end
-
-    it 'handles hyphens as underscores' do
-      @gen.args = ['model', 'resource-history']
-      assert_equal 'resource_histories', @gen.table_name
-    end
-
-    it 'handles slashs as underscores' do
-      @gen.args = ['model', 'resource/history']
-      assert_equal 'resource_histories', @gen.table_name
-    end
-  end
-
   describe '#run!' do
     before do
       FileUtils.mkdir_p('/tmp/plinytest')
@@ -228,13 +158,6 @@ describe Pliny::Commands::Generator do
       it 'creates a test' do
         assert File.exist?('spec/serializers/artist_spec.rb')
       end
-    end
-  end
-
-  describe '#url_path' do
-    it 'builds a URL path' do
-      @gen.args = %w(endpoint resource_history)
-      assert_equal '/resource-histories', @gen.url_path
     end
   end
 end
