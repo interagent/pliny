@@ -8,10 +8,10 @@ module Pliny::Commands
     class Base
       attr_reader :name, :stream, :options
 
-      def initialize(name, stream = $stdout, options = {})
+      def initialize(name, options = {}, stream = $stdout)
         @name = name
-        @stream = stream
         @options = options
+        @stream = stream
       end
 
       def paranoid

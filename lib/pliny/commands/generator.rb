@@ -1,3 +1,4 @@
+require 'thor'
 require_relative 'generator/base'
 require_relative 'generator/endpoint'
 require_relative 'generator/mediator'
@@ -7,77 +8,73 @@ require_relative 'generator/schema'
 require_relative 'generator/serializer'
 
 module Pliny::Commands
-  class Generator
-    attr_accessor :args, :opts, :stream
+  class Generator < Thor
+    attr_accessor :args, :options, :stream
 
-    def self.run(args, opts = {}, stream = $stdout)
-      new(args, opts, stream).run!
+    desc 'endpoint NAME', 'generates an endpoint'
+    def endpoint(name)
+      ep = Endpoint.new(name, scaffold: false)
+      ep.create_endpoint
+      ep.create_endpoint_test
+      ep.create_endpoint_acceptance_test
     end
 
-    def initialize(args = {}, opts = {}, stream = $stdout)
-      @args = args
-      @opts = opts
-      @stream = stream
+    desc 'mediator NAME', 'generates a mediator'
+    def mediator(name)
+      md = Mediator.new(name, options)
+      md.create_mediator
+      md.create_mediator_test
     end
 
-    def run!
-      fail 'Missing type of object to generate' unless type
-      fail "Missing #{type} name" unless name
-
-      case type
-      when 'endpoint'
-        opts[:scaffold] = false
-        ep = Endpoint.new(name, stream, opts)
-        ep.create_endpoint
-        ep.create_endpoint_test
-        ep.create_endpoint_acceptance_test
-      when 'mediator'
-        md = Mediator.new(name, stream, opts)
-        md.create_mediator
-        md.create_mediator_test
-      when 'migration'
-        mg = Migration.new(name, stream, opts)
-        mg.create_migration
-      when 'model'
-        md = Model.new(name, stream, opts)
-        md.create_model
-        md.create_model_migration
-        md.create_model_test
-      when 'scaffold'
-        opts[:scaffold] = true
-        ep = Endpoint.new(name, stream, opts)
-        ep.create_endpoint
-        ep.create_endpoint_test
-        ep.create_endpoint_acceptance_test
-        md = Model.new(name, stream, opts)
-        md.create_model
-        md.create_model_migration
-        md.create_model_test
-        sc = Schema.new(name, stream, opts)
-        sc.create_schema
-        sc.rebuild_schema
-        se = Serializer.new(name, stream, opts)
-        se.create_serializer
-        se.create_serializer_test
-      when 'schema'
-        sc = Schema.new(name, stream, opts)
-        sc.create_schema
-        sc.rebuild_schema
-      when 'serializer'
-        se = Serializer.new(name, stream, opts)
-        se.create_serializer
-        se.create_serializer_test
-      else
-        abort("Don't know how to generate '#{type}'.")
-      end
+    desc 'migration NAME', 'generates a migration'
+    def migration(name)
+      mg = Migration.new(name, options)
+      mg.create_migration
     end
 
-    def type
-      args.first
+    desc 'model NAME', 'generates a model'
+    method_options \
+      paranoid: :boolean,
+      aliases: '-p',
+      default: false,
+      desc: 'adds paranoid support to model'
+    def model(name)
+      md = Model.new(name, options)
+      md.create_model
+      md.create_model_migration
+      md.create_model_test
     end
 
-    def name
-      args[1]
+    desc 'scaffold NAME', 'generates a scaffold of endpoint, model, schema and serializer'
+    def scaffold(name)
+      ep = Endpoint.new(name, scaffold: true)
+      ep.create_endpoint
+      ep.create_endpoint_test
+      ep.create_endpoint_acceptance_test
+      md = Model.new(name, scaffold: true)
+      md.create_model
+      md.create_model_migration
+      md.create_model_test
+      sc = Schema.new(name, scaffold: true)
+      sc.create_schema
+      sc.rebuild_schema
+      se = Serializer.new(name, scaffold: true)
+      se.create_serializer
+      se.create_serializer_test
+    end
+
+    desc 'schema NAME', 'generates a schema'
+    def schema(name)
+      sc = Schema.new(name, options)
+      sc.create_schema
+      sc.rebuild_schema
+    end
+
+    desc 'serializer NAME', 'generates a serializer'
+    def serializer(name)
+      se = Serializer.new(name, options)
+      se.create_serializer
+      se.create_serializer_test
     end
   end
 end
