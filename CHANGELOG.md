@@ -1,9 +1,13 @@
 # Changelog
 
+* Add `encode` helper.
+  [#69](https://github.com/interagent/pliny/pull/69) and [pliny-template#132](https://github.com/interagent/pliny-template/pull/132)
+
+  Add `helpers Pliny::Helpers::Encode` to your `Endpoints::Base` and replace calls to `MultiJson.encode` with `encode` in all your endpoints.
 * `Serializers::Base#serialize` will now serialize Arrays and others Enumberable objects by itself.
   [pliny-template#125](https://github.com/interagent/pliny-template/pull/125)
 
-  Replace in your Endpoints the call to `MultiJson.encode User.all.map { |x| serialize(x) }` with `MultiJson.encode serialize(User.all)`
+  Replace in your Endpoints the call to `MultiJson.encode User.all.map { |x| serialize(x) }` with `encode serialize(User.all)`
 * New CastingConfigHelpers pre casts env vars, so you don't have to at all the call sites.
   See [pliny-template#131](https://github.com/interagent/pliny-template/pull/131) for how to use it.
 
