@@ -9,8 +9,6 @@ require_relative 'generator/serializer'
 
 module Pliny::Commands
   class Generator < Thor
-    attr_accessor :args, :options, :stream
-
     desc 'endpoint NAME', 'generates an endpoint'
     def endpoint(name)
       ep = Endpoint.new(name, scaffold: false)
