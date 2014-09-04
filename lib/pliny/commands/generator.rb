@@ -3,8 +3,9 @@ require 'thor'
 module Pliny::Commands
   class Generator < Thor
     desc 'endpoint NAME', 'generates an endpoint'
+    method_option :scaffold, type: :boolean, default: false, hide: true
     def endpoint(name)
-      ep = Endpoint.new(name, scaffold: false)
+      ep = Endpoint.new(name, options)
       ep.create_endpoint
       ep.create_endpoint_test
       ep.create_endpoint_acceptance_test
@@ -24,10 +25,7 @@ module Pliny::Commands
     end
 
     desc 'model NAME', 'generates a model'
-    method_options \
-      paranoid: :boolean,
-      default: false,
-      desc: 'adds paranoid support to model'
+    method_option :paranoid, type: :boolean, default: false, desc: 'adds paranoid support to model'
     def model(name)
       md = Model.new(name, options)
       md.create_model
@@ -36,19 +34,23 @@ module Pliny::Commands
     end
 
     desc 'scaffold NAME', 'generates a scaffold of endpoint, model, schema and serializer'
+    method_option :paranoid, type: :boolean, default: false, desc: 'adds paranoid support to model'
+    method_option :scaffold, type: :boolean, default: true, hide: true
     def scaffold(name)
-      ep = Endpoint.new(name, scaffold: true)
+      puts options.class
+      options = options.merge(options)
+      ep = Endpoint.new(name, options)
       ep.create_endpoint
       ep.create_endpoint_test
       ep.create_endpoint_acceptance_test
-      md = Model.new(name, scaffold: true)
+      md = Model.new(name, options)
       md.create_model
       md.create_model_migration
       md.create_model_test
-      sc = Schema.new(name, scaffold: true)
+      sc = Schema.new(name, options)
       sc.create_schema
       sc.rebuild_schema
-      se = Serializer.new(name, scaffold: true)
+      se = Serializer.new(name, options)
       se.create_serializer
       se.create_serializer_test
     end
