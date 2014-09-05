@@ -117,16 +117,16 @@ namespace :db do
 
   def database_urls
     if ENV["DATABASE_URL"]
-      [ENV["DATABASE_URL"]]
+      ENV.map { |key, value| value if key.match(/DATABASE_URL$/) }.compact
     else
       %w(.env .env.test).map { |env_file|
         env_path = "./#{env_file}"
         if File.exists?(env_path)
-          Pliny::Utils.parse_env(env_path)["DATABASE_URL"]
+          Pliny::Utils.parse_env(env_path).map { |key, value| value if key.match(/DATABASE_URL$/) }.compact
         else
           nil
         end
-      }.compact
+      }.flatten.compact
     end
   end
 
