@@ -34,7 +34,7 @@ task :release do
   sh "rm pliny-#{new_version}.gem"
 end
 
-desc 'Open an irb session preloaded with pliny'
+desc 'Open a irb/pry session preloaded with pliny'
 task :console do
   require 'pry'
   require 'pliny'
