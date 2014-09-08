@@ -1,222 +1,73 @@
-require "erb"
-require "fileutils"
-require "ostruct"
-require "active_support/inflector"
-require "prmd"
+require 'pliny/version'
+require 'thor'
 
 module Pliny::Commands
-  class Generator
-    attr_accessor :args, :opts, :stream
+  class Generator < Thor
+    desc 'endpoint NAME', 'Generates an endpoint'
+    method_option :scaffold, type: :boolean, default: false, hide: true
+    def endpoint(name)
+      require_relative 'generator/endpoint'
 
-    def self.run(args, opts={}, stream=$stdout)
-      new(args, opts, stream).run!
+      ep = Endpoint.new(name, options)
+      ep.create
+      ep.create_test
+      ep.create_acceptance_test
     end
 
-    def initialize(args={}, opts={}, stream=$stdout)
-      @args = args
-      @opts = opts
-      @stream = stream
+    desc 'mediator NAME', 'Generates a mediator'
+    def mediator(name)
+      require_relative 'generator/mediator'
+
+      md = Mediator.new(name, options)
+      md.create
+      md.create_test
     end
 
-    def run!
-      raise 'Missing type of object to generate' unless type
-      raise "Missing #{type} name" unless name
+    desc 'migration NAME', 'Generates a migration'
+    def migration(name)
+      require_relative 'generator/migration'
 
-      case type
-      when "endpoint"
-        create_endpoint(scaffold: false)
-        create_endpoint_test
-        create_endpoint_acceptance_test(scaffold: false)
-      when "mediator"
-        create_mediator
-        create_mediator_test
-      when "migration"
-        create_migration
-      when "model"
-        create_model
-        create_model_migration
-        create_model_test
-      when "scaffold"
-        create_endpoint(scaffold: true)
-        create_endpoint_test
-        create_endpoint_acceptance_test(scaffold: true)
-        create_model
-        create_model_migration
-        create_model_test
-        create_schema
-        rebuild_schema
-        create_serializer
-        create_serializer_test
-      when "schema"
-        create_schema
-        rebuild_schema
-      when "serializer"
-        create_serializer
-        create_serializer_test
-      else
-        abort("Don't know how to generate '#{type}'.")
-      end
+      mg = Migration.new(name, options)
+      mg.create
     end
 
-    def type
-      args.first
+    desc 'model NAME', 'Generates a model'
+    method_option :paranoid, type: :boolean, default: false, desc: 'adds paranoid support to model'
+    def model(name)
+      require_relative 'generator/model'
+
+      md = Model.new(name, options)
+      md.create
+      md.create_migration
+      md.create_test
     end
 
-    def name
-      args[1]
+    desc 'scaffold NAME', 'Generates a scaffold of endpoint, model, schema and serializer'
+    method_option :paranoid, type: :boolean, default: false, desc: 'adds paranoid support to model'
+    method_option :scaffold, type: :boolean, default: true, hide: true
+    def scaffold(name)
+      endpoint(name)
+      model(name)
+      schema(name)
+      serializer(name)
     end
 
-    def paranoid
-      opts[:paranoid]
+    desc 'schema NAME', 'Generates a schema'
+    def schema(name)
+      require_relative 'generator/schema'
+
+      sc = Schema.new(name, options)
+      sc.create
+      sc.rebuild
     end
 
-    def singular_class_name
-      name.gsub(/-/, '_').singularize.camelize
-    end
+    desc 'serializer NAME', 'Generates a serializer'
+    def serializer(name)
+      require_relative 'generator/serializer'
 
-    def plural_class_name
-      name.gsub(/-/, '_').pluralize.camelize
-    end
-
-    def field_name
-      name.tableize.singularize
-    end
-
-    def pluralized_file_name
-      name.tableize
-    end
-
-    def table_name
-      name.tableize.gsub('/', '_')
-    end
-
-    def display(msg)
-      stream.puts msg
-    end
-
-    def create_endpoint(options = {})
-      endpoint = "./lib/endpoints/#{pluralized_file_name}.rb"
-      template = options[:scaffold] ? "endpoint_scaffold.erb" : "endpoint.erb"
-      render_template(template, endpoint, {
-        plural_class_name: plural_class_name,
-        singular_class_name: singular_class_name,
-        field_name: field_name,
-        url_path:   url_path,
-      })
-      display "created endpoint file #{endpoint}"
-      display "add the following to lib/routes.rb:"
-      display "  mount Endpoints::#{plural_class_name}"
-    end
-
-    def create_endpoint_test
-      test = "./spec/endpoints/#{pluralized_file_name}_spec.rb"
-      render_template("endpoint_test.erb", test, {
-        plural_class_name: plural_class_name,
-        singular_class_name: singular_class_name,
-        url_path:   url_path,
-      })
-      display "created test #{test}"
-    end
-
-    def create_endpoint_acceptance_test(options = {})
-      test = "./spec/acceptance/#{pluralized_file_name}_spec.rb"
-      template = options[:scaffold] ? "endpoint_scaffold_acceptance_test.erb" :
-        "endpoint_acceptance_test.erb"
-      render_template(template, test, {
-        plural_class_name: plural_class_name,
-        field_name: field_name,
-        singular_class_name: singular_class_name,
-        url_path:   url_path,
-      })
-      display "created test #{test}"
-    end
-
-    def create_mediator
-      mediator = "./lib/mediators/#{field_name}.rb"
-      render_template("mediator.erb", mediator, singular_class_name: singular_class_name)
-      display "created mediator file #{mediator}"
-    end
-
-    def create_mediator_test
-      test = "./spec/mediators/#{field_name}_spec.rb"
-      render_template("mediator_test.erb", test, singular_class_name: singular_class_name)
-      display "created test #{test}"
-    end
-
-    def create_migration
-      migration = "./db/migrate/#{Time.now.to_i}_#{name}.rb"
-      render_template("migration.erb", migration)
-      display "created migration #{migration}"
-    end
-
-    def create_model
-      model = "./lib/models/#{field_name}.rb"
-      render_template("model.erb", model,
-        singular_class_name: singular_class_name,
-        paranoid: paranoid)
-      display "created model file #{model}"
-    end
-
-    def create_model_migration
-      migration = "./db/migrate/#{Time.now.to_i}_create_#{table_name}.rb"
-      render_template("model_migration.erb", migration,
-        table_name: table_name,
-        paranoid: paranoid)
-      display "created migration #{migration}"
-    end
-
-    def create_model_test
-      test = "./spec/models/#{field_name}_spec.rb"
-      render_template("model_test.erb", test, singular_class_name: singular_class_name)
-      display "created test #{test}"
-    end
-
-    def create_schema
-      schema = "./docs/schema/schemata/#{field_name}.yaml"
-      write_file(schema) do
-        Prmd.init(name.singularize, yaml: true)
-      end
-      display "created schema file #{schema}"
-    end
-
-    def rebuild_schema
-      schemata = "./docs/schema.json"
-      write_file(schemata) do
-        Prmd.combine("./docs/schema/schemata", meta: "./docs/schema/meta.json")
-      end
-      display "rebuilt #{schemata}"
-    end
-
-    def create_serializer
-      serializer = "./lib/serializers/#{name}.rb"
-      render_template("serializer.erb", serializer, singular_class_name: singular_class_name)
-      display "created serializer file #{serializer}"
-    end
-
-    def create_serializer_test
-      test = "./spec/serializers/#{name}_spec.rb"
-      render_template("serializer_test.erb", test, singular_class_name: singular_class_name)
-      display "created test #{test}"
-    end
-
-    def render_template(template_file, destination_path, vars={})
-      template_path = File.dirname(__FILE__) + "/../templates/#{template_file}"
-      template = ERB.new(File.read(template_path), 0, ">")
-      context = OpenStruct.new(vars)
-      write_file(destination_path) do
-        template.result(context.instance_eval { binding })
-      end
-    end
-
-    def url_path
-      "/" + name.pluralize.gsub(/_/, '-')
-    end
-
-    def write_file(destination_path)
-      FileUtils.mkdir_p(File.dirname(destination_path))
-      File.open(destination_path, "w") do |f|
-        f.puts yield
-      end
+      se = Serializer.new(name, options)
+      se.create
+      se.create_test
     end
   end
 end

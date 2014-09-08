@@ -1,3 +1,4 @@
+require 'pliny/commands/creator'
 require "test_helper"
 
 describe Pliny::Commands::Creator do
