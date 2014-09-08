@@ -89,18 +89,20 @@ $ bundle exec rspec spec/acceptance/artists_spec.rb
 ### Generators
 
 ```bash
-$ bundle exec pliny-generate TYPE NAME
+$ bin/pliny-generate
 ```
 
-Available generator types:
-
-* endpoint
-* mediator
-* migration
-* model
-* scaffold (includes endpoint, model, schema and serializer)
-* schema
-* serializer
+```
+Commands:
+  pliny-generate endpoint NAME    # Generates an endpoint
+  pliny-generate help [COMMAND]   # Describe available commands or one specific command
+  pliny-generate mediator NAME    # Generates a mediator
+  pliny-generate migration NAME   # Generates a migration
+  pliny-generate model NAME       # Generates a model
+  pliny-generate scaffold NAME    # Generates a scaffold of endpoint, model, schema and serializer
+  pliny-generate schema NAME      # Generates a schema
+  pliny-generate serializer NAME  # Generates a serializer
+```
 
 ### Rake tasks
 
