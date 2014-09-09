@@ -78,11 +78,15 @@ namespace :db do
   namespace :schema do
     desc "Load the database schema"
     task :load do
-      schema = File.read("./db/schema.sql")
-      database_urls.each do |database_url|
-        db = Sequel.connect(database_url)
-        db.run(schema)
-        puts "Loaded `#{name_from_uri(database_url)}`"
+      if File.exists?("./db/schema.sql")
+        schema = File.read("./db/schema.sql")
+        database_urls.each do |database_url|
+          db = Sequel.connect(database_url)
+          db.run(schema)
+          puts "Loaded `#{name_from_uri(database_url)}`"
+        end
+      else
+        puts "Skipped schema load, schema.sql not present"
       end
     end
 
