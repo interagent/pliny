@@ -8,7 +8,8 @@ namespace :db do
   desc "Run database migrations"
   task :migrate do
     next if Dir["./db/migrate/*.rb"].empty?
-    database_urls.each do |database_url|
+
+    default_database_urls.each do |database_url|
       db = Sequel.connect(database_url)
       Sequel::Migrator.apply(db, "./db/migrate")
       puts "Migrated `#{name_from_uri(database_url)}`"
@@ -18,10 +19,11 @@ namespace :db do
   desc "Rollback the database"
   task :rollback do
     next if Dir["./db/migrate/*.rb"].empty?
-    database_urls.each do |database_url|
-      db = Sequel.connect(database_url)
+
+    default_database_urls.each do |database_url|
+      db = Sequel.connect(default_database_url)
       Sequel::Migrator.apply(db, "./db/migrate", -1)
-      puts "Rolled back `#{name_from_uri(database_url)}`"
+      puts "Rolled back `#{name_from_uri(default_database_url)}`"
     end
   end
 
@@ -38,8 +40,8 @@ namespace :db do
 
   desc "Seed the database with data"
   task :seed do
-    if File.exist?('./db/seeds.rb')
-      database_urls.each do |database_url|
+    default_database_urls.each do |database_url|
+      if File.exist?('./db/seeds.rb')
         Sequel.connect(database_url)
         load 'db/seeds.rb'
       end
@@ -78,8 +80,8 @@ namespace :db do
   namespace :schema do
     desc "Load the database schema"
     task :load do
-      schema = File.read("./db/schema.sql")
-      database_urls.each do |database_url|
+      default_database_urls.each do |database_url|
+        schema = File.read("./db/schema.sql")
         db = Sequel.connect(database_url)
         db.run(schema)
         puts "Loaded `#{name_from_uri(database_url)}`"
@@ -89,8 +91,7 @@ namespace :db do
     desc "Dump the database schema"
     task :dump do
       file = File.join("db", "schema.sql")
-      database_url = database_urls.first
-      `pg_dump -i -s -x -O -f #{file} #{database_url}`
+      `pg_dump -i -s -x -O -f #{file} #{default_database_url.first}`
 
       schema = File.read(file)
       # filter all COMMENT ON EXTENSION, only owners and the db
@@ -100,7 +101,7 @@ namespace :db do
 
       File.open(file, "w") { |f| f.puts schema }
 
-      puts "Dumped `#{name_from_uri(database_url)}` to #{file}"
+      puts "Dumped `#{name_from_uri(default_database_url.first)}` to #{file}"
     end
 
     desc "Merges migrations into schema and removes them"
@@ -117,17 +118,25 @@ namespace :db do
 
   def database_urls
     if ENV["DATABASE_URL"]
-      ENV.map { |key, value| value if key.match(/DATABASE_URL$/) }.compact
+      Hash[ENV.map { |key, value| [key, value] if key.match(/DATABASE_URL$/) }.compact]
     else
-      %w(.env .env.test).map { |env_file|
+      %w(.env .env.test).inject({}) do |i, env_file|
         env_path = "./#{env_file}"
         if File.exists?(env_path)
-          Pliny::Utils.parse_env(env_path).map { |key, value| value if key.match(/DATABASE_URL$/) }.compact
-        else
-          nil
+          Pliny::Utils.parse_env(env_path).each do |key, value|
+            if key.match(/DATABASE_URL$/)
+              i[key] ||= []
+              i[key] << value
+            end
+          end
         end
-      }.flatten.compact
+        i
+      end
     end
+  end
+
+  def default_database_urls
+    database_urls['DATABASE_URL'] || database_urls.first
   end
 
   def name_from_uri(uri)
