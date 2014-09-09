@@ -22,7 +22,17 @@
 * New `CastingConfigHelpers` pre casts env vars, so you don't have to at all the call sites.
   
   See [pliny-template#131](https://github.com/interagent/pliny-template/pull/131) for how to use it.
+* Introduce `lib/application.rb`.
+  [pliny-template#133](https://github.com/interagent/pliny-template/pull/133)
 
+  Useful when using gems, like [Sidekiq](http://sidekiq.org/).
+  This allows you to require your pliny application in one call.  
+  For example in the `Procfile`.
+  
+  ```
+  worker: bundle exec sidekiq --require ./lib/application.rb
+  ```
+  
 ## 0.2.1 (2014-07-21)
 
 [Compare changes in gem](https://github.com/interagent/pliny/compare/0.1.0...0.2.1)
