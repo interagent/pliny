@@ -32,7 +32,13 @@
   ```
   worker: bundle exec sidekiq --require ./lib/application.rb
   ```
-  
+
+## 0.3.0 (2014-09-09)
+
+[Compare changes in gem](https://github.com/interagent/pliny/compare/0.2.1...0.3.0)
+|
+[Compare changes in template](https://github.com/interagent/pliny-template/compare/0.2.1...0.3.0)
+
 ## 0.2.1 (2014-07-21)
 
 [Compare changes in gem](https://github.com/interagent/pliny/compare/0.1.0...0.2.1)

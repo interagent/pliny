@@ -29,7 +29,7 @@ task :release do
   sh "git commit -a -m 'v#{new_version}'"
   sh "git tag v#{new_version}"
   sh "gem build pliny.gemspec"
-  sh "gem push pliny-#{new_version}.gem"
+  # sh "gem push pliny-#{new_version}.gem"
   sh "git push origin master --tags"
   sh "rm pliny-#{new_version}.gem"
 end
