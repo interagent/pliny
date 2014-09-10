@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.0 (2014-09-09)
+
+[Compare changes in gem](https://github.com/interagent/pliny/compare/0.2.1...v0.3.0)
+|
+[Compare changes in template](https://github.com/interagent/pliny-template/compare/0.2.1...v0.3.0)
+
 * Add `encode` helper.
   [#69](https://github.com/interagent/pliny/pull/69) and [pliny-template#132](https://github.com/interagent/pliny-template/pull/132)
 
@@ -32,12 +38,6 @@
   ```
   worker: bundle exec sidekiq --require ./lib/application.rb
   ```
-
-## 0.3.0 (2014-09-09)
-
-[Compare changes in gem](https://github.com/interagent/pliny/compare/0.2.1...0.3.0)
-|
-[Compare changes in template](https://github.com/interagent/pliny-template/compare/0.2.1...0.3.0)
 
 ## 0.2.1 (2014-07-21)
 
