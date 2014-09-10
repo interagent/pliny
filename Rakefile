@@ -28,6 +28,7 @@ task :release do
   sh "bundle install"
   sh "git commit -a -m 'v#{new_version}'"
   sh "git tag v#{new_version}"
+  sh "cd template && git tag v#{new_version} && git push origin master --tags"
   sh "gem build pliny.gemspec"
   # sh "gem push pliny-#{new_version}.gem"
   sh "git push origin master --tags"
