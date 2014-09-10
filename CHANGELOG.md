@@ -55,7 +55,7 @@
 
 [Compare changes in gem](https://github.com/interagent/pliny/compare/v0.0.3...0.0.4)
 |
-[Compare changes in template](https://github.com/interagent/pliny-template/compare/0.0.3...0.0.4)
+[Compare changes in template](https://github.com/interagent/pliny-template/compare/v0.0.3...0.0.4)
 
 ## 0.0.3 (2014-06-04)
 
