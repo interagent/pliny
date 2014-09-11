@@ -34,3 +34,10 @@ task :release do
   sh "git push origin master --tags"
   sh "rm pliny-#{new_version}.gem"
 end
+
+desc 'Open a irb/pry session preloaded with pliny'
+task :console do
+  require 'pry'
+  require 'pliny'
+  Pry.start
+end
