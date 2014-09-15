@@ -16,11 +16,11 @@ module Pliny::Commands
       end
 
       def singular_class_name
-        name.gsub(/-/, '_').singularize.camelize
+        name.tr('-', '_').singularize.camelize
       end
 
       def plural_class_name
-        name.gsub(/-/, '_').pluralize.camelize
+        name.tr('-', '_').pluralize.camelize
       end
 
       def field_name
@@ -32,7 +32,7 @@ module Pliny::Commands
       end
 
       def table_name
-        name.tableize.gsub('/', '_')
+        name.tableize.tr('/', '_')
       end
 
       def display(msg)
