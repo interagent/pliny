@@ -37,7 +37,7 @@ module Pliny::Commands
       end
 
       def url_path
-        '/' + name.pluralize.gsub(/_/, '-')
+        '/' + name.pluralize.tr('_', '-')
       end
     end
   end
