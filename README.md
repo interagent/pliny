@@ -129,6 +129,7 @@ rake test             # Run tests
 And provides the following commands:
 
 ```bash
+$ foreman start                             # Starts server
 $ foreman run bin/console                   # IRB/Pry console
 $ foreman run bin/run 'puts "hello world"'  # Run automated code
 ```
