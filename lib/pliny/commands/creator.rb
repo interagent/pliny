@@ -1,5 +1,6 @@
 require 'pliny/version'
 require 'fileutils'
+require 'uri'
 
 module Pliny::Commands
   class Creator
