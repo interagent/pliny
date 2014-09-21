@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.0 (2014-09-20)
+
+[Compare changes in gem](https://github.com/interagent/pliny/compare/v0.3.0...v0.4.0)
+|
+[Compare changes in template](https://github.com/interagent/pliny-template/compare/v0.3.0...v0.4.0)
+
 ## 0.3.0 (2014-09-09)
 
 [Compare changes in gem](https://github.com/interagent/pliny/compare/0.2.1...v0.3.0)
