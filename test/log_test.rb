@@ -40,4 +40,12 @@ describe Pliny::Log do
     end
     assert Pliny::RequestStore.store[:log_context][:app] = "pliny"
   end
+
+  it "local context does not propagate outside" do
+    Pliny::RequestStore.store[:log_context] = { app: "pliny" }
+    mock(@io).puts "app=pliny foo=bar"
+    Pliny.context(app: "not_pliny", test: 123) do
+    end
+    Pliny.log(foo: "bar")
+  end
 end
