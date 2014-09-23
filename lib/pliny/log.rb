@@ -10,7 +10,7 @@ module Pliny
       self.local_context = old.merge(data)
       res = block.call
     ensure
-      local_context = old
+      self.local_context = old
       res
     end
 
