@@ -30,7 +30,7 @@ namespace :db do
     database_urls.each do |database_url|
       db = Sequel.connect(database_url)
       db.tables.each do |table|
-        db.run(%{DROP TABLE "#{table}"})
+        db.run(%{DROP TABLE "#{table}" CASCADE})
       end
       puts "Nuked `#{name_from_uri(database_url)}`"
     end
