@@ -98,8 +98,15 @@ namespace :db do
       # replay such statements in certain production databases
       schema.gsub!(/^COMMENT ON EXTENSION.*\n/, "")
 
-      File.open(file, "w") { |f| f.puts schema }
+      # add migrations used to compose this schema
+      db = Sequel.connect(database_urls.first)
+      if db.table_exists?(:schema_migrations)
+        db[:schema_migrations].each do |migration|
+          schema << db[:schema_migrations].insert_sql(migration) + ";\n"
+        end
+      end
 
+      File.open(file, "w") { |f| f.puts schema }
       puts "Dumped `#{name_from_uri(database_url)}` to #{file}"
     end
 
