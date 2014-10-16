@@ -111,7 +111,7 @@ namespace :db do
   end
 
   desc "Setup the database"
-  task :setup => [:drop, :create]
+  task :setup => [:drop, :create, :migrate]
 
   private
 
