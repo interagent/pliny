@@ -19,6 +19,12 @@ describe Pliny::Commands::Creator do
       assert File.exists?("./foobar/Gemfile")
     end
 
+    it "copies the readme template over" do
+      @gen.run!
+      assert File.exists?("./foobar/README.md")
+      assert File.read("./foobar/README.md").include?('Welcome to your new')
+    end
+
     it "deletes the .git from it" do
       @gen.run!
       refute File.exists?("./foobar/.git")

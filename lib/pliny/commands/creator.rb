@@ -20,6 +20,7 @@ module Pliny::Commands
       abort("#{name} already exists") if File.exist?(app_dir)
 
       FileUtils.copy_entry template_dir, app_dir
+      FileUtils.copy readme_template_path, File.join(app_dir, "README.md")
       FileUtils.rm_rf("#{app_dir}/.git")
       setup_database_urls
       display 'Pliny app created. To start, run:'
@@ -56,6 +57,10 @@ module Pliny::Commands
 
     def template_dir
       File.expand_path('../../../template', File.dirname(__FILE__))
+    end
+
+    def readme_template_path
+      File.expand_path('../../../README_TEMPLATE.md', File.dirname(__FILE__))
     end
 
     def app_dir
