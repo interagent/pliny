@@ -2,14 +2,15 @@ $:.unshift File.expand_path("../lib", __FILE__)
 require "pliny/version"
 require "rake/testtask"
 
-task default: :test
-
-Rake::TestTask.new do |task|
-  task.libs << "lib"
-  task.libs << "test"
-  task.name = :test
-  task.test_files = FileList["test/**/*_test.rb"]
+task :spec do
+  require "rspec/core"
+  code = RSpec::Core::Runner.run(
+    ["./spec"],
+    $stderr, $stdout)
+  exit(code) unless code == 0
 end
+
+task default: :spec
 
 desc "Cut a new version specified in VERSION and push"
 task :release do

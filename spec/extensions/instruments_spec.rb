@@ -1,4 +1,4 @@
-require "test_helper"
+require "spec_helper"
 
 describe Pliny::Extensions::Instruments do
   def app

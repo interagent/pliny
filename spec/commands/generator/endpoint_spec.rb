@@ -1,6 +1,6 @@
 require 'pliny/commands/generator'
 require 'pliny/commands/generator/endpoint'
-require 'test_helper'
+require 'spec_helper'
 
 describe Pliny::Commands::Generator::Endpoint do
   subject { Pliny::Commands::Generator::Endpoint.new(model_name, {}, StringIO.new) }
