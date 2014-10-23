@@ -1,5 +1,5 @@
 require 'pliny/commands/creator'
-require "test_helper"
+require 'spec_helper'
 
 describe Pliny::Commands::Creator do
   before do

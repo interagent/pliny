@@ -4,6 +4,7 @@ gemspec
 
 group :test do
   gem "rack-test"
-  gem "rr", require: false
+  gem "rr"
+  gem "rspec"
   gem "timecop"
 end

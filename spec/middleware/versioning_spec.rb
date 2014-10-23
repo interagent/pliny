@@ -1,4 +1,4 @@
-require "test_helper"
+require "spec_helper"
 
 describe Pliny::Middleware::Versioning do
   include Rack::Test::Methods

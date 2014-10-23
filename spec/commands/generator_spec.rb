@@ -1,6 +1,6 @@
 require 'pliny/commands/generator'
 require 'pliny/commands/generator/base'
-require 'test_helper'
+require 'spec_helper'
 
 describe Pliny::Commands::Generator do
 subject { Pliny::Commands::Generator.new }

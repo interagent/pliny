@@ -1,4 +1,4 @@
-require "test_helper"
+require "spec_helper"
 
 describe Pliny::Errors do
   it "includes a general error that requires an identifier" do
