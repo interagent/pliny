@@ -121,7 +121,6 @@ rake db:schema:merge  # Merges migrations into schema and removes them
 rake db:seed          # Seed the database with data
 rake db:setup         # Setup the database
 rake schema           # Rebuild schema.json
-rake test             # Run tests
 ```
 
 ### Commands
