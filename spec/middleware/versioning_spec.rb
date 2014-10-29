@@ -2,6 +2,11 @@ require "spec_helper"
 
 describe Pliny::Middleware::Versioning do
   include Rack::Test::Methods
+  before do
+    @io = StringIO.new
+    Pliny.stdout = @io
+    stub(@io).print
+  end
 
   def app
     Rack::Builder.new do
