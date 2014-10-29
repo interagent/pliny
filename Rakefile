@@ -1,14 +1,8 @@
 $:.unshift File.expand_path("../lib", __FILE__)
 require "pliny/version"
 
-task :spec do
-  require "rspec/core"
-  code = RSpec::Core::Runner.run(
-    ["./spec"],
-    $stderr, $stdout)
-  exit(code) unless code == 0
-end
-
+require 'rspec/core/rake_task'
+RSpec::Core::RakeTask.new(:spec)
 task default: :spec
 
 desc "Cut a new version specified in VERSION and push"
