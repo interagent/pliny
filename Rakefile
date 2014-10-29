@@ -1,6 +1,5 @@
 $:.unshift File.expand_path("../lib", __FILE__)
 require "pliny/version"
-require "rake/testtask"
 
 task :spec do
   require "rspec/core"
