@@ -39,11 +39,7 @@ module Pliny
     def log_to_stream(stream, data, &block)
       unless block
         str = unparse(data)
-        if RUBY_PLATFORM == "java"
-          stream.puts str
-        else
-          mtx.synchronize { stream.puts str }
-        end
+        stream.print(str + "\n")
       else
         data = data.dup
         start = Time.now
@@ -59,10 +55,6 @@ module Pliny
           raise
         end
       end
-    end
-
-    def mtx
-      @mtx ||= Mutex.new
     end
 
     def quote_string(k, v)
