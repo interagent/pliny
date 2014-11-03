@@ -115,14 +115,14 @@ namespace :db do
     end
 
     desc "Merges migrations into schema and removes them"
-    task :merge => ["db:setup", "db:schema:load", "db:migrate", "db:schema:dump"] do
+    task :merge => ["db:setup", "db:schema:dump"] do
       FileUtils.rm Dir["./db/migrate/*.rb"]
       puts "Removed migrations"
     end
   end
 
   desc "Setup the database"
-  task :setup => [:drop, :create, :migrate]
+  task :setup => [:drop, :create, "schema:load", :migrate]
 
   private
 
