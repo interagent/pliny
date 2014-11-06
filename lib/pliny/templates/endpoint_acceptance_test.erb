@@ -15,7 +15,7 @@ describe Endpoints::<%= plural_class_name %> do
   describe 'GET <%= url_path %>' do
     it 'returns correct status code and conforms to schema' do
       get '<%= url_path %>'
-      expect(last_response.status).to eq(200)
+      assert_equal 200, last_response.status
       assert_schema_conform
     end
   end
@@ -24,7 +24,7 @@ describe Endpoints::<%= plural_class_name %> do
     it 'returns correct status code and conforms to schema' do
       header "Content-Type", "application/json"
       post '<%= url_path %>', MultiJson.encode({})
-      expect(last_response.status).to eq(201)
+      assert_equal 201, last_response.status
       assert_schema_conform
     end
   end
@@ -32,7 +32,7 @@ describe Endpoints::<%= plural_class_name %> do
   describe 'GET <%= url_path %>/:id' do
     it 'returns correct status code and conforms to schema' do
       get "<%= url_path %>/123"
-      expect(last_response.status).to eq(200)
+      assert_equal 200, last_response.status
       assert_schema_conform
     end
   end
@@ -41,7 +41,7 @@ describe Endpoints::<%= plural_class_name %> do
     it 'returns correct status code and conforms to schema' do
       header "Content-Type", "application/json"
       patch '<%= url_path %>/123', MultiJson.encode({})
-      expect(last_response.status).to eq(200)
+      assert_equal 200, last_response.status
       assert_schema_conform
     end
   end
@@ -49,7 +49,7 @@ describe Endpoints::<%= plural_class_name %> do
   describe 'DELETE <%= url_path %>/:id' do
     it 'returns correct status code and conforms to schema' do
       delete '<%= url_path %>/123'
-      expect(last_response.status).to eq(200)
+      assert_equal 200, last_response.status
       assert_schema_conform
     end
   end
