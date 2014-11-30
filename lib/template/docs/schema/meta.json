@@ -1,0 +1,9 @@
+{
+ "description": "A simple API template provided by the Pliny project.",
+ "id": "pliny-template-api",
+ "links": [{
+   "href": "https://api.example.com",
+   "rel": "self"
+ }],
+ "title": "Pliny Template API"
+}
