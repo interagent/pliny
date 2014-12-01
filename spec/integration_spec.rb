@@ -10,7 +10,7 @@ describe "Pliny integration test" do
   it "works" do
     bash "pliny-new myapp"
     bash_app "bin/setup"
-    assert File.exists?("./myapp/Gemfile.lock")
+    assert File.exists?("./myapp/.env")
     bash_app "pliny-generate model artist"
     assert File.exists?("./myapp/lib/models/artist.rb")
     # could use something like bin/run in the template app to facilitate testing this

@@ -55,7 +55,7 @@ module Pliny::Commands
     end
 
     def template_dir
-      File.expand_path('../../../template', File.dirname(__FILE__))
+      File.expand_path('../../template', File.dirname(__FILE__))
     end
 
     def app_dir

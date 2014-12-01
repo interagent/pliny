@@ -19,7 +19,7 @@ And gems/helpers to tie these together and support operations:
 - [Log helper](spec/log_spec.rb) that logs in [data format](https://www.youtube.com/watch?v=rpmc-wHFUBs) [to stdout](https://adam.heroku.com/past/2011/4/1/logs_are_streams_not_files)
 - [Mediators](http://brandur.org/mediator) to help encapsulate more complex interactions
 - [Rspec](https://github.com/rspec/rspec) for lean and fast testing
-- [Puma](http://puma.io/) as the web server, [configured for optimal performance on Heroku](https://github.com/interagent/pliny-template/blob/master/config/puma.rb)
+- [Puma](http://puma.io/) as the web server, [configured for optimal performance on Heroku](lib/template/config/puma.rb)
 - [Rack-test](https://github.com/brynary/rack-test) to test the API endpoints
 - [Request IDs](lib/pliny/middleware/request_id.rb)
 - [RequestStore](http://brandur.org/antipatterns), thread safe option to store data with the current request

@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+function main {
+  set -e
+
+  add_new_env_vars
+  bundle install
+  bundle exec rake db:setup
+}
+
+function add_new_env_vars {
+  # create .env and set perms if it does not exist
+  [ ! -f .env ] && { touch .env ; chmod 0600 .env ; }
+
+  export IFS=$'\n'
+  for var in `cat .env.sample`; do
+    key="${var%%=*}"     # get var key
+    var=`eval echo $var` # generate dynamic values
+
+    # If .env doesn't contain this env key, add it
+    if ! `grep -qLE "^$key=" .env`; then
+      echo "Adding $key to .env"
+      echo $var >> .env
+    fi
+  done
+}
+
+main
