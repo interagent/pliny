@@ -18,13 +18,28 @@ task :release do
     abort("ERROR: Invalid version, already at #{Pliny::VERSION}")
   end
 
-  sh "ruby", "-i", "-pe", "$_.gsub!(/VERSION = .*/, %{VERSION = \"#{new_version}\"})", "lib/pliny/version.rb"
+  # update lib/pliny/version.rb
+  sh "ruby",
+    "-i",
+    "-pe",
+    "$_.gsub!(/VERSION = .*/, %{VERSION = \"#{new_version}\"})",
+    "lib/pliny/version.rb"
+
+  # update version in the template app Gemfile
+  sh "ruby",
+    "-i",
+    "-pe",
+    "$_.gsub!(/gem \"pliny\", .*/, %{gem \"pliny\", \"#{new_version.approximate_recommendation}\"})",
+    "lib/template/Gemfile"
+
+  # tag/commit
   sh "bundle install"
   sh "git commit -a -m 'v#{new_version}'"
   sh "git tag v#{new_version}"
-  sh "cd template && git tag v#{new_version} && git push origin master --tags"
+
+  # build new gem and push
   sh "gem build pliny.gemspec"
-  # sh "gem push pliny-#{new_version}.gem"
+  sh "gem push pliny-#{new_version}.gem"
   sh "git push origin master --tags"
   sh "rm pliny-#{new_version}.gem"
 end
