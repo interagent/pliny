@@ -141,7 +141,6 @@ Run tests:
 
 ```
 $ bundle install
-$ git submodule update --init
 $ rake
 ```
 
