@@ -2,7 +2,10 @@
 ENV["RACK_ENV"] = "test"
 
 require "bundler"
-Bundler.require(:default, :test)
+Bundler.require
+
+require "rack/test"
+require "timecop"
 
 require_relative "../lib/pliny"
 
