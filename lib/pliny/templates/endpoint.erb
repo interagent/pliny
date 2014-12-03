@@ -11,19 +11,19 @@ module Endpoints
 
       post do
         status 201
-        encode {}
+        encode Hash.new
       end
 
       get "/:id" do
-        encode {}
+        encode Hash.new
       end
 
       patch "/:id" do |id|
-        encode {}
+        encode Hash.new
       end
 
       delete "/:id" do |id|
-        encode {}
+        encode Hash.new
       end
     end
   end

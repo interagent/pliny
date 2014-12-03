@@ -29,6 +29,7 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency "rack-test", "~> 0.6", ">= 0.6.2"
   gem.add_development_dependency "rr", "~> 1.1", ">= 1.1.2"
   gem.add_development_dependency "rspec", "~> 3.1", ">= 3.1.0"
+  gem.add_development_dependency "sinatra-contrib", "~> 1.4", ">= 1.4.2"
   gem.add_development_dependency "timecop", "~> 0.7", ">= 0.7.1"
   gem.add_development_dependency 'pry'
 end
