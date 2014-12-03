@@ -39,12 +39,16 @@ module Pliny::Commands
         stream.puts msg
       end
 
-      def render_template(template_file, destination_path, vars = {})
+      def render_template(template_file, vars = {})
         template_path = File.dirname(__FILE__) + "/../../templates/#{template_file}"
         template = ERB.new(File.read(template_path), 0, '>')
         context = OpenStruct.new(vars)
+        template.result(context.instance_eval { binding })
+      end
+
+      def write_template(template_file, destination_path, vars = {})
         write_file(destination_path) do
-          template.result(context.instance_eval { binding })
+          render_template(template_file, vars)
         end
       end
 

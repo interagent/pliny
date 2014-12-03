@@ -5,7 +5,7 @@ module Pliny::Commands
     class Migration < Base
       def create
         migration = "./db/migrate/#{Time.now.to_i}_#{name}.rb"
-        render_template('migration.erb', migration)
+        write_template('migration.erb', migration)
         display "created migration #{migration}"
       end
     end
