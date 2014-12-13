@@ -147,7 +147,7 @@ namespace :db do
 
   def postgres_location_from_uri(uri)
     p = URI.parse(uri)
-    port = p.port ? ":#{p.port}" : ""
-    "#{p.scheme}://#{p.host}#{port}"
+    p.path = ""
+    p.to_s
   end
 end
