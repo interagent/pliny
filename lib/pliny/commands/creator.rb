@@ -1,5 +1,5 @@
-require 'pliny/version'
 require 'fileutils'
+require 'pathname'
 require 'uri'
 
 module Pliny::Commands
@@ -59,7 +59,7 @@ module Pliny::Commands
     end
 
     def app_dir
-      "./#{name}"
+      Pathname.new(name).expand_path
     end
   end
 end
