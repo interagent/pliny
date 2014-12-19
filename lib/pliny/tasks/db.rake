@@ -13,6 +13,7 @@ namespace :db do
       Sequel::Migrator.apply(db, "./db/migrate")
       puts "Migrated `#{name_from_uri(database_url)}`"
     end
+    disconnect
   end
 
   desc "Rollback the database"
@@ -23,6 +24,7 @@ namespace :db do
       Sequel::Migrator.apply(db, "./db/migrate", -1)
       puts "Rolled back `#{name_from_uri(database_url)}`"
     end
+    disconnect
   end
 
   desc "Nuke the database (drop all tables)"
@@ -34,6 +36,7 @@ namespace :db do
       end
       puts "Nuked `#{name_from_uri(database_url)}`"
     end
+    disconnect
   end
 
   desc "Seed the database with data"
@@ -43,6 +46,7 @@ namespace :db do
         Sequel.connect(database_url)
         load 'db/seeds.rb'
       end
+      disconnect
     end
   end
 
@@ -63,6 +67,7 @@ namespace :db do
       end
       puts "Created `#{name}`" if !exists
     end
+    disconnect
   end
 
   desc "Drop the database"
@@ -73,6 +78,7 @@ namespace :db do
       db.run(%{DROP DATABASE IF EXISTS "#{name}"})
       puts "Dropped `#{name}`"
     end
+    disconnect
   end
 
   namespace :schema do
@@ -85,6 +91,7 @@ namespace :db do
           db.run(schema)
           puts "Loaded `#{name_from_uri(database_url)}`"
         end
+        disconnect
       else
         puts "Skipped schema load, schema.sql not present"
       end
@@ -109,6 +116,7 @@ namespace :db do
           schema << db[:schema_migrations].insert_sql(migration) + ";\n"
         end
       end
+      disconnect
 
       File.open(file, "w") { |f| f.puts schema }
       puts "Dumped `#{name_from_uri(database_url)}` to #{file}"
@@ -125,6 +133,11 @@ namespace :db do
   task :setup => [:drop, :create, "schema:load", :migrate]
 
   private
+
+  def disconnect
+    Sequel::DATABASES.each { |db| db.disconnect }
+    Sequel::DATABASES.clear
+  end
 
   def database_urls
     if ENV["DATABASE_URL"]
@@ -147,7 +160,7 @@ namespace :db do
 
   def postgres_location_from_uri(uri)
     p = URI.parse(uri)
-    port = p.port ? ":#{p.port}" : ""
-    "#{p.scheme}://#{p.host}#{port}"
+    p.path = ""
+    p.to_s
   end
 end
