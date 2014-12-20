@@ -1,4 +1,5 @@
 Routes = Rack::Builder.new do
+  use Rollbar::Middleware::Sinatra
   use Pliny::Middleware::RescueErrors, raise: Config.raise_errors?
   use Pliny::Middleware::CORS
   use Pliny::Middleware::RequestID

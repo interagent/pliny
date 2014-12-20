@@ -16,10 +16,6 @@ module Endpoints
       also_reload '../**/*.rb'
     end
 
-    error Pliny::Errors::Error do
-      Pliny::Errors::Error.render(env["sinatra.error"])
-    end
-
     not_found do
       content_type :json
       status 404
