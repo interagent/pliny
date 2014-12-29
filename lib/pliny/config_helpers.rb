@@ -83,4 +83,4 @@ module Pliny
 end
 
 # Supress the "use RbConfig instead" warning.
-Object.send :remove_const, :Config
+Object.send(:remove_const, :Config) if Object.const_defined?(:Config)
