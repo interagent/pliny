@@ -1,4 +1,4 @@
-require 'test_helper'
+require 'spec_helper'
 
 describe Pliny::Helpers::Paginator do
   let(:dummy_class) { Class.new { include Pliny::Helpers::Paginator } }

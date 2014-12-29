@@ -1,4 +1,4 @@
-require 'test_helper'
+require 'spec_helper'
 
 describe Pliny::Helpers::Paginator::IntegerPaginator do
   subject { Pliny::Helpers::Paginator::IntegerPaginator.new(sinatra, count, opts) }
