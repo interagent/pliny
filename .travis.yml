@@ -6,6 +6,7 @@ rvm:
   - 1.9.3
 addons:
   postgresql: '9.3'
+sudo: false
 cache: bundler
 notifications:
   hipchat:
