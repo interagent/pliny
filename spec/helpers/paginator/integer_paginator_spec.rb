@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Pliny::Helpers::Paginator::IntegerPaginator do
-  subject { Pliny::Helpers::Paginator::IntegerPaginator.new(sinatra, count, opts) }
+  subject { described_class.new(sinatra, count, opts) }
   let(:dummy_class) { Class.new { include Pliny::Helpers::Paginator } }
   let(:sinatra) { dummy_class.new }
   let(:count) { 4 }
