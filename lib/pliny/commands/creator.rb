@@ -1,6 +1,6 @@
-require 'pliny/version'
 require 'fileutils'
 require 'pathname'
+require 'pliny/version'
 require 'uri'
 
 module Pliny::Commands
