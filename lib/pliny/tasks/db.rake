@@ -130,7 +130,7 @@ namespace :db do
   end
 
   desc "Setup the database"
-  task :setup => [:drop, :create, "schema:load", :migrate]
+  task :setup => [:drop, :create, "schema:load", :migrate, :seed]
 
   private
 
