@@ -89,7 +89,7 @@ $ bundle exec rspec spec/acceptance/artists_spec.rb
 ### Generators
 
 ```bash
-$ bin/pliny-generate
+$ bundle exec pliny-generate
 ```
 
 ```
