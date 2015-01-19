@@ -8,6 +8,9 @@ module Pliny::Middleware
     def call(env)
       @app.call(env)
     rescue Pliny::Errors::Error => e
+      # blank out this field so that the error is not picked up by Rollbar
+      env["sinatra.error"] = nil
+
       Pliny::Errors::Error.render(e)
     rescue Exception => e
       if @raise
