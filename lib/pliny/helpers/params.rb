@@ -7,7 +7,7 @@ module Pliny::Helpers
     private
 
     def parse_body_params
-      if request.content_type == "application/json"
+      if request.media_type == "application/json"
         p = indifferent_params(MultiJson.decode(request.body.read))
         request.body.rewind
         p
