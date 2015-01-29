@@ -2,8 +2,14 @@
 
 module Pliny::Middleware
   class RequestID
+    # note that this pattern supports either a full UUID, or a "squashed" UUID
+    # like the kind Hermes sends:
+    #
+    #     full:     01234567-89ab-cdef-0123-456789abcdef
+    #     squashed: 0123456789abcdef0123456789abcdef
+    #
     UUID_PATTERN =
-      /\A[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}\Z/
+      /\A[a-f0-9]{8}-?[a-f0-9]{4}-?[a-f0-9]{4}-?[a-f0-9]{4}-?[a-f0-9]{12}\Z/
 
     def initialize(app)
       @app = app
