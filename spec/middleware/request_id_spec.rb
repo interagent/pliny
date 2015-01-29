@@ -25,4 +25,11 @@ describe Pliny::Middleware::RequestID do
     get "/"
     assert_includes last_response.body, id
   end
+
+  it "accepts incoming request IDs with an `X-` prefix" do
+    id = SecureRandom.uuid
+    header "X-Request-Id", id
+    get "/"
+    assert_includes last_response.body, id
+  end
 end
