@@ -1,3 +1,4 @@
+require 'pliny/commands/creator'
 require 'pliny/commands/generator'
 require 'pliny/commands/generator/base'
 require 'spec_helper'
@@ -6,8 +7,6 @@ describe Pliny::Commands::Generator do
 subject { Pliny::Commands::Generator.new }
 
   before do
-    FileUtils.mkdir_p('/tmp/plinytest')
-    Dir.chdir('/tmp/plinytest')
     Timecop.freeze(@t = Time.now)
 
     any_instance_of(Pliny::Commands::Generator::Base) do |klass|
@@ -15,8 +14,16 @@ subject { Pliny::Commands::Generator.new }
     end
   end
 
+  around do |example|
+    Dir.mktmpdir do |dir|
+      app_dir = File.join(dir, "app")
+      # some generators depend on files seeded by the template
+      Pliny::Commands::Creator.run([app_dir], {}, StringIO.new)
+      Dir.chdir(app_dir, &example)
+    end
+  end
+
   after do
-    FileUtils.rmdir('/tmp/plinytest')
     Timecop.return
   end
 
