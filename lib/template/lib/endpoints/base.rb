@@ -16,7 +16,7 @@ module Endpoints
       also_reload '../**/*.rb'
     end
 
-    not_found do
+    error Sinatra::NotFound do
       content_type :json
       status 404
       "{}"
