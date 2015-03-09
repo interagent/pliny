@@ -127,7 +127,7 @@ subject { Pliny::Commands::Generator.new }
     end
 
     it 'creates a schema' do
-      assert File.exist?('docs/schema/schemata/artist.yaml')
+      assert File.exist?('schema/schemata/artist.yaml')
     end
 
     it 'creates a new serializer module' do
@@ -145,7 +145,7 @@ subject { Pliny::Commands::Generator.new }
     end
 
     it 'creates a schema' do
-      assert File.exist?('docs/schema/schemata/artist.yaml')
+      assert File.exist?('schema/schemata/artist.yaml')
     end
   end
 
