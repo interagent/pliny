@@ -4,7 +4,7 @@ require 'pliny/commands/generator/base'
 require 'spec_helper'
 
 describe Pliny::Commands::Generator do
-subject { Pliny::Commands::Generator.new }
+  subject { Pliny::Commands::Generator.new }
 
   before do
     Timecop.freeze(@t = Time.now)
