@@ -62,6 +62,7 @@ module Pliny
     class RequestedRangeNotSatisfiable < HTTPStatusError; end # 416
     class ExpectationFailed < HTTPStatusError; end            # 417
     class UnprocessableEntity < HTTPStatusError; end          # 422
+    class TooManyRequests < HTTPStatusError; end              # 429
     class InternalServerError < HTTPStatusError; end          # 500
     class NotImplemented < HTTPStatusError; end               # 501
     class BadGateway < HTTPStatusError; end                   # 502
@@ -105,6 +106,7 @@ module Pliny
       RequestedRangeNotSatisfiable => [416, 'Requested range not satisfiable'],
       ExpectationFailed            => [417, 'Expectation failed'],
       UnprocessableEntity          => [422, 'Unprocessable entity'],
+      TooManyRequests              => [429, 'Too many requests'],
       InternalServerError          => [500, 'Internal server error'],
       NotImplemented               => [501, 'Not implemented'],
       BadGateway                   => [502, 'Bad gateway'],
