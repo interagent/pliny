@@ -46,7 +46,7 @@ describe Pliny::Log do
     Pliny.default_context = { app: "pliny" }
     mock(@io).print "app=not_pliny foo=bar\n"
     Pliny.log(app: 'not_pliny', foo: "bar")
-    assert Pliny.default_context[:app] = "pliny"
+    assert Pliny.default_context[:app] == "pliny"
   end
 
   it "local context does not overwrite request context" do
@@ -55,7 +55,7 @@ describe Pliny::Log do
     Pliny.context(app: "not_pliny") do
       Pliny.log(foo: "bar")
     end
-    assert Pliny::RequestStore.store[:log_context][:app] = "pliny"
+    assert Pliny::RequestStore.store[:log_context][:app] == "pliny"
   end
 
   it "local context does not propagate outside" do
