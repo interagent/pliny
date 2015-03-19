@@ -5,7 +5,7 @@
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 #
-ENV["RACK_ENV"] = "test"
+ENV["PLINY_ENV"] = "test"
 
 require "bundler"
 Bundler.require(:default, :test)
@@ -27,7 +27,7 @@ RSpec.configure do |config|
   config.before :all do
     load('db/seeds.rb') if File.exist?('db/seeds.rb')
   end
-  
+
   config.before :each do
     DatabaseCleaner.start
   end
