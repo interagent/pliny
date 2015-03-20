@@ -8,7 +8,7 @@ describe Pliny::Log do
   end
 
   after do
-    Pliny.default_context = { }
+    Pliny.default_context = {}
   end
 
   it "logs in structured format" do
