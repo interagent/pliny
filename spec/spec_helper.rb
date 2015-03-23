@@ -1,5 +1,5 @@
 # make sure this is set before Sinatra is required
-ENV["PLINY_ENV"] = "test"
+ENV["RACK_ENV"] = "test"
 
 require "bundler"
 Bundler.require
