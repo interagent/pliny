@@ -5,7 +5,7 @@
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 #
-ENV["PLINY_ENV"] = "test"
+ENV["RACK_ENV"] = "test"
 
 require "bundler"
 Bundler.require(:default, :test)
