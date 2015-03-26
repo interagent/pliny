@@ -27,7 +27,7 @@ RSpec.configure do |config|
   config.before :all do
     load('db/seeds.rb') if File.exist?('db/seeds.rb')
   end
-  
+
   config.before :each do
     DatabaseCleaner.start
   end

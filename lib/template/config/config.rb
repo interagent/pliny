@@ -25,6 +25,7 @@ module Config
   override :puma_min_threads, 1,    int
   override :puma_workers,     3,    int
   override :rack_env,         'development', string
+  override :pliny_env,        'development', string
   override :raise_errors,     false,         bool
   override :root,             File.expand_path("../../", __FILE__), string
   override :timeout,          10,    int
