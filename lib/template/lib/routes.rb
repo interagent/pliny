@@ -4,7 +4,7 @@ Routes = Rack::Builder.new do
   use Pliny::Middleware::CORS
   use Pliny::Middleware::RequestID
   use Pliny::Middleware::RequestStore, store: Pliny::RequestStore
-  use Pliny::Middleware::Timeout, timeout: Config.timeout if Config.timeout > 0
+  use Rack::Timeout if Config.timeout > 0
   use Pliny::Middleware::Versioning,
       default: Config.versioning_default,
       app_name: Config.versioning_app_name if Config.versioning?
