@@ -1,4 +1,5 @@
 require "multi_json"
+require "rack/timeout"
 require "sinatra/base"
 
 require_relative "pliny/version"
@@ -14,7 +15,6 @@ require_relative "pliny/middleware/cors"
 require_relative "pliny/middleware/request_id"
 require_relative "pliny/middleware/request_store"
 require_relative "pliny/middleware/rescue_errors"
-require_relative "pliny/middleware/timeout"
 require_relative "pliny/middleware/versioning"
 
 module Pliny
