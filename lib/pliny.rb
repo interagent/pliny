@@ -1,6 +1,6 @@
 require "multi_json"
-require "sinatra/base"
 require "rack/timeout"
+require "sinatra/base"
 
 require_relative "pliny/version"
 require_relative "pliny/errors"
