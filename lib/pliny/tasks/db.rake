@@ -34,7 +34,7 @@ namespace :db do
       db.tables.each do |table|
         db.run(%{DROP TABLE "#{table}" CASCADE})
       end
-      db.fetch(<<-SQL).each do |row|
+      db.fetch(<<-SQL).all do |row|
 SELECT quote_ident(n.nspname) AS schema,
   pg_catalog.format_type(t.oid, NULL) AS type_name
 FROM pg_catalog.pg_type t
