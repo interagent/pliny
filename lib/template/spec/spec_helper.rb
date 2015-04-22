@@ -36,6 +36,7 @@ RSpec.configure do |config|
     DatabaseCleaner.clean
   end
 
+  config.include Rack::Test::Methods
   config.expect_with :minitest
   config.run_all_when_everything_filtered = true
   config.filter_run :focus
