@@ -9,6 +9,7 @@ module Endpoints
 
     set :dump_errors, false
     set :raise_errors, true
+    set :root, Config.root
     set :show_exceptions, false
 
     configure :development do
