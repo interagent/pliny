@@ -18,19 +18,19 @@ module Endpoints
       end
 
       get "/:id" do |id|
-        <%= field_name %> = <%= singular_class_name %>.first(uuid: id) || halt(404)
+        <%= field_name %> = <%= singular_class_name %>.first(id: id) || halt(404)
         encode serialize(<%= field_name %>)
       end
 
       patch "/:id" do |id|
-        <%= field_name %> = <%= singular_class_name %>.first(uuid: id) || halt(404)
+        <%= field_name %> = <%= singular_class_name %>.first(id: id) || halt(404)
         # warning: not safe
         #<%= field_name %>.update(body_params)
         encode serialize(<%= field_name %>)
       end
 
       delete "/:id" do |id|
-        <%= field_name %> = <%= singular_class_name %>.first(uuid: id) || halt(404)
+        <%= field_name %> = <%= singular_class_name %>.first(id: id) || halt(404)
         <%= field_name %>.destroy
         encode serialize(<%= field_name %>)
       end
