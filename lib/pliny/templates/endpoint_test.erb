@@ -1,8 +1,6 @@
 require "spec_helper"
 
 describe Endpoints::<%= plural_class_name %> do
-  include Rack::Test::Methods
-
   describe "GET <%= url_path %>" do
     it "succeeds" do
       get "<%= url_path %>"
