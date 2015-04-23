@@ -23,6 +23,7 @@ group :development, :test do
 end
 
 group :test do
+  gem "simpleconv", require: false
   gem "committee"
   gem "database_cleaner"
   gem "dotenv"
