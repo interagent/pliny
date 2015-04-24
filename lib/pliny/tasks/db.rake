@@ -22,18 +22,11 @@ namespace :db do
   task :rollback do
     next if Dir["./db/migrate/*.rb"].empty?
     database_urls.each do |database_url|
-      db = Sequel.connect(database_url)
-      db.loggers << Logger.new($stdout)
-      migrations = Dir["./db/migrate/*.rb"].map { |f| File.basename(f).to_i }.sort
-      current = db[:schema_migrations].order(Sequel.desc(:filename)).first[:filename].to_i
-      target = 0 # by default, rollback everything
-      if i = migrations.index(current)
-        target = migrations[i - 1] || 0
+      Pliny::DbSupport.run(database_url, logger: Logger.new($stdout)) do |helper|
+        helper.rollback
+        puts "Rolled back `#{name_from_uri(database_url)}`"
       end
-      Sequel::Migrator.apply(db, "./db/migrate", target)
-      puts "Rolled back `#{name_from_uri(database_url)}`"
     end
-    disconnect
   end
 
   desc "Nuke the database (drop all tables)"

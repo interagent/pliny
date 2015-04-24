@@ -38,4 +38,29 @@ describe Pliny::DbSupport do
       assert_equal [:bar, :id], @db[:foo].columns.sort
     end
   end
+
+  describe "#rollback" do
+    before do
+      t = Time.now
+      File.open("#{@path}/db/migrate/#{(t-3).to_i}_first.rb", "w") do |f|
+        f.puts "Sequel.migration { change { create_table(:first) } }"
+      end
+
+      File.open("#{@path}/db/migrate/#{(t-2).to_i}_second.rb", "w") do |f|
+        f.puts "Sequel.migration { change { create_table(:second) } }"
+      end
+
+      File.open("#{@path}/db/migrate/#{(t-1).to_i}_third.rb", "w") do |f|
+        f.puts "Sequel.migration { change { create_table(:third) } }"
+      end
+    end
+
+    it "reverts one migration" do
+      support.migrate
+      support.rollback
+      assert_equal [:first, :schema_migrations, :second], @db.tables.sort
+      support.rollback
+      assert_equal [:first, :schema_migrations], @db.tables.sort
+    end
+  end
 end
