@@ -9,12 +9,14 @@ Bundler.require
 
 require "fileutils"
 require "rack/test"
+require "sequel"
 require "sinatra/namespace"
 require "sinatra/router"
 require "timecop"
 
 require_relative "../lib/pliny"
 Pliny::Utils.require_glob("./spec/support/**/*.rb")
+DB = Sequel.connect(ENV["DATABASE_URL"])
 
 RSpec.configure do |config|
   config.include Rack::Test::Methods

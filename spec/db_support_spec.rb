@@ -5,12 +5,11 @@ describe Pliny::DbSupport do
   let(:support) { Pliny::DbSupport.new(ENV["DATABASE_URL"]) }
 
   before(:all) do
-    @db = Sequel.connect(ENV["DATABASE_URL"])
     @path = "/tmp/pliny-test"
   end
 
   before(:each) do
-    @db.tables.each { |t| @db.drop_table(t) }
+    DB.tables.each { |t| DB.drop_table(t) }
     FileUtils.rm_rf(@path)
     FileUtils.mkdir_p("#{@path}/db/migrate")
     Dir.chdir(@path)
@@ -34,8 +33,8 @@ describe Pliny::DbSupport do
 
     it "migrates the database" do
       support.migrate
-      assert_equal [:foo, :schema_migrations], @db.tables.sort
-      assert_equal [:bar, :id], @db[:foo].columns.sort
+      assert_equal [:foo, :schema_migrations], DB.tables.sort
+      assert_equal [:bar, :id], DB[:foo].columns.sort
     end
   end
 
@@ -58,9 +57,9 @@ describe Pliny::DbSupport do
     it "reverts one migration" do
       support.migrate
       support.rollback
-      assert_equal [:first, :schema_migrations, :second], @db.tables.sort
+      assert_equal [:first, :schema_migrations, :second], DB.tables.sort
       support.rollback
-      assert_equal [:first, :schema_migrations], @db.tables.sort
+      assert_equal [:first, :schema_migrations], DB.tables.sort
     end
   end
 end
