@@ -2,7 +2,7 @@
 ENV["RACK_ENV"] = "test"
 
 # have this database is available for tests
-ENV["DATABASE_URL"] ||= "postgres://localhost/pliny-test"
+ENV["DATABASE_URL"] ||= "postgres://localhost/pliny-gem-test"
 
 require "bundler"
 Bundler.require
