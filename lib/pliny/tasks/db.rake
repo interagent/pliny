@@ -3,6 +3,7 @@ require "sequel"
 require "sequel/extensions/migration"
 require "uri"
 
+require "pliny/db_support"
 require "pliny/utils"
 
 namespace :db do
@@ -10,12 +11,11 @@ namespace :db do
   task :migrate do
     next if Dir["./db/migrate/*.rb"].empty?
     database_urls.each do |database_url|
-      db = Sequel.connect(database_url)
-      db.loggers << Logger.new($stdout)
-      Sequel::Migrator.apply(db, "./db/migrate")
-      puts "Migrated `#{name_from_uri(database_url)}`"
+      Pliny::DbSupport.run(database_url, logger: Logger.new($stdout)) do |helper|
+        helper.migrate
+        puts "Migrated `#{name_from_uri(database_url)}`"
+      end
     end
-    disconnect
   end
 
   desc "Rollback last database migration"

@@ -1,9 +1,13 @@
 # make sure this is set before Sinatra is required
 ENV["RACK_ENV"] = "test"
 
+# have this database is available for tests
+ENV["DATABASE_URL"] ||= "postgres://localhost/pliny-test"
+
 require "bundler"
 Bundler.require
 
+require "fileutils"
 require "rack/test"
 require "sinatra/namespace"
 require "sinatra/router"
