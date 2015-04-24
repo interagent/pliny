@@ -4,18 +4,24 @@ require "sequel/extensions/migration"
 
 module Pliny
   class DbSupport
-    def self.run(url, options={})
-      instance = new(url, options)
+    @@logger = nil
+
+    def self.logger=(logger)
+      @@logger=logger
+    end
+
+    def self.run(url)
+      instance = new(url)
       yield instance
       instance.disconnect
     end
 
     attr_accessor :db
 
-    def initialize(url, options={})
+    def initialize(url)
       @db = Sequel.connect(url)
-      if logger = options[:logger]
-        @db.loggers << logger
+      if @@logger
+        @db.loggers << @@logger
       end
     end
 
