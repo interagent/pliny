@@ -2,7 +2,7 @@ require "spec_helper"
 require "pliny/db_support"
 
 describe Pliny::DbSupport do
-  let(:support) { Pliny::DbSupport.new(ENV["DATABASE_URL"]) }
+  let(:support) { Pliny::DbSupport.new(ENV["TEST_DATABASE_URL"]) }
 
   before(:all) do
     @path = "/tmp/pliny-test"

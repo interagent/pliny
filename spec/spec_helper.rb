@@ -2,7 +2,7 @@
 ENV["RACK_ENV"] = "test"
 
 # have this database is available for tests
-ENV["DATABASE_URL"] ||= "postgres://localhost/pliny-gem-test"
+ENV["TEST_DATABASE_URL"] ||= "postgres://localhost/pliny-gem-test"
 
 require "bundler"
 Bundler.require
@@ -16,7 +16,7 @@ require "timecop"
 
 require_relative "../lib/pliny"
 Pliny::Utils.require_glob("./spec/support/**/*.rb")
-DB = Sequel.connect(ENV["DATABASE_URL"])
+DB = Sequel.connect(ENV["TEST_DATABASE_URL"])
 
 RSpec.configure do |config|
   config.include Rack::Test::Methods
