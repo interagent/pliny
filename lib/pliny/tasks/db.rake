@@ -3,31 +3,32 @@ require "sequel"
 require "sequel/extensions/migration"
 require "uri"
 
+require "pliny/db_support"
 require "pliny/utils"
+
+Pliny::DbSupport.logger = Logger.new($stdout)
 
 namespace :db do
   desc "Run database migrations"
   task :migrate do
     next if Dir["./db/migrate/*.rb"].empty?
     database_urls.each do |database_url|
-      db = Sequel.connect(database_url)
-      db.loggers << Logger.new($stdout)
-      Sequel::Migrator.apply(db, "./db/migrate")
-      puts "Migrated `#{name_from_uri(database_url)}`"
+      Pliny::DbSupport.run(database_url) do |helper|
+        helper.migrate
+        puts "Migrated `#{name_from_uri(database_url)}`"
+      end
     end
-    disconnect
   end
 
-  desc "Rollback the database"
+  desc "Rollback last database migration"
   task :rollback do
     next if Dir["./db/migrate/*.rb"].empty?
     database_urls.each do |database_url|
-      db = Sequel.connect(database_url)
-      db.loggers << Logger.new($stdout)
-      Sequel::Migrator.apply(db, "./db/migrate", -1)
-      puts "Rolled back `#{name_from_uri(database_url)}`"
+      Pliny::DbSupport.run(database_url) do |helper|
+        helper.rollback
+        puts "Rolled back `#{name_from_uri(database_url)}`"
+      end
     end
-    disconnect
   end
 
   desc "Nuke the database (drop all tables)"

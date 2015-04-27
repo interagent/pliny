@@ -6,6 +6,8 @@ rvm:
   - 1.9.3
 addons:
   postgresql: '9.3'
+before_script:
+  - createdb pliny-gem-test
 sudo: false
 cache: bundler
 notifications:

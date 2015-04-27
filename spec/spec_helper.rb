@@ -1,16 +1,22 @@
 # make sure this is set before Sinatra is required
 ENV["RACK_ENV"] = "test"
 
+# have this database is available for tests
+ENV["TEST_DATABASE_URL"] ||= "postgres://localhost/pliny-gem-test"
+
 require "bundler"
 Bundler.require
 
+require "fileutils"
 require "rack/test"
+require "sequel"
 require "sinatra/namespace"
 require "sinatra/router"
 require "timecop"
 
 require_relative "../lib/pliny"
 Pliny::Utils.require_glob("./spec/support/**/*.rb")
+DB = Sequel.connect(ENV["TEST_DATABASE_URL"])
 
 RSpec.configure do |config|
   config.include Rack::Test::Methods
