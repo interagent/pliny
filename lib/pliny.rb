@@ -8,6 +8,7 @@ require_relative "pliny/extensions/instruments"
 require_relative "pliny/helpers/encode"
 require_relative "pliny/helpers/params"
 require_relative "pliny/log"
+require_relative "pliny/measure"
 require_relative "pliny/request_store"
 require_relative "pliny/router"
 require_relative "pliny/utils"
@@ -19,4 +20,5 @@ require_relative "pliny/middleware/versioning"
 
 module Pliny
   extend Log
+  extend Measure
 end
