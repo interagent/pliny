@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+
+require "optparse"
+require_relative '../lib/pliny/commands/updater'
+
+ARGV.options do |options|
+  opts = {}
+
+  options.parse!
+
+  Pliny::Commands::Updater.run(ARGV.dup, opts)
+end
