@@ -1,4 +1,4 @@
-class Serializers
+module Serializers
   class Base
     @@structures = {}
 
