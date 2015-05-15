@@ -17,10 +17,8 @@ Gem::Specification.new do |gem|
 
   gem.add_dependency "activesupport",  "~> 4.1",  ">= 4.1.0"
   gem.add_dependency "multi_json",     "~> 1.9",  ">= 1.9.3"
-  gem.add_dependency "pg",             "~> 0.17", ">= 0.17.1"
   gem.add_dependency "prmd",           "~> 0.7.0"
   gem.add_dependency "rack-timeout",   "~> 0.2",  ">= 0.2.3"
-  gem.add_dependency "sequel",         "~> 4.9",  ">= 4.9.0"
   gem.add_dependency "sinatra",        "~> 1.4",  ">= 1.4.5"
   gem.add_dependency "http_accept",    "~> 0.1",  ">= 0.1.5"
   gem.add_dependency "sinatra-router", "~> 0.2",  ">= 0.2.3"
@@ -33,4 +31,6 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency "sinatra-contrib", "~> 1.4", ">= 1.4.2"
   gem.add_development_dependency "timecop", "~> 0.7", ">= 0.7.1"
   gem.add_development_dependency 'pry'
+  gem.add_development_dependency "pg",             "~> 0.17", ">= 0.17.1"
+  gem.add_development_dependency "sequel",         "~> 4.9",  ">= 4.9.0"
 end
