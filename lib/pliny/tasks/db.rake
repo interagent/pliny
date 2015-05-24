@@ -38,6 +38,20 @@ namespace :db do
       db.tables.each do |table|
         db.run(%{DROP TABLE "#{table}" CASCADE})
       end
+      db.fetch(<<-SQL).all do |row|
+SELECT quote_ident(n.nspname) AS schema,
+  pg_catalog.format_type(t.oid, NULL) AS type_name
+FROM pg_catalog.pg_type t
+     LEFT JOIN pg_catalog.pg_namespace n ON n.oid = t.typnamespace
+WHERE (t.typrelid = 0 OR (SELECT c.relkind = 'c' FROM pg_catalog.pg_class c WHERE c.oid = t.typrelid))
+  AND NOT EXISTS(SELECT 1 FROM pg_catalog.pg_type el WHERE el.oid = t.typelem AND el.typarray = t.oid)
+      AND n.nspname <> 'pg_catalog'
+      AND n.nspname <> 'information_schema'
+  AND pg_catalog.pg_type_is_visible(t.oid)
+ORDER BY 1, 2;
+      SQL
+        db.run(%{DROP TYPE #{row[:schema]}.#{row[:type_name]} CASCADE})
+      end
       puts "Nuked `#{name_from_uri(database_url)}`"
     end
     disconnect
