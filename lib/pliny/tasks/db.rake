@@ -35,8 +35,19 @@ namespace :db do
   task :nuke do
     database_urls.each do |database_url|
       db = Sequel.connect(database_url)
-      db.tables.each do |table|
-        db.run(%{DROP TABLE "#{table}" CASCADE})
+      db.fetch(<<-SQL).all do |row|
+SELECT quote_ident(n.nspname) as schema,
+  quote_ident(c.relname) as table
+FROM pg_catalog.pg_class c
+     LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+WHERE c.relkind = 'r'
+      AND n.nspname <> 'pg_catalog'
+      AND n.nspname <> 'information_schema'
+      AND n.nspname !~ '^pg_toast'
+  AND pg_catalog.pg_table_is_visible(c.oid)
+ORDER BY 1,2;
+SQL
+        db.run(%{DROP TABLE #{row[:schema]}.#{row[:table]} CASCADE})
       end
       puts "Nuked `#{name_from_uri(database_url)}`"
     end
