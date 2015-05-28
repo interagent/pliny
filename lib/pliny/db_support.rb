@@ -30,6 +30,8 @@ module Pliny
     end
 
     def rollback
+      return unless db.tables.include?(:schema_migrations)
+
       migrations = Dir["./db/migrate/*.rb"].map { |f| File.basename(f).to_i }.sort
       current    = db[:schema_migrations].order(Sequel.desc(:filename)).first[:filename].to_i
       target     = 0 # by default, rollback everything

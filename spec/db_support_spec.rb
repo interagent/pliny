@@ -64,5 +64,9 @@ describe Pliny::DbSupport do
       support.rollback
       assert_equal [:schema_migrations], DB.tables.sort
     end
+
+    it "handle empty databases" do
+      support.rollback # noop
+    end
   end
 end
