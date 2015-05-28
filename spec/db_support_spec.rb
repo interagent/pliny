@@ -41,23 +41,17 @@ describe Pliny::DbSupport do
   describe "#rollback" do
     before do
       @t = Time.now
-      File.open("#{@path}/db/migrate/#{(@t-3).to_i}_first.rb", "w") do |f|
+      File.open("#{@path}/db/migrate/#{(@t-2).to_i}_first.rb", "w") do |f|
         f.puts "Sequel.migration { change { create_table(:first) } }"
       end
 
-      File.open("#{@path}/db/migrate/#{(@t-2).to_i}_second.rb", "w") do |f|
+      File.open("#{@path}/db/migrate/#{(@t-1).to_i}_second.rb", "w") do |f|
         f.puts "Sequel.migration { change { create_table(:second) } }"
-      end
-
-      File.open("#{@path}/db/migrate/#{(@t-1).to_i}_third.rb", "w") do |f|
-        f.puts "Sequel.migration { change { create_table(:third) } }"
       end
     end
 
     it "reverts migrations" do
       support.migrate
-      assert_equal [:first, :schema_migrations, :second, :third], DB.tables.sort
-      support.rollback
       assert_equal [:first, :schema_migrations, :second], DB.tables.sort
       support.rollback
       assert_equal [:first, :schema_migrations], DB.tables.sort
@@ -70,7 +64,7 @@ describe Pliny::DbSupport do
     end
 
     it "handles databases not migrated (schema_migrations is empty)" do
-      support.migrate (@t-3).to_i
+      support.migrate (@t-2).to_i
       support.rollback # destroy table, leave schema_migrations
       support.rollback # should noop
     end
