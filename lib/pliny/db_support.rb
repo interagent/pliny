@@ -31,10 +31,11 @@ module Pliny
 
     def rollback
       migrations = Dir["./db/migrate/*.rb"].map { |f| File.basename(f).to_i }.sort
-      current = db[:schema_migrations].order(Sequel.desc(:filename)).first[:filename].to_i
-      target = 0 # by default, rollback everything
-      if i = migrations.index(current)
-        target = migrations[i - 1] || 0
+      current    = db[:schema_migrations].order(Sequel.desc(:filename)).first[:filename].to_i
+      target     = 0 # by default, rollback everything
+      index      = migrations.index(current)
+      if index > 0
+        target = migrations[index - 1]
       end
       Sequel::Migrator.apply(db, "./db/migrate", target)
     end

@@ -54,12 +54,15 @@ describe Pliny::DbSupport do
       end
     end
 
-    it "reverts one migration" do
+    it "reverts migrations" do
       support.migrate
+      assert_equal [:first, :schema_migrations, :second, :third], DB.tables.sort
       support.rollback
       assert_equal [:first, :schema_migrations, :second], DB.tables.sort
       support.rollback
       assert_equal [:first, :schema_migrations], DB.tables.sort
+      support.rollback
+      assert_equal [:schema_migrations], DB.tables.sort
     end
   end
 end
