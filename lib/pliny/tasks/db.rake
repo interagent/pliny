@@ -31,18 +31,6 @@ namespace :db do
     end
   end
 
-  desc "Nuke the database (drop all tables)"
-  task :nuke do
-    database_urls.each do |database_url|
-      db = Sequel.connect(database_url)
-      db.tables.each do |table|
-        db.run(%{DROP TABLE "#{table}" CASCADE})
-      end
-      puts "Nuked `#{name_from_uri(database_url)}`"
-    end
-    disconnect
-  end
-
   desc "Seed the database with data"
   task :seed do
     if File.exist?('./db/seeds.rb')
@@ -53,9 +41,6 @@ namespace :db do
       disconnect
     end
   end
-
-  desc "Reset the database"
-  task :reset => [:nuke, :migrate, :seed]
 
   desc "Create the database"
   task :create do
