@@ -112,8 +112,6 @@ Pliny comes with several rake tasks:
 rake db:create        # Create the database
 rake db:drop          # Drop the database
 rake db:migrate       # Run database migrations
-rake db:nuke          # Nuke the database (drop all tables)
-rake db:reset         # Reset the database
 rake db:rollback      # Rollback the database
 rake db:schema:dump   # Dump the database schema
 rake db:schema:load   # Load the database schema
