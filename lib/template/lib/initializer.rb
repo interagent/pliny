@@ -33,8 +33,7 @@ module Initializer
   end
 
   def self.require!(globs)
-    globs = [globs] unless globs.is_a?(Array)
-    globs.each do |f|
+    Array(globs).each do |f|
       Pliny::Utils.require_glob("#{Config.root}/#{f}.rb")
     end
   end
