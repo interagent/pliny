@@ -23,8 +23,8 @@ module Pliny::Commands
       md.create_test
     end
 
-    desc 'migration NAME', 'Generates a migration'
-    def migration(name)
+    desc 'migration [NAME]', 'Generates a migration'
+    def migration(*name)
       require_relative 'generator/migration'
 
       mg = Migration.new(name, options)
