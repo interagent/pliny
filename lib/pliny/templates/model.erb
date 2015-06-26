@@ -1,5 +1,5 @@
 class <%= singular_class_name %> < Sequel::Model
-  plugin :timestamps
+  plugin :timestamps, update_on_create: true
 <% if paranoid %>
   plugin :paranoid
 <% end %>
