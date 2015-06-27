@@ -31,7 +31,7 @@ module Pliny::Commands
         display "Updating from #{version_current} to #{version_target}..."
         ensure_repo_available
         save_patch(version_current, version_target)
-        exec "patch -p1 < #{patch_file}"
+        exec "patch --prefix=/tmp/ --reject-file=/tmp/pliny-reject -p1 < #{patch_file}"
       end
     end
 
