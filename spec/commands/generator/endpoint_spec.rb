@@ -3,8 +3,8 @@ require 'pliny/commands/generator/endpoint'
 require 'spec_helper'
 
 describe Pliny::Commands::Generator::Endpoint do
-  subject { Pliny::Commands::Generator::Endpoint.new(model_name, {}, StringIO.new) }
-  let(:model_name) { 'resource_history' }
+  subject { Pliny::Commands::Generator::Endpoint.new(endpoint_name, {}, StringIO.new) }
+  let(:endpoint_name) { 'resource_history' }
 
   describe '#url_path' do
     it 'builds a URL path' do
