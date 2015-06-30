@@ -6,7 +6,7 @@ Sequel.migration do
 <% if paranoid %>
       timestamptz  :deleted_at
 <% end %>
-      timestamptz  :updated_at
+      timestamptz  :updated_at, default: Sequel.function(:now), null: false
     end
   end
 end
