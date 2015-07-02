@@ -133,6 +133,13 @@ $ foreman run bin/run 'puts "hello world"'  # Run automated code
 
 (hint: don't forget `foreman run` in development)
 
+### Updating
+
+Use `pliny-update` to update the Pliny app in the current directory.
+
+This not only bumps the version dependency, but also applies any changes that happened in the template app (for instance: new initializer, tweaks in the base endpoint, etc).
+
+
 ## Development
 
 Run tests:
