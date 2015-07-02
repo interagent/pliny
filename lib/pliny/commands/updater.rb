@@ -56,13 +56,13 @@ module Pliny::Commands
     end
 
     def save_patch(curr, target)
-      # take a diff from the template folder from diff
+      # take a diff of changes that happened to the template app in Pliny
       diff = `cd #{repo_dir} && git diff v#{curr}..v#{target} lib/template/`
 
-      # take lib/template away from the path name so we can apply
+      # remove lib/template from the path of files in the patch so that we can
+      # apply these to the current folder
       diff.gsub!(/^(\-\-\-|\+\+\+) (\w)\/lib\/template/, '\1 \2')
 
-      # save it
       File.open(patch_file, "w") { |f| f.puts diff }
     end
 
