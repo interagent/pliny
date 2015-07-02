@@ -16,7 +16,9 @@ module Pliny::Commands
     end
 
     def run!
-      abort("Pliny app not found") unless File.exist?("Gemfile")
+      unless File.exist?("Gemfile.lock")
+        abort("Pliny app not found - looking for Gemfile.lock")
+      end
 
       version_current = get_current_version
       version_target  = Gem::Version.new(Pliny::VERSION)
@@ -33,8 +35,6 @@ module Pliny::Commands
       end
     end
 
-    protected
-
     # we need a local copy of the pliny repo to produce a diff
     def ensure_repo_available
       unless File.exists?(repo_dir)
@@ -45,9 +45,10 @@ module Pliny::Commands
     end
 
     def get_current_version
-      path = `bundle show pliny`
-      file = File.basename(path)
-      Gem::Version.new(file.sub("pliny-", ""))
+      File.read("./Gemfile.lock").split("\n").each do |line|
+        next unless pliny_version = line.match(/pliny \(([\d+\.]+)\)/)
+        return Gem::Version.new(pliny_version[1])
+      end
     end
 
     def save_patch(curr, target)
