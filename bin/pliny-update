@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+
+require "optparse"
+require_relative '../lib/pliny/commands/updater'
+
+Pliny::Commands::Updater.run
