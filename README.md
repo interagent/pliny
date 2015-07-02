@@ -24,7 +24,7 @@ And gems/helpers to tie these together and support operations:
 - [Request IDs](lib/pliny/middleware/request_id.rb)
 - [RequestStore](http://brandur.org/antipatterns), thread safe option to store data with the current request
 - [Sequel](http://sequel.jeremyevans.net/) for ORM
-- [Sequel-PG](https://github.com/jeremyevans/sequel_pg) because we don't like mysql
+- [Sequel-PG](https://github.com/jeremyevans/sequel_pg) to talk to the world's most advanced open source database
 - [Versioning](lib/pliny/middleware/versioning.rb) to allow versioning your API in the HTTP Accept header
 
 ## Getting started
