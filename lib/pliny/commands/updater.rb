@@ -42,7 +42,7 @@ module Pliny::Commands
       unless File.exists?(repo_dir)
         system("git clone git@github.com:interagent/pliny.git #{repo_dir}")
       else
-        system("cd #{repo_dir} && git fetch")
+        system("cd #{repo_dir} && git fetch --tags")
       end
     end
 
