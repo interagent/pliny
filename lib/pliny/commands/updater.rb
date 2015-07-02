@@ -5,15 +5,13 @@ require 'uri'
 
 module Pliny::Commands
   class Updater
-    attr_accessor :args, :opts, :stream
+    attr_accessor :stream
 
-    def self.run(args, opts = {}, stream = $stdout)
-      new(args, opts, stream).run!
+    def self.run(stream = $stdout)
+      new(stream).run!
     end
 
-    def initialize(args = {}, opts = {}, stream = $stdout)
-      @args = args
-      @opts = opts
+    def initialize(stream = $stdout)
       @stream = stream
     end
 

@@ -3,7 +3,4 @@
 require "optparse"
 require_relative '../lib/pliny/commands/updater'
 
-ARGV.options do |options|
-  options.parse!
-  Pliny::Commands::Updater.run(ARGV.dup, {})
-end
+Pliny::Commands::Updater.run
