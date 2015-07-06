@@ -68,7 +68,7 @@ module Pliny::Commands
 
     def exec_patch
       # throw .orig and .rej files in /tmp, they're useless with source control
-      exec "patch --prefix=/tmp/ --reject-file=/tmp/pliny-reject -p1 < #{patch_file}"
+      exec "git apply -v --reject #{patch_file}"
     end
 
     def display(msg)
