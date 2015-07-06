@@ -10,17 +10,17 @@ module Pliny::Commands
       attr_reader :name, :stream, :options
 
       def initialize(name, options = {}, stream = $stdout)
-        @name = name
+        @name = normalize_name(name)
         @options = options
         @stream = stream
       end
 
       def singular_class_name
-        name.tr('-', '_').singularize.camelize
+        name.singularize.camelize
       end
 
       def plural_class_name
-        name.tr('-', '_').pluralize.camelize
+        name.pluralize.camelize
       end
 
       def field_name
@@ -57,6 +57,14 @@ module Pliny::Commands
         File.open(destination_path, 'w') do |f|
           f.puts yield
         end
+      end
+
+      private
+
+      def normalize_name(name)
+        Array(name).map(&:underscore)
+                   .map { |n| n.tr(' ', '_') }
+                   .join('_')
       end
     end
   end
