@@ -67,8 +67,13 @@ module Pliny::Commands
     end
 
     def exec_patch
+      msg = [
+        "Pliny update applied. Please review the changes staged for",
+        "commit, and consider applying the diff in .rej files manually.",
+        "You can then remove these files with `git clean -f`.",
+      ].join("\n")
       # throw .orig and .rej files in /tmp, they're useless with source control
-      exec "git apply -v --reject #{patch_file}"
+      exec "git apply -v --reject #{patch_file}; echo '\n\n#{msg}'"
     end
 
     def display(msg)
