@@ -149,6 +149,18 @@ $ bundle install
 $ rake
 ```
 
+## Deployment
+
+Before a Pliny app can use the database, the schema must be loaded & then migrated.
+
+Generally after your initial deployment, execute `rake db:schema:load db:migrate` in the environment's console.
+
+On Heroku specifically:
+```
+$ git push heroku master
+$ heroku run rake db:schema:load db:migrate
+```
+
 ## Meta
 
 Created by Brandur Leach and Pedro Belo.
