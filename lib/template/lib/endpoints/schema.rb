@@ -3,11 +3,10 @@ module Endpoints
     get "/schema.json" do
       content_type("application/schema+json")
       response.headers["Cache-Control"] = "public, max-age=3600"
-      filename = schema_filename
-      unless File.exists?(filename)
         raise Pliny::Errors::NotFound.new("Schema")
+      unless File.exists?(schema_filename)
       end
-      File.read(filename)
+      File.read(schema_filename)
     end
 
     private
