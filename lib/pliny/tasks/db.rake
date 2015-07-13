@@ -45,7 +45,8 @@ namespace :db do
   desc "Create the database"
   task :create do
     database_urls.each do |database_url|
-      db = Sequel.connect("#{postgres_location_from_uri(database_url)}/postgres")
+      admin_url = Pliny::DbSupport.admin_url(database_url)
+      db = Sequel.connect(admin_url)
       name = name_from_uri(database_url)
       begin
         db.run(%{CREATE DATABASE "#{name}"})
@@ -60,7 +61,8 @@ namespace :db do
   desc "Drop the database"
   task :drop do
     database_urls.each do |database_url|
-      db = Sequel.connect("#{postgres_location_from_uri(database_url)}/postgres")
+      admin_url = Pliny::DbSupport.admin_url(database_url)
+      db = Sequel.connect(admin_url)
       name = name_from_uri(database_url)
       db.run(%{DROP DATABASE IF EXISTS "#{name}"})
       puts "Dropped `#{name}`"
@@ -143,11 +145,5 @@ namespace :db do
 
   def name_from_uri(uri)
     URI.parse(uri).path[1..-1]
-  end
-
-  def postgres_location_from_uri(uri)
-    p = URI.parse(uri)
-    p.path = ""
-    p.to_s
   end
 end

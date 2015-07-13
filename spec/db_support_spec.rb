@@ -15,6 +15,13 @@ describe Pliny::DbSupport do
     Dir.chdir(@path)
   end
 
+  describe ".admin_url" do
+    it "connects to the postgres system's db" do
+      assert_equal "postgres://1.2.3.4/postgres",
+        Pliny::DbSupport.admin_url("postgres://1.2.3.4/my-db")
+    end
+  end
+
   describe "#migrate" do
     before do
       File.open("#{@path}/db/migrate/#{Time.now.to_i}_create_foo.rb", "w") do |f|

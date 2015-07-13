@@ -6,6 +6,12 @@ module Pliny
   class DbSupport
     @@logger = nil
 
+    def self.admin_url(database_url)
+      uri = URI.parse(database_url)
+      uri.path = "/postgres"
+      uri.to_s
+    end
+
     def self.logger=(logger)
       @@logger=logger
     end
