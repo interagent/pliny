@@ -2,11 +2,11 @@ require "spec_helper"
 require "pliny/db_support"
 
 describe Pliny::DbSupport do
+  let(:url) { ENV["TEST_DATABASE_URL"] }
   let(:logger) { Logger.new(StringIO.new) }
-  let(:support) { Pliny::DbSupport.new(@url, logger) }
+  let(:support) { Pliny::DbSupport.new(url, logger) }
 
   before do
-    @url = ENV["TEST_DATABASE_URL"]
     @path = "/tmp/pliny-test"
   end
 
@@ -26,7 +26,7 @@ describe Pliny::DbSupport do
 
   describe "#exists?" do
     it "checks if the database already exists" do
-      my_db_name = URI.parse(@url).path.sub(/^\//, '')
+      my_db_name = URI.parse(url).path.sub(/^\//, '')
       assert_equal true, support.exists?(my_db_name)
       assert_equal false, support.exists?("a-db-that-doesnt-exist")
     end
