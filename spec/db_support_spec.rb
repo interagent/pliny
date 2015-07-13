@@ -24,22 +24,6 @@ describe Pliny::DbSupport do
     end
   end
 
-  describe "#create" do
-    it "creates a new postgres database" do
-      @url = Pliny::DbSupport.admin_url(@url)
-      db_name = "pliny_test_#{Process.pid}"
-      begin
-        assert support.create(db_name)
-        uri = URI.parse(@url)
-        uri.path = "/#{db_name}"
-        test_db = Sequel.connect(uri.to_s)
-        assert_equal 1, test_db.fetch("SELECT 1 AS f").first[:f]
-      ensure
-        support.db.fetch "DROP DATABASE ?", db_name
-      end
-    end
-  end
-
   describe "#migrate" do
     before do
       File.open("#{@path}/db/migrate/#{Time.now.to_i}_create_foo.rb", "w") do |f|
