@@ -43,12 +43,12 @@ namespace :db do
   desc "Create the database"
   task :create do
     database_urls.each do |database_url|
-      admin_url = Pliny::DbSupport.admin_url(database_url)
-      Pliny::DbSupport.run(admin_url) do |helper|
-        db_name = name_from_uri(database_url)
-        if helper.exists?(db_name)
-          puts "Skipped `#{db_name}` already exists"
-        else
+      db_name = name_from_uri(database_url)
+      if Pliny::DbSupport.setup?(database_url)
+        puts "Skipping `#{db_name}`, already exists"
+      else
+        admin_url = Pliny::DbSupport.admin_url(database_url)
+        Pliny::DbSupport.run(admin_url) do |helper|
           helper.create(db_name)
           puts "Created `#{db_name}`"
         end

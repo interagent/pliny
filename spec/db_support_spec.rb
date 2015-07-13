@@ -24,11 +24,10 @@ describe Pliny::DbSupport do
     end
   end
 
-  describe "#exists?" do
-    it "checks if the database already exists" do
-      my_db_name = URI.parse(url).path.sub(/^\//, '')
-      assert_equal true, support.exists?(my_db_name)
-      assert_equal false, support.exists?("a-db-that-doesnt-exist")
+  describe ".setup?" do
+    it "checks if the database is responsive" do
+      assert_equal true, Pliny::DbSupport.setup?(url)
+      assert_equal false, Pliny::DbSupport.setup?("postgres://localhost/does-not-exist")
     end
   end
 
