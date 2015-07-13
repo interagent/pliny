@@ -46,10 +46,11 @@ namespace :db do
       admin_url = Pliny::DbSupport.admin_url(database_url)
       Pliny::DbSupport.run(admin_url) do |helper|
         db_name = name_from_uri(database_url)
-        if helper.create(db_name)
-          puts "Created `#{db_name}`"
+        if helper.exists?(db_name)
+          puts "Skipped `#{db_name}` already exists"
         else
-          puts "Skipped `#{db_name}`"
+          helper.create(db_name)
+          puts "Created `#{db_name}`"
         end
       end
     end

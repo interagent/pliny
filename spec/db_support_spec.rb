@@ -24,6 +24,14 @@ describe Pliny::DbSupport do
     end
   end
 
+  describe "#exists?" do
+    it "checks if the database already exists" do
+      my_db_name = URI.parse(@url).path.sub(/^\//, '')
+      assert_equal true, support.exists?(my_db_name)
+      assert_equal false, support.exists?("a-db-that-doesnt-exist")
+    end
+  end
+
   describe "#migrate" do
     before do
       File.open("#{@path}/db/migrate/#{Time.now.to_i}_create_foo.rb", "w") do |f|

@@ -26,12 +26,13 @@ module Pliny
       end
     end
 
+    def exists?(name)
+      res = db.fetch("SELECT 1 FROM pg_database WHERE datname = ?", name)
+      return res.count > 0
+    end
+
     def create(name)
       db.run(%{CREATE DATABASE "#{name}"})
-      return true
-    rescue Sequel::DatabaseError
-      raise unless $!.message =~ /already exists/
-      return false
     end
 
     def migrate(target=nil)
