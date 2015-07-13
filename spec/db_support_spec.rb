@@ -29,7 +29,7 @@ describe Pliny::DbSupport do
       @url = Pliny::DbSupport.admin_url(@url)
       db_name = "pliny_test_#{Process.pid}"
       begin
-        support.create(db_name)
+        assert support.create(db_name)
         uri = URI.parse(@url)
         uri.path = "/#{db_name}"
         test_db = Sequel.connect(uri.to_s)
