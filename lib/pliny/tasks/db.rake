@@ -46,15 +46,13 @@ namespace :db do
   task :create do
     database_urls.each do |database_url|
       db = Sequel.connect("#{postgres_location_from_uri(database_url)}/postgres")
-      exists = false
       name = name_from_uri(database_url)
       begin
         db.run(%{CREATE DATABASE "#{name}"})
+        puts "Created `#{name}`"
       rescue Sequel::DatabaseError
         raise unless $!.message =~ /already exists/
-        exists = true
       end
-      puts "Created `#{name}`" if !exists
     end
     disconnect
   end
