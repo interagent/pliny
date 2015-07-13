@@ -4,31 +4,34 @@ require "sequel/extensions/migration"
 
 module Pliny
   class DbSupport
-    @@logger = nil
-
     def self.admin_url(database_url)
       uri = URI.parse(database_url)
       uri.path = "/postgres"
       uri.to_s
     end
 
-    def self.logger=(logger)
-      @@logger=logger
-    end
-
-    def self.run(url)
-      instance = new(url)
+    def self.run(url, sequel_log_io=StringIO.new)
+      logger = Logger.new(sequel_log_io)
+      instance = new(url, logger)
       yield instance
       instance.disconnect
     end
 
     attr_accessor :db
 
-    def initialize(url)
+    def initialize(url, sequel_logger)
       @db = Sequel.connect(url)
-      if @@logger
-        @db.loggers << @@logger
+      if sequel_logger
+        @db.loggers << sequel_logger
       end
+    end
+
+    def create(name)
+      db.run(%{CREATE DATABASE "#{name}"})
+      return true
+    rescue Sequel::DatabaseError
+      raise unless $!.message =~ /already exists/
+      return false
     end
 
     def migrate(target=nil)

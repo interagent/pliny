@@ -2,9 +2,11 @@ require "spec_helper"
 require "pliny/db_support"
 
 describe Pliny::DbSupport do
-  let(:support) { Pliny::DbSupport.new(ENV["TEST_DATABASE_URL"]) }
+  let(:logger) { Logger.new(StringIO.new) }
+  let(:support) { Pliny::DbSupport.new(@url, logger) }
 
-  before(:all) do
+  before do
+    @url = ENV["TEST_DATABASE_URL"]
     @path = "/tmp/pliny-test"
   end
 
@@ -19,6 +21,22 @@ describe Pliny::DbSupport do
     it "connects to the postgres system's db" do
       assert_equal "postgres://1.2.3.4/postgres",
         Pliny::DbSupport.admin_url("postgres://1.2.3.4/my-db")
+    end
+  end
+
+  describe "#create" do
+    it "creates a new postgres database" do
+      @url = Pliny::DbSupport.admin_url(@url)
+      db_name = "pliny_test_#{Process.pid}"
+      begin
+        support.create(db_name)
+        uri = URI.parse(@url)
+        uri.path = "/#{db_name}"
+        test_db = Sequel.connect(uri.to_s)
+        assert_equal 1, test_db.fetch("SELECT 1 AS f").first[:f]
+      ensure
+        support.db.fetch "DROP DATABASE ?", db_name
+      end
     end
   end
 
