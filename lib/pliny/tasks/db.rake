@@ -6,14 +6,12 @@ require "uri"
 require "pliny/db_support"
 require "pliny/utils"
 
-Pliny::DbSupport.logger = Logger.new($stdout)
-
 namespace :db do
   desc "Run database migrations"
   task :migrate do
     next if Dir["./db/migrate/*.rb"].empty?
     database_urls.each do |database_url|
-      Pliny::DbSupport.run(database_url) do |helper|
+      Pliny::DbSupport.run(database_url, $stdout) do |helper|
         helper.migrate
         puts "Migrated `#{name_from_uri(database_url)}`"
       end
@@ -24,7 +22,7 @@ namespace :db do
   task :rollback do
     next if Dir["./db/migrate/*.rb"].empty?
     database_urls.each do |database_url|
-      Pliny::DbSupport.run(database_url) do |helper|
+      Pliny::DbSupport.run(database_url, $stdout) do |helper|
         helper.rollback
         puts "Rolled back `#{name_from_uri(database_url)}`"
       end
@@ -45,16 +43,16 @@ namespace :db do
   desc "Create the database"
   task :create do
     database_urls.each do |database_url|
-      db = Sequel.connect("#{postgres_location_from_uri(database_url)}/postgres")
-      exists = false
-      name = name_from_uri(database_url)
-      begin
-        db.run(%{CREATE DATABASE "#{name}"})
-      rescue Sequel::DatabaseError
-        raise unless $!.message =~ /already exists/
-        exists = true
+      db_name = name_from_uri(database_url)
+      if Pliny::DbSupport.setup?(database_url)
+        puts "Skipping `#{db_name}`, already exists"
+      else
+        admin_url = Pliny::DbSupport.admin_url(database_url)
+        Pliny::DbSupport.run(admin_url) do |helper|
+          helper.create(db_name)
+          puts "Created `#{db_name}`"
+        end
       end
-      puts "Created `#{name}`" if !exists
     end
     disconnect
   end
@@ -62,7 +60,8 @@ namespace :db do
   desc "Drop the database"
   task :drop do
     database_urls.each do |database_url|
-      db = Sequel.connect("#{postgres_location_from_uri(database_url)}/postgres")
+      admin_url = Pliny::DbSupport.admin_url(database_url)
+      db = Sequel.connect(admin_url)
       name = name_from_uri(database_url)
       db.run(%{DROP DATABASE IF EXISTS "#{name}"})
       puts "Dropped `#{name}`"
@@ -145,11 +144,5 @@ namespace :db do
 
   def name_from_uri(uri)
     URI.parse(uri).path[1..-1]
-  end
-
-  def postgres_location_from_uri(uri)
-    p = URI.parse(uri)
-    p.path = ""
-    p.to_s
   end
 end

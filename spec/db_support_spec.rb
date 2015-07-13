@@ -2,9 +2,11 @@ require "spec_helper"
 require "pliny/db_support"
 
 describe Pliny::DbSupport do
-  let(:support) { Pliny::DbSupport.new(ENV["TEST_DATABASE_URL"]) }
+  let(:url) { ENV["TEST_DATABASE_URL"] }
+  let(:logger) { Logger.new(StringIO.new) }
+  let(:support) { Pliny::DbSupport.new(url, logger) }
 
-  before(:all) do
+  before do
     @path = "/tmp/pliny-test"
   end
 
@@ -13,6 +15,20 @@ describe Pliny::DbSupport do
     FileUtils.rm_rf(@path)
     FileUtils.mkdir_p("#{@path}/db/migrate")
     Dir.chdir(@path)
+  end
+
+  describe ".admin_url" do
+    it "connects to the postgres system's db" do
+      assert_equal "postgres://1.2.3.4/postgres",
+        Pliny::DbSupport.admin_url("postgres://1.2.3.4/my-db")
+    end
+  end
+
+  describe ".setup?" do
+    it "checks if the database is responsive" do
+      assert_equal true, Pliny::DbSupport.setup?(url)
+      assert_equal false, Pliny::DbSupport.setup?("postgres://localhost/does-not-exist")
+    end
   end
 
   describe "#migrate" do
