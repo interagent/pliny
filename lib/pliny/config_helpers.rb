@@ -35,6 +35,10 @@ module Pliny
       ->(v) { v.to_sym }
     end
 
+    def array
+      ->(v) { v.split(",") }
+    end
+
     private
 
     def cast(value, method)
