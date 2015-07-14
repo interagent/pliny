@@ -5,7 +5,7 @@ module Pliny
 
       def self.render(error)
         headers = { "Content-Type" => "application/json; charset=utf-8" }
-        data = { id: error.id, message: error.message, status: error.status }
+        data = { id: error.id, message: error.message }
         [error.status, headers, [MultiJson.encode(data)]]
       end
 
