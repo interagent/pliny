@@ -35,8 +35,18 @@ module Pliny
       ->(v) { v.to_sym }
     end
 
-    def array
-      ->(v) { v.split(",") }
+    # optional :accronyms, array(string)
+    # => ['a', 'b']
+    # optional :numbers, array(int)
+    # => [1, 2]
+    # optional :notype, array
+    # => ['a', 'b']
+    def array(method = nil)
+      -> (v) do
+        if v
+          v.split(",").map{|a| cast(a, method) }
+        end
+      end
     end
 
     private
