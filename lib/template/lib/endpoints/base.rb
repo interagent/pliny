@@ -18,9 +18,7 @@ module Endpoints
     end
 
     error Sinatra::NotFound do
-      content_type :json
-      status 404
-      { id: "not_found", message: "Resource not found" }.to_json
+      raise Pliny::Errors::NotFound
     end
   end
 end
