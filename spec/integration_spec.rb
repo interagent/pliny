@@ -16,13 +16,25 @@ describe "Pliny integration test" do
     end
   end
 
-  describe "pliny-generate model" do
+  describe "pliny-generate scaffold" do
     before(:all) do
-      bash_app "pliny-generate model artist"
+      bash_app "pliny-generate scaffold artist"
     end
 
     it "creates the model file" do
       assert File.exists?("./myapp/lib/models/artist.rb")
+    end
+
+    it "creates the endpoint file" do
+      assert File.exists?("./myapp/lib/endpoints/artists.rb")
+    end
+
+    it "creates the serializer file" do
+      assert File.exists?("./myapp/lib/serializers/artist.rb")
+    end
+
+    it "creates the schema file" do
+      assert File.exists?("./myapp/schema/schemata/artist.yaml")
     end
   end
 
