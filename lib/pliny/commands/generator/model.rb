@@ -3,7 +3,15 @@ require_relative 'base'
 module Pliny::Commands
   class Generator
     class Model < Base
-      def create
+      def run
+        create_model
+        create_migration
+        create_test
+      end
+
+      private
+
+      def create_model
         model = "./lib/models/#{field_name}.rb"
         write_template('model.erb', model,
                         singular_class_name: singular_class_name,

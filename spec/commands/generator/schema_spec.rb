@@ -15,10 +15,19 @@ describe Pliny::Commands::Generator::Schema do
     end
   end
 
+  describe '#run' do
+    it 'creates and rebuilds schema' do
+      stub(subject, :create_schema).once
+      stub(subject, :rebuild).once
+
+      subject.run
+    end
+  end
+
   describe '#create' do
     context 'with new layout' do
       before do
-        subject.create
+        subject.send(:create_schema)
       end
 
       it 'creates a schema' do
@@ -30,7 +39,7 @@ describe Pliny::Commands::Generator::Schema do
       before do
         FileUtils.mkdir_p('./docs/schema/schemata')
         FileUtils.cp('./schema/meta.json', './docs/schema')
-        subject.create
+        subject.send(:create_schema)
       end
 
       it 'creates a legacy schema' do

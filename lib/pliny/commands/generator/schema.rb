@@ -9,14 +9,9 @@ module Pliny::Commands
         @warned_legacy = false
       end
 
-      def create
-        warn_legacy if legacy?
-
-        schema = schema_yaml_path(field_name)
-        write_file(schema) do
-          Prmd.init(name.singularize, yaml: true)
-        end
-        display "created schema file #{schema}"
+      def run
+        create_schema
+        rebuild
       end
 
       def rebuild
@@ -26,6 +21,18 @@ module Pliny::Commands
           Prmd.combine(schemata_path, meta: meta_path)
         end
         display "rebuilt #{schema_json_path}"
+      end
+
+      private
+
+      def create_schema
+        warn_legacy if legacy?
+
+        schema = schema_yaml_path(field_name)
+        write_file(schema) do
+          Prmd.init(name.singularize, yaml: true)
+        end
+        display "created schema file #{schema}"
       end
 
       def legacy?

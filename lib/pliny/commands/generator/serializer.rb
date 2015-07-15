@@ -3,7 +3,14 @@ require_relative 'base'
 module Pliny::Commands
   class Generator
     class Serializer < Base
-      def create
+      def run
+        create_serializer
+        create_test
+      end
+
+      private
+
+      def create_serializer
         serializer = "./lib/serializers/#{field_name}.rb"
         write_template('serializer.erb', serializer,
                         singular_class_name: singular_class_name)

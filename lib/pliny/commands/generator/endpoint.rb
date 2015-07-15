@@ -3,7 +3,15 @@ require_relative 'base'
 module Pliny::Commands
   class Generator
     class Endpoint < Base
-      def create
+      def run
+        create_endpoint
+        create_test
+        create_acceptance_test
+      end
+
+      private
+
+      def create_endpoint
         endpoint = "./lib/endpoints/#{pluralized_file_name}.rb"
         template = options[:scaffold] ? 'endpoint_scaffold.erb' : 'endpoint.erb'
         write_template(template, endpoint,

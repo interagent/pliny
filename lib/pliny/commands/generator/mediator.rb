@@ -3,7 +3,14 @@ require_relative 'base'
 module Pliny::Commands
   class Generator
     class Mediator < Base
-      def create
+      def run
+        create_mediator
+        create_test
+      end
+
+      private
+
+      def create_mediator
         mediator = "./lib/mediators/#{field_name}.rb"
         write_template('mediator.erb', mediator,
                         singular_class_name: singular_class_name)
