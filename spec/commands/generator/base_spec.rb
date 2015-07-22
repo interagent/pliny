@@ -10,7 +10,6 @@ describe Pliny::Commands::Generator::Base do
   describe '#name' do
     it 'generates a normalized name given differents argument formats' do
       [
-        %w(resource history),
         'resource history',
         'resource-history',
         'resource_history',
