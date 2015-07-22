@@ -5,6 +5,12 @@ require 'uri'
 
 module Pliny::Commands
   class Creator
+    DEFAULT_DB_URI_PREFIX = 'postgres:///'.freeze
+    DOCKER_DB_URI_PREFIX = 'postgres://postgres@postgres/'.freeze
+    # ruby's URI#to_s renders foo:/bar when there's no host
+    # we want foo:///bar instead when there's a single '/'
+    DB_URI_FIX_REGEX = /:\/(?=[^\/])/
+
     attr_accessor :args, :opts, :stream
 
     def self.run(args, opts = {}, stream = $stdout)
@@ -24,13 +30,21 @@ module Pliny::Commands
       FileUtils.rm_rf("#{app_dir}/.git")
       setup_database_urls
       display 'Pliny app created. To start, run:'
-      display "cd #{app_dir} && bin/setup"
+      if opts[:docker]
+        display "cd #{app_dir} && docker-compose run web bin/setup"
+      else
+        display "cd #{app_dir} && bin/setup"
+      end
     end
 
     protected
 
     def setup_database_urls
-      db = URI.parse("postgres:///#{name}")
+      if opts[:docker]
+        db = URI.parse(DOCKER_DB_URI_PREFIX + name)
+      else
+        db = URI.parse(DEFAULT_DB_URI_PREFIX + name)
+      end
       {
         '.env.sample' => 'development',
         '.env.test'   => 'test'
@@ -39,9 +53,7 @@ module Pliny::Commands
         db.path  = "/#{name}-#{db_env_suffix}"
         env      = File.read(env_path)
         File.open(env_path, 'w') do |f|
-          # ruby's URI#to_s renders foo:/bar when there's no host
-          # we want foo:///bar instead!
-          db_url = db.to_s.sub(':/', ':///')
+          db_url = db.to_s.sub DB_URI_FIX_REGEX, ':///'
           f.puts env.sub(/DATABASE_URL=.*/, "DATABASE_URL=#{db_url}")
         end
       end

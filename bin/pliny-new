@@ -5,6 +5,9 @@ require_relative '../lib/pliny/commands/creator'
 
 OptionParser.new do |options|
   opts = {}
+  options.on("-d", "--docker", "Enable docker support.") do |v|
+    opts[:docker] = v
+  end
   options.banner = "Usage: pliny-new app-name [options]"
 
   begin

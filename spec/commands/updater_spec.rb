@@ -10,12 +10,14 @@ describe Pliny::Commands::Updater do
   end
 
   describe "#run!" do
-    before do
-      FileUtils.rm_rf("/tmp/plinytest")
-      FileUtils.mkdir_p("/tmp/plinytest")
-      Dir.chdir("/tmp/plinytest")
-      File.open("/tmp/plinytest/Gemfile.lock", "w") do |f|
-        f.puts "    pliny (0.6.3)"
+    around do |example|
+      FileUtils.rm_rf("tmp/plinytest")
+      FileUtils.mkdir_p("tmp/plinytest")
+      Dir.chdir("tmp/plinytest") do
+        File.open("Gemfile.lock", "w") do |f|
+          f.puts "    pliny (0.6.3)"
+        end
+        example.run
       end
     end
 

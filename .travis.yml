@@ -8,7 +8,8 @@ addons:
   postgresql: '9.3'
 before_script:
   - createdb pliny-gem-test
-sudo: false
+sudo: required
+dist: trusty
 cache: bundler
 notifications:
   hipchat:

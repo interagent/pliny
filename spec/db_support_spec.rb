@@ -6,15 +6,14 @@ describe Pliny::DbSupport do
   let(:logger) { Logger.new(StringIO.new) }
   let(:support) { Pliny::DbSupport.new(url, logger) }
 
-  before do
-    @path = "/tmp/pliny-test"
-  end
-
-  before(:each) do
+  around(:each) do |example|
+    @path = "tmp/pliny-test"
     DB.tables.each { |t| DB.drop_table(t) }
     FileUtils.rm_rf(@path)
     FileUtils.mkdir_p("#{@path}/db/migrate")
-    Dir.chdir(@path)
+    Dir.chdir(@path) do
+      example.run
+    end
   end
 
   describe ".admin_url" do
@@ -33,7 +32,7 @@ describe Pliny::DbSupport do
 
   describe "#migrate" do
     before do
-      File.open("#{@path}/db/migrate/#{Time.now.to_i}_create_foo.rb", "w") do |f|
+      File.open("db/migrate/#{Time.now.to_i}_create_foo.rb", "w") do |f|
         f.puts "
           Sequel.migration do
             change do
@@ -57,11 +56,11 @@ describe Pliny::DbSupport do
   describe "#rollback" do
     before do
       @t = Time.now
-      File.open("#{@path}/db/migrate/#{(@t-2).to_i}_first.rb", "w") do |f|
+      File.open("db/migrate/#{(@t-2).to_i}_first.rb", "w") do |f|
         f.puts "Sequel.migration { change { create_table(:first) } }"
       end
 
-      File.open("#{@path}/db/migrate/#{(@t-1).to_i}_second.rb", "w") do |f|
+      File.open("db/migrate/#{(@t-1).to_i}_second.rb", "w") do |f|
         f.puts "Sequel.migration { change { create_table(:second) } }"
       end
     end
