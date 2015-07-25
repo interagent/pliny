@@ -45,10 +45,8 @@ module Pliny::Commands
     method_option :paranoid, type: :boolean, default: false, desc: 'adds paranoid support to model'
     method_option :scaffold, type: :boolean, default: true, hide: true
     def scaffold(name)
-      endpoint(name)
-      model(name)
-      schema(name)
-      serializer(name)
+      require_relative 'generator/scaffold'
+      Scaffold.new(name, options).run
     end
   end
 end
