@@ -3,4 +3,7 @@
 # The data can then be loaded with the rake db:seed (or created alongside the
 # db with db:setup).
 #
-# A Sequel database connection can be obtained via Sequel::Model.db
+# Seeding can occur multiple times during the execution of a single Rake task
+# because seeding should occur in all environments (development, testing,
+# etc.). The currently connected database can be accessed via
+# `Sequel::DATABASES.last`.
