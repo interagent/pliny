@@ -3,10 +3,19 @@
 require "optparse"
 require_relative '../lib/pliny/commands/creator'
 
-ARGV.options do |options|
+OptionParser.new do |options|
   opts = {}
+  options.banner = "Usage: pliny-new app-name [options]"
 
-  options.parse!
-
-  Pliny::Commands::Creator.run(ARGV.dup, opts)
+  begin
+    options.parse!
+    if ARGV.empty?
+      puts options.banner
+    else
+      Pliny::Commands::Creator.run(ARGV.dup, opts)
+    end
+  rescue OptionParser::InvalidOption => e
+    puts e
+    puts options.banner
+  end
 end
