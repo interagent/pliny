@@ -8,8 +8,6 @@ addons:
   postgresql: '9.3'
 before_script:
   - createdb pliny-gem-test
-sudo: required
-dist: trusty
 cache: bundler
 notifications:
   hipchat:
@@ -20,3 +18,6 @@ notifications:
     format: html
   email: false
 script: bundle exec rake
+sudo: required
+services:
+    - docker
