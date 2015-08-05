@@ -6,6 +6,10 @@ rvm:
   - 1.9.3
 addons:
   postgresql: '9.3'
+before_install:
+  - curl -L https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
 before_script:
   - createdb pliny-gem-test
 cache: bundler
