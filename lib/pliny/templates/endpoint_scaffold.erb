@@ -6,7 +6,8 @@ module Endpoints
       end
 
       get do
-        encode serialize(<%= singular_class_name %>.all)
+        <%= fields_name %> = uuid_paginator(<%= singular_class_name %>, args: { max: 10 })
+        encode serialize(<%= fields_name %>)
       end
 
       post do

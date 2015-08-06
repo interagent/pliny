@@ -27,6 +27,10 @@ module Pliny::Commands
         name.tableize.singularize
       end
 
+      def fields_name
+        name.tableize.pluralize
+      end
+
       def pluralized_file_name
         name.tableize
       end
