@@ -31,6 +31,10 @@ Dotenv.load('.env.test')
 
 require_relative "../lib/initializer"
 
+unless Sequel::Migrator.is_current?(Sequel::Model.db, 'db/migrate')
+  Sequel::Migrator.run(Sequel::Model.db, 'db/migrate')
+end
+
 # pull in test initializers
 Pliny::Utils.require_glob("#{Config.root}/spec/support/**/*.rb")
 
