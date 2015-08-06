@@ -62,9 +62,7 @@ module Pliny::Commands
       private
 
       def normalize_name(name)
-        Array(name).map(&:underscore)
-                   .map { |n| n.tr(' ', '_') }
-                   .join('_')
+        name.underscore.tr(' ', '_')
       end
     end
   end
