@@ -61,7 +61,7 @@ module Pliny::Commands
       sc.rebuild
     end
 
-    desc 'serializer [NAME]', 'Generates a serializer'
+    desc 'serializer NAME', 'Generates a serializer'
     def serializer(name)
       require_relative 'generator/serializer'
 
