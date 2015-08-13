@@ -84,13 +84,13 @@ Commands:
 
 ### Rake tasks
 
-Pliny comes with several rake tasks:
+Pliny adds common Rake tasks to help maintain your app:
 
 ```bash
 rake db:create        # Create the database
 rake db:drop          # Drop the database
 rake db:migrate       # Run database migrations
-rake db:rollback      # Rollback the database
+rake db:rollback      # Rollback last database migration
 rake db:schema:dump   # Dump the database schema
 rake db:schema:load   # Load the database schema
 rake db:schema:merge  # Merges migrations into schema and removes them
