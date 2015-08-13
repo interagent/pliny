@@ -7,7 +7,11 @@ Pliny helps Ruby developers write and maintain excellent APIs.
 
 It bundles the best patterns, libraries and practices we've seen after writing a lot of APIs.
 
-For more info please refer to the [documentation](https://github.com/interagent/pliny/wiki).
+
+## Resources
+
+- [Documentation](https://github.com/interagent/pliny/wiki)
+- [Mailing list](https://groups.google.com/group/pliny-talk)
 
 
 ## Getting started
