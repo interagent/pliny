@@ -7,27 +7,25 @@ Pliny helps Ruby developers write and maintain excellent APIs.
 
 It bundles the best patterns, libraries and practices we've seen after writing a lot of APIs.
 
+For more info please refer to the [documentation](https://github.com/interagent/pliny/wiki).
+
+
 ## Getting started
 
-First make sure the following is installed:
-
-* [Postgres](http://www.postgresql.org/)
-    * The [uuid-ossp](http://www.postgresql.org/docs/9.3/static/uuid-ossp.html) module for Postgres
-
-Then install the gem:
+Install gem:
 
 ```bash
 $ gem install pliny
 ```
 
-And initialize a new app:
+And initialize your new API app:
 
 ```bash
 $ pliny-new myapp
 $ cd myapp && bin/setup
 ```
 
-Pliny also bundles [some generators](#generators) to help you get started:
+Pliny bundles [generators](#generators) to help you get started:
 
 ```bash
 $ bundle exec pliny-generate model artist
