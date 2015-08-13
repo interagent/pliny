@@ -130,3 +130,5 @@ $ rake
 ## Meta
 
 Created by Brandur Leach and Pedro Belo.
+
+MIT licensed.
