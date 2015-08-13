@@ -1,9 +1,9 @@
 # Pliny
 
-Pliny helps Ruby developers write and maintain excellent APIs.
-
 [![Gem version](http://img.shields.io/gem/v/pliny.svg)](https://rubygems.org/gems/pliny)
 [![Build Status](https://travis-ci.org/interagent/pliny.svg?branch=master)](https://travis-ci.org/interagent/pliny)
+
+Pliny helps Ruby developers write and maintain excellent APIs.
 
 It bundles the best patterns, libraries and practices we've seen after writing a lot of APIs.
 
