@@ -2,6 +2,7 @@
 
 Opinionated template Sinatra app for writing excellent APIs in Ruby.
 
+[![Gem version](http://img.shields.io/gem/v/pliny.svg)](https://rubygems.org/gems/pliny)
 [![Build Status](https://travis-ci.org/interagent/pliny.svg?branch=master)](https://travis-ci.org/interagent/pliny)
 
 It bundles some of the patterns we like to develop these apps:
