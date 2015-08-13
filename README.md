@@ -1,6 +1,6 @@
 # Pliny
 
-Opinionated template Sinatra app for writing excellent APIs in Ruby.
+Pliny helps Ruby developers write and maintain excellent APIs.
 
 [![Gem version](http://img.shields.io/gem/v/pliny.svg)](https://rubygems.org/gems/pliny)
 [![Build Status](https://travis-ci.org/interagent/pliny.svg?branch=master)](https://travis-ci.org/interagent/pliny)
