@@ -4,7 +4,7 @@ module Pliny::Middleware
     ALLOW_METHODS  =
       %w( GET POST PUT PATCH DELETE OPTIONS ).freeze
     ALLOW_HEADERS  =
-      %w( * Content-Type Accept AUTHORIZATION Cache-Control ).freeze
+      %w( Content-Type Accept Authorization Cache-Control If-None-Match If-Modified-Since ).freeze
     EXPOSE_HEADERS =
       %w( Cache-Control Content-Language Content-Type Expires Last-Modified Pragma ).freeze
 
