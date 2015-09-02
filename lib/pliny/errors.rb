@@ -1,16 +1,17 @@
 module Pliny
   module Errors
     class Error < StandardError
-      attr_accessor :id
+      attr_accessor :id, :metadata
 
       def self.render(error)
         headers = { "Content-Type" => "application/json; charset=utf-8" }
-        data = { id: error.id, message: error.message }
+        data = { id: error.id, message: error.message }.merge(error.metadata)
         [error.status, headers, [MultiJson.encode(data)]]
       end
 
       def initialize(options={})
         @id = options[:id]
+        @metadata = options[:metadata] || {}
         super(options[:message])
       end
     end

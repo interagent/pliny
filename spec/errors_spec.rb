@@ -10,6 +10,12 @@ describe Pliny::Errors do
       e = Pliny::Errors::Error.new(id: :fail)
       assert_equal :fail, e.id
     end
+
+    it "takes metadata" do
+      meta = { resource: "artists" }
+      e = Pliny::Errors::Error.new(metadata: meta)
+      assert_equal meta, e.metadata
+    end
   end
 
   describe Pliny::Errors::HTTPStatusError do
