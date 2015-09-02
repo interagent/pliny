@@ -9,21 +9,21 @@ module Pliny
         [error.status, headers, [MultiJson.encode(data)]]
       end
 
-      def initialize(message, id)
-        @id = id
-        super(message)
+      def initialize(options={})
+        @id = options[:id]
+        super(options[:message])
       end
     end
 
     class HTTPStatusError < Error
       attr_accessor :status
 
-      def initialize(message = nil, id = nil, status = nil)
-        meta    = Pliny::Errors::META[self.class]
-        message = message || meta[1] + "."
-        id      = id || meta[1].downcase.tr(' ', '_').to_sym
-        @status = status || meta[0]
-        super(message, id)
+      def initialize(options={})
+        meta = Pliny::Errors::META[self.class]
+        options[:message] ||= "#{meta[1]}."
+        options[:id] ||= meta[1].downcase.tr(' ', '_').to_sym
+        @status = options[:status] || meta[0]
+        super(options)
       end
     end
 
@@ -108,6 +108,7 @@ module Pliny
       UnprocessableEntity          => [422, 'Unprocessable entity'],
       TooManyRequests              => [429, 'Too many requests'],
       InternalServerError          => [500, 'Internal server error'],
+      HTTPStatusError              => [500, 'Unspecified'],
       NotImplemented               => [501, 'Not implemented'],
       BadGateway                   => [502, 'Bad gateway'],
       ServiceUnavailable           => [503, 'Service unavailable'],
