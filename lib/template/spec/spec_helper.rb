@@ -32,7 +32,7 @@ Dotenv.load('.env.test')
 require_relative "../lib/initializer"
 
 # pull in test initializers
-Pliny::Utils.require_glob("#{Config.root}/spec/support/**/*.rb")
+Pliny::Utils.require_glob("#{Config.root}/spec/spec_support/**/*.rb")
 
 RSpec.configure do |config|
   config.before :suite do
