@@ -128,6 +128,7 @@ Run tests:
 
 ```
 $ bundle install
+$ createdb pliny-gem-test
 $ rake
 ```
 
