@@ -1,5 +1,5 @@
 require "multi_json"
-require "rack/timeout"
+require "rack-timeout"
 require "sinatra/base"
 
 require_relative "pliny/version"
