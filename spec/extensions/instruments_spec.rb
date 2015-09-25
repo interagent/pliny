@@ -4,6 +4,10 @@ describe Pliny::Extensions::Instruments do
   def app
     Rack::Builder.new do
       run Sinatra.new {
+        before do
+          env['REQUEST_ID'] = 'DEADBEEF'
+        end
+
         register Pliny::Extensions::Instruments
 
         error Pliny::Errors::Error do
@@ -28,6 +32,7 @@ describe Pliny::Extensions::Instruments do
       at:              "start",
       method:          "GET",
       path:            "/apps/123",
+      request_id:      "DEADBEEF"
     ))
     mock(Pliny).log(hash_including(
       instrumentation: true,
@@ -35,6 +40,7 @@ describe Pliny::Extensions::Instruments do
       method:          "GET",
       path:            "/apps/123",
       route_signature: "/apps/:id",
+      request_id:      "DEADBEEF",
       status:          201
     ))
     get "/apps/123"

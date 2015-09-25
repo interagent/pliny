@@ -6,6 +6,7 @@ module Pliny::Extensions
         Pliny.log(
           instrumentation: true,
           at:              "start",
+          request_id:      env['REQUEST_ID'],
           method:          request.request_method,
           path:            request.path_info,
         )
@@ -19,6 +20,7 @@ module Pliny::Extensions
           path:            request.path_info,
           route_signature: route_signature,
           status:          status,
+          request_id:      env['REQUEST_ID'],
           elapsed:         (Time.now - @request_start).to_f
         )
       end
