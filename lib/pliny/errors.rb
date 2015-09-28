@@ -109,7 +109,6 @@ module Pliny
       UnprocessableEntity          => [422, 'Unprocessable entity'],
       TooManyRequests              => [429, 'Too many requests'],
       InternalServerError          => [500, 'Internal server error'],
-      HTTPStatusError              => [500, 'Unspecified'],
       NotImplemented               => [501, 'Not implemented'],
       BadGateway                   => [502, 'Bad gateway'],
       ServiceUnavailable           => [503, 'Service unavailable'],
