@@ -9,22 +9,22 @@ module Pliny
         [error.status, headers, [MultiJson.encode(data)]]
       end
 
-      def initialize(options={})
-        @id = options[:id]
-        @metadata = options[:metadata] || {}
-        super(options[:message])
+      def initialize(message, id: nil, metadata: {})
+        @id = id
+        @metadata = metadata
+        super(message)
       end
     end
 
     class HTTPStatusError < Error
       attr_accessor :status
 
-      def initialize(options={})
+      def initialize(message=nil, options={})
         meta = Pliny::Errors::META[self.class]
-        options[:message] ||= "#{meta[1]}."
+        message ||= "#{meta[1]}."
         options[:id] ||= meta[1].downcase.tr(' ', '_').to_sym
-        @status = options[:status] || meta[0]
-        super(options)
+        @status = options.delete(:status) || meta[0]
+        super(message, options)
       end
     end
 
