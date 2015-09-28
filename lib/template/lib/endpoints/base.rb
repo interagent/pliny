@@ -14,7 +14,7 @@ module Endpoints
 
     configure :development do
       register Sinatra::Reloader
-      also_reload '../**/*.rb'
+      also_reload "#{Config.root}/lib/**/*.rb"
     end
 
     error Sinatra::NotFound do
