@@ -1,3 +1,4 @@
+require 'pliny/commands/creator'
 require 'pliny/commands/generator'
 require 'pliny/commands/generator/schema'
 require 'spec_helper'
@@ -12,6 +13,16 @@ describe Pliny::Commands::Generator::Schema do
       # schema work depends on files seeded by the template
       Pliny::Commands::Creator.run([app_dir], {}, StringIO.new)
       Dir.chdir(app_dir, &example)
+    end
+  end
+
+  describe '#new#rebuild as seen in schema.rake' do
+    context 'with nil as the name argument' do
+      it 'rebuilds the schema with prmd' do
+        assert_output(/rebuilt/) do
+          Pliny::Commands::Generator::Schema.new(nil).rebuild
+        end
+      end
     end
   end
 

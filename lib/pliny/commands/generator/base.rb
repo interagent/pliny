@@ -10,7 +10,7 @@ module Pliny::Commands
       attr_reader :name, :stream, :options
 
       def initialize(name, options = {}, stream = $stdout)
-        @name = normalize_name(name)
+        @name = name ? normalize_name(name) : nil
         @options = options
         @stream = stream
       end
