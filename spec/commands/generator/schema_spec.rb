@@ -16,15 +16,6 @@ describe Pliny::Commands::Generator::Schema do
     end
   end
 
-  describe '#new#rebuild as seen in schema.rake' do
-    context 'with nil as the name argument' do
-      it 'rebuilds the schema with prmd' do
-        assert_output(/rebuilt/) do
-          Pliny::Commands::Generator::Schema.new(nil).rebuild
-        end
-      end
-    end
-  end
 
   describe '#create' do
     context 'with new layout' do
@@ -55,6 +46,14 @@ describe Pliny::Commands::Generator::Schema do
   end
 
   describe '#rebuild' do
+    context 'with nil as the name argument (as used in schema.rake)' do
+      it 'rebuilds the schema with prmd' do
+        assert_output(/rebuilt/) do
+          Pliny::Commands::Generator::Schema.new(nil).rebuild
+        end
+      end
+    end
+
     context 'with new layout' do
       before do
         subject.rebuild
