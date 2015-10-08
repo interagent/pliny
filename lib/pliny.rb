@@ -4,7 +4,6 @@ require "sinatra/base"
 
 require_relative "pliny/version"
 require_relative "pliny/errors"
-require_relative "pliny/extensions/instruments"
 require_relative "pliny/helpers/encode"
 require_relative "pliny/helpers/params"
 require_relative "pliny/log"
