@@ -1,10 +1,10 @@
 require "spec_helper"
 
-describe Pliny::Extensions::Instruments do
+describe Pliny::Middleware::Instruments do
   def app
     Rack::Builder.new do
       run Sinatra.new {
-        register Pliny::Extensions::Instruments
+        use Pliny::Middleware::Instruments
 
         error Pliny::Errors::Error do
           Pliny::Errors::Error.render(env["sinatra.error"])
@@ -34,7 +34,6 @@ describe Pliny::Extensions::Instruments do
       at:              "finish",
       method:          "GET",
       path:            "/apps/123",
-      route_signature: "/apps/:id",
       status:          201
     ))
     get "/apps/123"
