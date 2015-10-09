@@ -20,6 +20,10 @@ module Pliny::Middleware
 
       status, headers, response = @app.call(env)
 
+      if route = env["sinatra.route"]
+        data.merge!(route_signature: route.split(" ").last)
+      end
+
       elapsed = (Time.now - start).to_f
       Pliny.log(data.merge(
         at:              "finish",
