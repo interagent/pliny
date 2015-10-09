@@ -34,6 +34,7 @@ describe Pliny::Middleware::Instruments do
       at:              "finish",
       method:          "GET",
       path:            "/apps/123",
+      route_signature: "/apps/:id",
       status:          201
     ))
     get "/apps/123"
