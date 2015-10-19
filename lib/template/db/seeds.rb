@@ -4,6 +4,5 @@
 # db with db:setup).
 #
 # Seeding can occur multiple times during the execution of a single Rake task
-# because seeding should occur in all environments (development, testing,
-# etc.). The currently connected database can be accessed via
-# `Sequel::DATABASES.last`.
+# because it applies to all your app environments (eg: test and development).
+# An instance of the current database connection is available as `DB`.

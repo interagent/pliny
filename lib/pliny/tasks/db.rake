@@ -34,7 +34,7 @@ begin
     task :seed do
       if File.exist?('./db/seeds.rb')
         database_urls.each do |database_url|
-          Sequel.connect(database_url)
+          DB = Sequel.connect(database_url)
           load 'db/seeds.rb'
         end
         disconnect
