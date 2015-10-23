@@ -101,6 +101,10 @@ begin
         # add migrations used to compose this schema
         db = Sequel.connect(database_urls.first)
         if db.table_exists?(:schema_migrations)
+          # set the search_path so migrations are added in the right schema
+          search_path = db.dataset.with_sql("SHOW search_path").single_value
+          schema << "SET search_path = #{search_path};\n\n"
+
           db[:schema_migrations].each do |migration|
             schema << db[:schema_migrations].insert_sql(migration) + ";\n"
           end
