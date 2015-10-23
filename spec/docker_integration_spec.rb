@@ -1,12 +1,12 @@
 require "spec_helper"
 
-describe "Pliny integration test" do
-  around(:all) do |example|
+describe "Pliny w/ docker integration test" do
+  around(:each) do |example|
     FileUtils.rm_rf("tmp/plinytest")
     FileUtils.mkdir_p("tmp/plinytest")
     Dir.chdir("tmp/plinytest") do
-      bash "pliny-new myapp"
-      bash_app "bin/setup"
+      bash "pliny-new myapp --docker"
+      bash_app "docker-compose run web bin/setup"
       example.run
     end
   end
@@ -17,30 +17,18 @@ describe "Pliny integration test" do
     end
   end
 
-  describe "pliny-generate scaffold" do
+  describe "pliny-generate model" do
     before do
-      bash_app "pliny-generate scaffold artist"
+      bash_app "pliny-generate model artist"
     end
 
     it "creates the model file" do
       assert File.exists?("./myapp/lib/models/artist.rb")
     end
-
-    it "creates the endpoint file" do
-      assert File.exists?("./myapp/lib/endpoints/artists.rb")
-    end
-
-    it "creates the serializer file" do
-      assert File.exists?("./myapp/lib/serializers/artist.rb")
-    end
-
-    it "creates the schema file" do
-      assert File.exists?("./myapp/schema/schemata/artist.yaml")
-    end
   end
 
   def bash(cmd)
-    bin  = File.expand_path('../bin', File.dirname(__FILE__))
+    bin  = File.expand_path('../../bin', File.dirname(__FILE__))
     path = "#{bin}:#{ENV["PATH"]}"
     env = { "PATH" => path }
     unless system(env, "#{cmd} > /dev/null")

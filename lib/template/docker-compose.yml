@@ -1,0 +1,11 @@
+postgres:
+  image: postgres
+web:
+  build: .
+  command: bundle exec foreman start
+  volumes:
+    - .:/app
+  ports:
+    - "5000:5000"
+  links:
+    - postgres
