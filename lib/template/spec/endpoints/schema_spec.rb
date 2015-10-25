@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Endpoints::Schema do
+RSpec.describe Endpoints::Schema do
   include Rack::Test::Methods
 
   let(:schema_filename) { "#{Config.root}/schema/schema.json" }
