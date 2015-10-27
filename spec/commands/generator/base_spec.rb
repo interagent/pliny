@@ -69,4 +69,52 @@ describe Pliny::Commands::Generator::Base do
       end
     end
   end
+
+  describe '#display' do
+    it 'puts given message into stream' do
+      stream = StringIO.new
+      message = 'Hello world'
+      generator('resource_history', {}, stream).display(message)
+
+      assert_includes stream.string, message
+    end
+  end
+
+  describe '#render_template' do
+    it 'renders template into a string' do
+      template = generator('resource_history').render_template('endpoint.erb')
+      assert_match /module Endpoints/, template
+    end
+  end
+
+  describe '#write_template' do
+    let(:destination_path) { File.join(Dir.mktmpdir, 'endpoint.rb') }
+
+    before do
+      generator('resource_history').write_template('endpoint.erb', destination_path)
+    end
+
+    it 'renders given template into a file by given path' do
+      assert File.exist?(destination_path)
+      assert_match /module Endpoints/, File.read(destination_path)
+    end
+  end
+  
+  describe '#write_file' do
+    let(:destination_path) { File.join(Dir.mktmpdir, 'foo.txt') }
+
+    before do
+      generator('resource_history').write_file(destination_path) do
+        'Hello world'
+      end
+    end
+
+    it 'creates a file by given path' do
+      assert File.exist?(destination_path)
+    end
+
+    it 'writes given content into a file' do
+      assert_match /Hello world/, File.read(destination_path)
+    end
+  end
 end
