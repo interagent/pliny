@@ -16,6 +16,14 @@ describe Pliny::Log do
     Pliny.log(foo: "bar", baz: 42)
   end
 
+  it "re-raises errors" do
+    assert_raises(RuntimeError) do
+      Pliny.log(foo: "bar") do
+        raise RuntimeError
+      end
+    end
+  end
+
   it "supports blocks to log stages and elapsed" do
     mock(@io).print "foo=bar at=start\n"
     mock(@io).print "foo=bar at=finish elapsed=0.000\n"
