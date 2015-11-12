@@ -60,7 +60,7 @@ module Pliny
         rescue
           log_to_stream(stream, data.merge(
             at: "exception", elapsed: (Time.now - start).to_f))
-          raise
+          raise $!
         end
       end
     end
