@@ -34,7 +34,9 @@ begin
     task :seed do
       if File.exist?('./db/seeds.rb')
         database_urls.each do |database_url|
-          Sequel.connect(database_url)
+          # make a DB instance available to the seeds file
+          self.class.send(:remove_const, 'DB') if self.class.const_defined?('DB')
+          self.class.const_set('DB', Sequel.connect(database_url))
           load 'db/seeds.rb'
         end
         disconnect
