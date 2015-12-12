@@ -19,6 +19,7 @@ describe Pliny::RangeParser do
     it 'parses a start and an end' do
       assert_equal 0, parser.start
       assert_equal 99, parser.end
+      assert_equal({}, parser.parameters)
     end
   end
 
@@ -28,6 +29,7 @@ describe Pliny::RangeParser do
     it 'parses a start' do
       assert_equal 0, parser.start
       assert_nil parser.end
+      assert_equal({}, parser.parameters)
     end
   end
 
