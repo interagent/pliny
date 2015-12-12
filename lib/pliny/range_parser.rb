@@ -27,6 +27,10 @@ module Pliny
       return if bounds_str.nil?
       unit, bounds = bounds_str.split(%r{\s+}, 2)
       raise_range_format_error unless unit.downcase == 'objects'
+      if bounds =~ %r{(\d*)-(\d*)}
+        @start = $1.to_i unless $1.empty?
+        @end   = $2.to_i unless $2.empty?
+      end
     end
 
     def parse_range_parameters(parameters_str)
