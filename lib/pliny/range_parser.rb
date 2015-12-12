@@ -34,7 +34,13 @@ module Pliny
     end
 
     def parse_range_parameters(parameters_str)
-
+      return if parameters_str.nil?
+      @parameters = Hash[
+        parameters_str.split(',')
+        .map    { |option| option.split('=') }
+        .select { |k, v| k && v }
+        .map    { |k, v| [k.strip.to_sym, v.strip] }
+      ]
     end
 
     def raise_range_format_error
