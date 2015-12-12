@@ -25,9 +25,9 @@ module Pliny
 
     def parse_range_bounds(bounds_str)
       return if bounds_str.nil?
-      unit, bounds = bounds_str.split(%r{\s+}, 2)
+      unit, bounds = bounds_str.split(/\s+/, 2)
       raise_range_format_error unless unit.downcase == 'objects'
-      if bounds =~ %r{(\d*)-(\d*)}
+      if bounds =~ /(\d*)-(\d*)/
         @start = $1.to_i unless $1.empty?
         @end   = $2.to_i unless $2.empty?
       end
@@ -44,7 +44,7 @@ module Pliny
     end
 
     def raise_range_format_error
-      raise Pliny::Errors::BadRequest, RANGE_FORMAT_ERROR
+      fail Pliny::Errors::BadRequest, RANGE_FORMAT_ERROR
     end
 
     def set_defaults
