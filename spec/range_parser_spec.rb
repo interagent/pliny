@@ -3,6 +3,16 @@ require "spec_helper"
 describe Pliny::RangeParser do
   subject(:parser) { described_class.new(range_header) }
 
+  context 'with an empty header' do
+    let(:range_header) { nil }
+
+    it 'parses' do
+      assert_nil parser.start
+      assert_nil parser.end
+      assert_equal({}, parser.parameters)
+    end
+  end
+
   context 'with a bound range' do
     let(:range_header) { 'objects 0-99' }
 

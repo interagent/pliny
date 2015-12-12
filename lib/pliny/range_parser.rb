@@ -7,6 +7,7 @@ module Pliny
       @range_header = range_header
 
       set_defaults
+      return if range_header.nil?
       parse
     end
 
