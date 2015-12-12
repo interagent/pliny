@@ -38,4 +38,15 @@ describe Pliny::RangeParser do
       assert_equal({ a: 'b', c: 'd' }, parser.parameters)
     end
   end
+
+  context 'with multiple semicolons' do
+    let(:range_header) { 'objects 0-99; a=b; c=d' }
+    let(:message) { Pliny::RangeParser::RANGE_FORMAT_ERROR }
+
+    it 'raises a bad request' do
+      assert_raises Pliny::Errors::BadRequest, message do
+        parser
+      end
+    end
+  end
 end
