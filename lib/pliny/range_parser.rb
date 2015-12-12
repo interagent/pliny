@@ -18,6 +18,17 @@ module Pliny
     def parse
       parts = range_header.split(';')
       raise_range_format_error if parts.size > 2
+      bounds_str, parameters_str = parts
+      parse_range_bounds(bounds_str)
+      parse_range_parameters(parameters_str)
+    end
+
+    def parse_range_bounds(bounds_str)
+
+    end
+
+    def parse_range_parameters(parameters_str)
+
     end
 
     def raise_range_format_error
