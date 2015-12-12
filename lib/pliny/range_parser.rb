@@ -24,7 +24,9 @@ module Pliny
     end
 
     def parse_range_bounds(bounds_str)
-
+      return if bounds_str.nil?
+      unit, bounds = bounds_str.split(%r{\s+}, 2)
+      raise_range_format_error unless unit.downcase == 'objects'
     end
 
     def parse_range_parameters(parameters_str)

@@ -49,4 +49,15 @@ describe Pliny::RangeParser do
       end
     end
   end
+
+  context 'with a non objects unit' do
+    let(:range_header) { 'ids 0-99' }
+    let(:message) { Pliny::RangeParser::RANGE_FORMAT_ERROR }
+
+    it 'raises a bad request' do
+      assert_raises Pliny::Errors::BadRequest, message do
+        parser
+      end
+    end
+  end
 end
