@@ -23,7 +23,17 @@ describe Pliny::RangeParser do
     end
   end
 
-  context 'with an unbound range' do
+  context 'with an unbound start range' do
+    let(:range_header) { 'objects -99' }
+
+    it 'parses a start' do
+      assert_nil parser.start
+      assert_equal 99, parser.end
+      assert_equal({}, parser.parameters)
+    end
+  end
+
+  context 'with an unbound end range' do
     let(:range_header) { 'objects 0-' }
 
     it 'parses a start' do
