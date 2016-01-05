@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Pliny - <%= @item[:title] %></title>
+    <link rel="stylesheet" href="/assets/stylesheets/application.css">
+
+    <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="//www.herokucdn.com/glostick/1.1.1/glostick.min.js"></script>
+    <script src="/assets/javascripts/application.js"></script>
+  </head>
+  <body>
+    <div id="main">
+      <div class="container">
+        <%= yield %>
+      </div>
+    </div>
+  </body>
+</html>
