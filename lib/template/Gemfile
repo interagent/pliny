@@ -1,6 +1,7 @@
 source "https://rubygems.org"
 ruby "2.2.3"
 
+gem "i18n", "~> 0.7"
 gem "multi_json"
 gem "oj"
 gem "pg"
