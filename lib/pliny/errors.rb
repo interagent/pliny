@@ -28,22 +28,6 @@ module Pliny
       end
     end
 
-    class Continue < HTTPStatusError; end                     # 100
-    class SwitchingProtocols < HTTPStatusError; end           # 101
-    class OK < HTTPStatusError; end                           # 200
-    class Created < HTTPStatusError; end                      # 201
-    class Accepted < HTTPStatusError; end                     # 202
-    class NonAuthoritativeInformation < HTTPStatusError; end  # 203
-    class NoContent < HTTPStatusError; end                    # 204
-    class ResetContent < HTTPStatusError; end                 # 205
-    class PartialContent < HTTPStatusError; end               # 206
-    class MultipleChoices < HTTPStatusError; end              # 300
-    class MovedPermanently < HTTPStatusError; end             # 301
-    class Found < HTTPStatusError; end                        # 302
-    class SeeOther < HTTPStatusError; end                     # 303
-    class NotModified < HTTPStatusError; end                  # 304
-    class UseProxy < HTTPStatusError; end                     # 305
-    class TemporaryRedirect < HTTPStatusError; end            # 307
     class BadRequest < HTTPStatusError; end                   # 400
     class Unauthorized < HTTPStatusError; end                 # 401
     class PaymentRequired < HTTPStatusError; end              # 402
@@ -72,22 +56,6 @@ module Pliny
 
     # Messages for nicer exceptions, from rfc2616
     META = {
-      Continue                     => [100, 'Continue'],
-      SwitchingProtocols           => [101, 'Switching protocols'],
-      OK                           => [200, 'OK'],
-      Created                      => [201, 'Created'],
-      Accepted                     => [202, 'Accepted'],
-      NonAuthoritativeInformation  => [203, 'Non-authoritative information'],
-      NoContent                    => [204, 'No content'],
-      ResetContent                 => [205, 'Reset content'],
-      PartialContent               => [206, 'Partial content'],
-      MultipleChoices              => [300, 'Multiple choices'],
-      MovedPermanently             => [301, 'Moved permanently'],
-      Found                        => [302, 'Found'],
-      SeeOther                     => [303, 'See other'],
-      NotModified                  => [304, 'Not modified'],
-      UseProxy                     => [305, 'Use proxy'],
-      TemporaryRedirect            => [307, 'Temporary redirect'],
       BadRequest                   => [400, 'Bad request'],
       Unauthorized                 => [401, 'Unauthorized'],
       PaymentRequired              => [402, 'Payment required'],
