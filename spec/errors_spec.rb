@@ -1,36 +1,32 @@
 require "spec_helper"
 
 describe Pliny::Errors do
-  describe Pliny::Errors::Error do
-    it "takes a message" do
-      e = Pliny::Errors::Error.new("Fail.")
-      assert_equal "Fail.", e.message
-    end
-    it "takes an identifier" do
-      e = Pliny::Errors::Error.new(nil, id: :fail)
-      assert_equal :fail, e.id
-    end
+  it "bundles classes to represent the different status codes" do
+    error = Pliny::Errors::BadRequest.new
+    assert_equal :bad_request, error.id
+    assert_equal 400, error.status
+    assert_equal "Bad request", error.user_message
 
-    it "takes metadata" do
-      meta = { resource: "artists" }
-      e = Pliny::Errors::Error.new(nil, metadata: meta)
-      assert_equal meta, e.metadata
-    end
+    error = Pliny::Errors::InternalServerError.new
+    assert_equal :internal_server_error, error.id
+    assert_equal 500, error.status
+    assert_equal "Internal server error", error.user_message
   end
 
-  describe Pliny::Errors::HTTPStatusError do
-    it "includes an HTTP error that will take generic parameters" do
-      e = Pliny::Errors::HTTPStatusError.new("error", id: :foo, status: 499)
-      assert_equal :foo, e.id
-      assert_equal 499, e.status
-      assert_equal "error", e.message
-    end
+  it "keeps the error id stored as the internal message" do
+    error = Pliny::Errors::BadRequest.new
+    assert_equal "bad_request", error.message
+  end
 
-    it "includes pre-defined HTTP error templates" do
-      e = Pliny::Errors::NotFound.new
-      assert_equal "Not found.", e.message
-      assert_equal :not_found, e.id
-      assert_equal 404, e.status
-    end
+  it "takes a custom id" do
+    error = Pliny::Errors::BadRequest.new(:invalid_json)
+    assert_equal :invalid_json, error.id
+    assert_equal 400, error.status
+  end
+
+  it "takes optional metadata" do
+    metadata = { foo: "bar" }
+    error = Pliny::Errors::BadRequest.new(:invalid_json, metadata: metadata)
+    assert_equal metadata, error.metadata
   end
 end
