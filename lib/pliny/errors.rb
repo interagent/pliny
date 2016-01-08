@@ -14,14 +14,17 @@ module Pliny
         end
       end
 
-      attr_accessor :id, :status, :metadata, :user_message
+      attr_accessor :id, :status, :metadata
 
       def initialize(id=nil, metadata: {})
         @id = (id || self.class.error_class_id).to_sym
         @status = self.class.error_class_status
         @metadata = metadata
-        @user_message = I18n.t("errors.#{@id}")
         super(@id.to_s)
+      end
+
+      def user_message
+        I18n.t("errors.#{self.id}")
       end
     end
 
