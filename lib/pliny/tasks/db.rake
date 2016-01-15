@@ -92,7 +92,7 @@ begin
       task :dump do
         file = File.join("db", "schema.sql")
         database_url = database_urls.first
-        `pg_dump -i -s -x -O -f #{file} #{database_url}`
+        `pg_dump -s -x -O -f #{file} #{database_url}`
 
         schema = File.read(file)
         # filter all COMMENT ON EXTENSION, only owners and the db
