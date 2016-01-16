@@ -22,14 +22,14 @@ module Pliny::Commands
 
       FileUtils.copy_entry template_dir, app_dir
       FileUtils.rm_rf("#{app_dir}/.git")
-      setup_database_urls
+      setup_environments
       display 'Pliny app created. To start, run:'
       display "cd #{app_dir} && bin/setup"
     end
 
     protected
 
-    def setup_database_urls
+    def setup_environments
       db = URI.parse("postgres:///#{name}")
       {
         '.env.sample' => 'development',
@@ -42,7 +42,8 @@ module Pliny::Commands
           # ruby's URI#to_s renders foo:/bar when there's no host
           # we want foo:///bar instead!
           db_url = db.to_s.sub(':/', ':///')
-          f.puts env.sub(/DATABASE_URL=.*/, "DATABASE_URL=#{db_url}")
+          f.puts env.sub(/APP_NAME=.*/, "APP_NAME=#{name}")
+                    .sub(/DATABASE_URL=.*/, "DATABASE_URL=#{db_url}")
         end
       end
     end
