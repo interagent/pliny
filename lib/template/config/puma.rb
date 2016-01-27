@@ -1,6 +1,6 @@
 require "./config/config"
 
-environment Config.pliny_env
+environment Config.rack_env
 port Config.port
 quiet
 threads Config.puma_min_threads, Config.puma_max_threads

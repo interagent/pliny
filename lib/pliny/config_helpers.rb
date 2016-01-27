@@ -49,6 +49,14 @@ module Pliny
       end
     end
 
+    def rack_env
+      if pliny_env == "development" || pliny_env == "test"
+        "development"
+      else
+        "deployment"
+      end
+    end
+
     private
 
     def cast(value, method)
@@ -96,5 +104,7 @@ module Pliny
 
 end
 
-# Supress the "use RbConfig instead" warning.
-Object.send(:remove_const, :Config) if Object.const_defined?(:Config)
+# Supress the "use RbConfig instead" warning
+if Object.const_defined?(:Config) && !Config.is_a?(Pliny::CastingConfigHelpers)
+  Object.send(:remove_const, :Config)
+end
