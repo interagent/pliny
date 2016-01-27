@@ -24,6 +24,11 @@ describe Pliny::Commands::Creator do
       refute File.exists?("./foobar/.git")
     end
 
+    it "deletes the .erb files from it" do
+      @gen.run!
+      assert_equal 0, Dir.glob("./foobar/**/{*,.*}.erb").length
+    end
+
     it "changes DATABASE_URL in .env.sample to use the app name" do
       @gen.run!
       db_url = File.read("./foobar/.env.sample").split("\n").detect do |line|
@@ -38,6 +43,14 @@ describe Pliny::Commands::Creator do
         line.include?("DATABASE_URL=")
       end
       assert_equal "DATABASE_URL=postgres:///foobar-test", db_url
+    end
+
+    it "changes APP_NAME in app.json to use the app name" do
+      @gen.run!
+      db_url = File.read("./foobar/app.json").split("\n").detect do |line|
+        line.include?("\"name\":")
+      end
+      assert_equal "  \"name\": \"foobar\",", db_url
     end
   end
 end

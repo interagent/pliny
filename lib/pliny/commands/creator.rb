@@ -2,6 +2,8 @@ require 'fileutils'
 require 'pathname'
 require 'pliny/version'
 require 'uri'
+require 'erb'
+require 'ostruct'
 
 module Pliny::Commands
   class Creator
@@ -22,29 +24,25 @@ module Pliny::Commands
 
       FileUtils.copy_entry template_dir, app_dir
       FileUtils.rm_rf("#{app_dir}/.git")
-      setup_environments
+      parse_erb_files
       display 'Pliny app created. To start, run:'
       display "cd #{app_dir} && bin/setup"
     end
 
     protected
 
-    def setup_environments
-      db = URI.parse("postgres:///#{name}")
-      {
-        '.env.sample' => 'development',
-        '.env.test'   => 'test'
-      }.each do |env_file, db_env_suffix|
-        env_path = "#{app_dir}/#{env_file}"
-        db.path  = "/#{name}-#{db_env_suffix}"
-        env      = File.read(env_path)
-        File.open(env_path, 'w') do |f|
-          # ruby's URI#to_s renders foo:/bar when there's no host
-          # we want foo:///bar instead!
-          db_url = db.to_s.sub(':/', ':///')
-          f.puts env.sub(/APP_NAME=.*/, "APP_NAME=#{name}")
-                    .sub(/DATABASE_URL=.*/, "DATABASE_URL=#{db_url}")
+    def parse_erb_files
+      Dir.glob("#{app_dir}/{*,.*}.erb").each do |file|
+        static_file = file.gsub(/\.erb$/, '')
+
+        template = ERB.new(File.read(file), 0)
+        context = OpenStruct.new(app_name: name)
+        content = template.result(context.instance_eval { binding })
+
+        File.open(static_file, "w") do |f|
+          f.write content
         end
+        FileUtils.rm(file)
       end
     end
 
