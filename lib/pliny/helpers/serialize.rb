@@ -5,6 +5,13 @@ module Pliny::Helpers
     end
 
     def serialize(data, structure = :default)
+      if self.class.serializer_class.nil?
+        raise <<-eos.strip
+No serializer has been specified for this endpoint. Please specify one with
+`serializer Serializers::ModelName` in the endpoint.
+        eos
+      end
+
       self.class.serializer_class.new(structure).serialize(data)
     end
 
