@@ -12,13 +12,13 @@ module Initializer
 
   def self.require_lib
     require! %w(
+      lib/serializers/base
+      lib/serializers/**/*
       lib/endpoints/base
       lib/endpoints/**/*
       lib/mediators/base
       lib/mediators/**/*
       lib/routes
-      lib/serializers/base
-      lib/serializers/**/*
     )
   end
 

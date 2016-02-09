@@ -1,6 +1,9 @@
 module Endpoints
   class <%= plural_class_name %> < Base
     namespace "<%= url_path %>" do
+      serializer Serializers::<%= singular_class_name %>
+
+
       get do
         encode serialize(<%= singular_class_name %>.all)
       end
@@ -29,12 +32,6 @@ module Endpoints
         <%= field_name %> = <%= singular_class_name %>.first(id: id) || halt(404)
         <%= field_name %>.destroy
         encode serialize(<%= field_name %>)
-      end
-
-      private
-
-      def serialize(data, structure = :default)
-        Serializers::<%= singular_class_name %>.new(structure).serialize(data)
       end
     end
   end
