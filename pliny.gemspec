@@ -17,7 +17,8 @@ Gem::Specification.new do |gem|
 
   gem.add_dependency "activesupport",  "~> 4.1",  ">= 4.1.0"
   gem.add_dependency "multi_json",     "~> 1.9",  ">= 1.9.3"
-  gem.add_dependency "prmd",           "~> 0.7.0"
+  gem.add_dependency "prmd",           "~> 0.11", ">= 0.11.4"
+
   gem.add_dependency "sinatra",        "~> 1.4",  ">= 1.4.5"
   gem.add_dependency "http_accept",    "~> 0.1",  ">= 0.1.5"
   gem.add_dependency "sinatra-router", "~> 0.2",  ">= 0.2.3"
