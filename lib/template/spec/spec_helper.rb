@@ -12,10 +12,15 @@ require "dotenv"
 Bundler.require(:default, :test)
 Dotenv.load('.env.test')
 
-require_relative "../lib/initializer"
+# Get only App Config first, to avoid pulling in libraries until
+# spec_support has a chance to run, which is important for at least
+# simplecov and code coverage.
+require_relative "../config/config"
 
 # pull in test initializers
 Pliny::Utils.require_glob("#{Config.root}/spec/spec_support/**/*.rb")
+
+require_relative "../lib/initializer"
 
 RSpec.configure do |config|
   config.before :suite do
