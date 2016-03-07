@@ -24,6 +24,7 @@ module Pliny
       instance = new(url, logger)
       yield instance
       instance.disconnect
+      Sequel::DATABASES.delete(instance)
     end
 
     attr_accessor :db
