@@ -1,5 +1,5 @@
 source "https://rubygems.org"
-ruby "2.3.0"
+ruby IO.read(File.join(__dir__, ".ruby-version")).strip
 
 gem "multi_json"
 gem "oj"
