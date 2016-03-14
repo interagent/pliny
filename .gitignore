@@ -1,3 +1,7 @@
 Gemfile.lock
 .bundle
 .ruby-*
+
+website/output
+website/tmp
+website/crash.log

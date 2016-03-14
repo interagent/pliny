@@ -1,0 +1,44 @@
+#!/bin/bash
+set -e
+
+last_commit=`git log -1 --pretty=format:"%s"`.chomp.strip
+if [ -n "$last_commit" ]
+then
+  last_commit='Publishing content to GitHub pages.'
+fi
+
+git checkout master
+git pull --rebase
+
+rm -rf output/
+bundle exec nanoc
+
+
+GIT_DIR=`git rev-parse --git-dir`
+old_sha=`git rev-parse refs/remotes/origin/gh-pages || true`
+
+cd output
+
+GIT_INDEX_FILE='/tmp/dev.gh.i'
+GIT_WORK_TREE=`pwd`
+
+rm -f $GIT_INDEX_FILE
+
+git add -A
+tsha=`git write-tree`
+
+printf "Created tree $tsha\n"
+
+if [ ${#old_sha} -eq 40 ]
+then
+  csha=`git commit-tree $tsha -p $old_sha -m "$last_commit"`
+else
+  csha=`git commit-tree $tsha -m "$last_commit"`
+fi
+
+printf "Created commit $csha\n"
+printf "`git show $csha --stat`"
+printf "\nUpdating gh-pages from $old_sha"
+
+git update-ref refs/heads/gh-pages $csha
+git push origin gh-pages
