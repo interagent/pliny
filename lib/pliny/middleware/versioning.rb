@@ -19,7 +19,7 @@ module Pliny::Middleware
     def detect_api_version(env)
       media_types = HTTPAccept.parse(env["HTTP_ACCEPT"])
 
-      version = nil
+      version, variant = nil
       media_types.map! do |media_type|
         if accept_headers.include?(media_type.format)
           unless media_type.params['version']
@@ -31,7 +31,7 @@ Please specify a version along with the MIME type. For example, `Accept: applica
           end
 
           unless version
-            version = media_type.params["version"]
+            version, variant = media_type.params["version"].split(".")
           end
 
           # replace the MIME with a simplified version for easier
@@ -44,13 +44,14 @@ Please specify a version along with the MIME type. For example, `Accept: applica
       env['HTTP_ACCEPT'] = media_types.join(', ')
 
       version ||= @default
-      set_api_version(env, version)
+      set_api_version(env, version, variant)
       @app.call(env)
     end
 
-    def set_api_version(env, version)
+    def set_api_version(env, version, variant)
       # API modules will look for the version in env
       env["HTTP_X_API_VERSION"] = version
+      env["HTTP_X_API_VARIANT"] = variant
     end
 
     def accept_headers

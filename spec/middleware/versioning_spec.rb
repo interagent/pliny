@@ -50,12 +50,28 @@ Please specify a version along with the MIME type. For example, `Accept: applica
     assert_equal '3', json['HTTP_X_API_VERSION']
   end
 
+  it "handles a version with a variant" do
+    get '/', {}, {'HTTP_ACCEPT' => 'application/vnd.pliny+json; version=3.variant_feature'}
+    json = MultiJson.decode(last_response.body)
+    assert_equal 'application/json', json['HTTP_ACCEPT']
+    assert_equal '3', json['HTTP_X_API_VERSION']
+    assert_equal 'variant_feature', json['HTTP_X_API_VARIANT']
+  end
+
   # this behavior is pretty sketchy, but a pretty extreme edge case
   it "handles multiple MIME types" do
     get '/', {}, {'HTTP_ACCEPT' => 'application/vnd.pliny+json; version=3; q=0.5, text/xml'}
     json = MultiJson.decode(last_response.body)
     assert_equal 'text/xml, application/json; q=0.5', json['HTTP_ACCEPT']
     assert_equal '3', json['HTTP_X_API_VERSION']
+  end
+
+  it "handles multiple MIME types with variants" do
+    get '/', {}, {'HTTP_ACCEPT' => 'application/vnd.pliny+json; version=3.variant; q=0.5, text/xml'}
+    json = MultiJson.decode(last_response.body)
+    assert_equal 'text/xml, application/json; q=0.5', json['HTTP_ACCEPT']
+    assert_equal '3', json['HTTP_X_API_VERSION']
+    assert_equal 'variant', json['HTTP_X_API_VARIANT']
   end
 
   it "produces the priority version on multiple types" do
