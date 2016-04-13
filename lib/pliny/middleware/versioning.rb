@@ -50,8 +50,8 @@ Please specify a version along with the MIME type. For example, `Accept: applica
 
     def set_api_version(env, version, variant)
       # API modules will look for the version in env
-      env["HTTP_X_API_VERSION"] = version
-      env["HTTP_X_API_VARIANT"] = variant
+      env["api.version"] = version
+      env["api.variant"] = variant
     end
 
     def accept_headers

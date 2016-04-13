@@ -9,13 +9,13 @@ module Pliny::Helpers
     # By design, only a single variant can be specified at a time.
     def api_variant
       # set by Versioning middleware
-      env["HTTP_X_API_VARIANT"]
+      env["api.variant"]
     end
 
     # version like: "1", "2", ...
     def api_version
       # set by Versioning middleware
-      env["HTTP_X_API_VERSION"]
+      env["api.version"]
     end
   end
 end

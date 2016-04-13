@@ -25,15 +25,12 @@ describe Pliny::Helpers::Versioning do
   end
 
   it "has a version" do
-    header "X_API_VERSION", "1"
-    post "/"
+    post "/", {}, {"api.version" => "1"}
     assert_equal MultiJson.encode({version: "1", variant: nil}), last_response.body
   end
 
   it "has a variant" do
-    header "X_API_VERSION", "1"
-    header "X_API_VARIANT", "my_variant"
-    post "/"
+    post "/", {}, {"api.version" => "1", "api.variant" => "my_variant"}
     assert_equal MultiJson.encode({version: "1", variant: "my_variant"}), last_response.body
   end
 end

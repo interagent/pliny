@@ -7,7 +7,7 @@ module Pliny
     # the given version
     def version(*versions, &block)
       condition = lambda { |env|
-        versions.include?(env["HTTP_X_API_VERSION"])
+        versions.include?(env["api.version"])
       }
       with_conditions(condition, &block)
     end
