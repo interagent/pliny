@@ -11,5 +11,14 @@ module Pliny
       }
       with_conditions(condition, &block)
     end
+
+    # yield to a builder block in which all defined apps will only respond for
+    # the given variant
+    def variant(*variants, &block)
+      condition = lambda { |env|
+        variants.include?(env["api.variant"])
+      }
+      with_conditions(condition, &block)
+    end
   end
 end
