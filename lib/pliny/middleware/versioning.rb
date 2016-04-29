@@ -45,6 +45,7 @@ Please specify a version along with the MIME type. For example, `Accept: applica
 
       version ||= @default
       set_api_version(env, version, variant)
+      set_log_context(version, variant)
       @app.call(env)
     end
 
@@ -52,6 +53,10 @@ Please specify a version along with the MIME type. For example, `Accept: applica
       # API modules will look for the version in env
       env["api.version"] = version
       env["api.variant"] = variant
+    end
+
+    def set_log_context(version, variant)
+      Pliny.default_context[:api_version] = [version, variant].join(".")
     end
 
     def accept_headers
