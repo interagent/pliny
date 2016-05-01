@@ -8,6 +8,10 @@
     "PLINY_ENV": "production"
   },
 
+  "scripts": {
+    "postdeploy": "bundle exec rake db:schema:load db:migrate"
+  },
+
   "addons": [
     "heroku-postgresql"
   ]
