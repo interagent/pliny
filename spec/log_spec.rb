@@ -4,6 +4,7 @@ describe Pliny::Log do
   before do
     @io = StringIO.new
     Pliny.stdout = @io
+    Pliny.stderr = @io
     stub(@io).print
   end
 
@@ -72,5 +73,12 @@ describe Pliny::Log do
     Pliny.context(app: "not_pliny", test: 123) do
     end
     Pliny.log(foo: "bar")
+  end
+
+  it "logs exceptions" do
+    Pliny::RequestStore.store[:log_context] = { app: "pliny" }
+    e = RuntimeError.new
+    mock(@io).print "app=pliny exception class=RuntimeError message=RuntimeError exception_id=#{e.object_id}\n"
+    Pliny.log_exception(e)
   end
 end

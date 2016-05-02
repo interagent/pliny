@@ -43,3 +43,4 @@ RSpec.configure do |config|
 end
 
 Pliny.stdout = StringIO.new
+Pliny.stderr = StringIO.new
