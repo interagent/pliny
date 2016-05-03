@@ -9,7 +9,7 @@ module Pliny::Middleware
       @app.call(env)
     rescue Pliny::Errors::Error => e
       Pliny::Errors::Error.render(e)
-    rescue Exception => e
+    rescue => e
       raise if @raise
 
       Pliny::ErrorReporter.notify(e, rack_env: env)
