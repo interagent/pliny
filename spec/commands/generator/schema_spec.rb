@@ -12,6 +12,15 @@ describe Pliny::Commands::Generator::Schema do
       app_dir = File.join(dir, "app")
       # schema work depends on files seeded by the template
       Pliny::Commands::Creator.run([app_dir], {}, StringIO.new)
+
+      # create a variant for the purposes of the tests
+      FileUtils.mkdir_p("#{app_dir}/schema/variants/my_variant/schemata")
+      File.open("#{app_dir}/schema/variants/my_variant/schemata/test.json", 'w') do |f|
+        f.write({
+          id: "schemata/my_variant"
+        }.to_json)
+      end
+
       Dir.chdir(app_dir, &example)
     end
   end
@@ -48,7 +57,7 @@ describe Pliny::Commands::Generator::Schema do
   describe '#rebuild' do
     context 'with nil as the name argument (as used in schema.rake)' do
       it 'rebuilds the schema with prmd' do
-        assert_output(/rebuilt/) do
+        assert_output("rebuilt ./schema/schema.json\nrebuilt ./schema/variants/my_variant/schema.json\n") do
           Pliny::Commands::Generator::Schema.new(nil).rebuild
         end
       end
