@@ -22,7 +22,7 @@ module Config
   override :db_pool,          5,    int
   override :deployment,       'production', string
   override :force_ssl,        true,  bool
-  override :pliny_env,        'development', string
+  override :pliny_env,        'production', string
   override :port,             5000, int
   override :pretty_json,      false, bool
   override :puma_max_threads, 16,   int
