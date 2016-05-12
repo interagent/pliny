@@ -14,7 +14,6 @@ module Config
 
   # Optional -- value is returned or `nil` if it wasn't present.
   optional :app_name,            string
-  optional :placeholder,         string
   optional :versioning_default,  string
   optional :versioning_app_name, string
 
