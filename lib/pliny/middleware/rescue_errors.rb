@@ -8,25 +8,12 @@ module Pliny::Middleware
     def call(env)
       @app.call(env)
     rescue Pliny::Errors::Error => e
-      # blank out this field so that the error is not picked up by Rollbar
-      env["sinatra.error"] = nil
-
       Pliny::Errors::Error.render(e)
-    rescue Exception => e
-      if @raise
-        raise
-      else
-        dump_error(e, env)
-        Pliny::Errors::Error.render(Pliny::Errors::InternalServerError.new)
-      end
-    end
+    rescue => e
+      raise if @raise
 
-    private
-
-    # pulled from Sinatra
-    def dump_error(e, env)
-      message = ["#{e.class} - #{e.message}:", *e.backtrace].join("\n\t")
-      env['rack.errors'].puts(message)
+      Pliny::ErrorReporter.notify(e, rack_env: env)
+      Pliny::Errors::Error.render(Pliny::Errors::InternalServerError.new)
     end
   end
 end

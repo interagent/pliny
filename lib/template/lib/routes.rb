@@ -1,5 +1,4 @@
 Routes = Rack::Builder.new do
-  use Rollbar::Middleware::Sinatra
   use Pliny::Middleware::CORS
   use Pliny::Middleware::RequestID
   use Pliny::Middleware::Instruments
