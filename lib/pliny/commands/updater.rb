@@ -1,10 +1,11 @@
 require 'fileutils'
 require 'pathname'
 require 'pliny/version'
+require 'pliny/commands/creator'
 require 'uri'
 
 module Pliny::Commands
-  class Updater
+  class Updater < Creator
     attr_accessor :stream
 
     def self.run(stream = $stdout)
@@ -29,22 +30,11 @@ module Pliny::Commands
         display "pliny-update is outdated. Please update it with `gem install pliny` or similar."
       else
         display "Updating from #{version_current} to #{version_target}..."
-        ensure_repo_available
-        save_patch(version_current, version_target)
-        exec_patch
-      end
-    end
 
-    # we need a local copy of the pliny repo to produce a diff
-    def ensure_repo_available
-      if File.exists?(repo_dir)
-        unless system("cd #{repo_dir} && git fetch --tags")
-          abort("Could not update Pliny repo at #{repo_dir}")
-        end
-      else
-        unless system("git clone https://github.com/interagent/pliny.git #{repo_dir}")
-          abort("Could not git clone the Pliny repo")
-        end
+        display template_dir
+        display app_dir
+        FileUtils.copy_entry template_dir, app_dir
+        parse_erb_files
       end
     end
 
@@ -55,36 +45,12 @@ module Pliny::Commands
       end
     end
 
-    def save_patch(curr, target)
-      # take a diff of changes that happened to the template app in Pliny
-      diff = `cd #{repo_dir} && git diff v#{curr}..v#{target} lib/template/`
-
-      # remove /lib/template from the path of files in the patch so that we can
-      # apply these to the current folder
-      diff.gsub!(/(\w)\/lib\/template/, '\1')
-
-      File.open(patch_file, "w") { |f| f.puts diff }
+    def name
+      Config.app_name
     end
 
-    def exec_patch
-      msg = [
-        "Pliny update applied. Please review the changes staged for",
-        "commit, and consider applying the diff in .rej files manually.",
-        "You can then remove these files with `git clean -f`.",
-      ].join("\n")
-      exec "git apply -v --reject #{patch_file}; echo '\n\n#{msg}'"
-    end
-
-    def display(msg)
-      stream.puts msg
-    end
-
-    def repo_dir
-      File.join(Dir.home, ".tmp/pliny-repo")
-    end
-
-    def patch_file
-      File.join(repo_dir, "pliny-update.patch")
+    def app_dir
+      Dir.pwd
     end
   end
 end
