@@ -11,7 +11,7 @@ describe Pliny::Helpers::Encode do
   end
 
   before do
-    stub(Config).pretty_json { false }
+    allow(Config).to receive(:pretty_json) { false }
   end
 
   it "sets the Content-Type" do
@@ -33,7 +33,7 @@ describe Pliny::Helpers::Encode do
   end
 
   it "encodes in pretty mode when set by config" do
-    stub(Config).pretty_json { true }
+    allow(Config).to receive(:pretty_json) { true }
     payload = { "foo" => "bar" }
     post "/", payload
     assert_equal MultiJson.encode(payload, pretty: true), last_response.body

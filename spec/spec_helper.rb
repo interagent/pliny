@@ -22,7 +22,7 @@ RSpec.configure do |config|
   config.include Rack::Test::Methods
 
   config.expect_with :minitest
-  config.mock_with :rr
+  config.mock_with :rspec
   config.run_all_when_everything_filtered = true
   config.filter_run :focus
 

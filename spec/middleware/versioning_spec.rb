@@ -5,7 +5,6 @@ describe Pliny::Middleware::Versioning do
   before do
     @io = StringIO.new
     Pliny.stdout = @io
-    stub(@io).print
   end
 
   def app
