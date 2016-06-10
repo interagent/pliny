@@ -14,9 +14,9 @@ describe Pliny::ErrorReporter do
     end
 
     it "notifies rollbar" do
-      any_instance_of(Pliny::ErrorReporter::RollbarReporter) do |klass|
-        stub(klass).notify(exception, context: context, rack_env: rack_env)
-      end
+      expect_any_instance_of(Pliny::ErrorReporter::RollbarReporter).
+        to receive(:notify).
+        with(exception, context: context, rack_env: rack_env)
 
       notify_reporter
     end

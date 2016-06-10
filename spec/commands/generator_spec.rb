@@ -9,9 +9,7 @@ describe Pliny::Commands::Generator do
   before do
     Timecop.freeze(@t = Time.now)
 
-    any_instance_of(Pliny::Commands::Generator::Base) do |klass|
-      stub(klass).display
-    end
+    allow_any_instance_of(Pliny::Commands::Generator::Base).to receive(:display)
   end
 
   around do |example|

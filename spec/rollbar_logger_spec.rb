@@ -7,7 +7,7 @@ describe Pliny::RollbarLogger do
   let(:log_context) { { rollbar: true, level: level, message: message } }
 
   before do
-    mock(Pliny).log(log_context)
+    expect(Pliny).to receive(:log).with(log_context)
   end
 
   context '#debug' do

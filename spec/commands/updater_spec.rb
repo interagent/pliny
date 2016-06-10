@@ -6,7 +6,7 @@ describe Pliny::Commands::Updater do
     @io = StringIO.new
     @cmd = Pliny::Commands::Updater.new(@io)
 
-    stub(@cmd).exec_patch
+    allow(@cmd).to receive(:exec_patch)
   end
 
   describe "#run!" do

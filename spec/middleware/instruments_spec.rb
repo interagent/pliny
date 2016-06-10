@@ -23,13 +23,13 @@ describe Pliny::Middleware::Instruments do
   end
 
   it "performs logging" do
-    mock(Pliny).log(hash_including(
+    expect(Pliny).to receive(:log).with(hash_including(
       instrumentation: true,
       at:              "start",
       method:          "GET",
       path:            "/apps/123",
     ))
-    mock(Pliny).log(hash_including(
+    expect(Pliny).to receive(:log).with(hash_including(
       instrumentation: true,
       at:              "finish",
       method:          "GET",
@@ -41,8 +41,8 @@ describe Pliny::Middleware::Instruments do
   end
 
   it "respects Pliny error status codes" do
-    mock(Pliny).log.with_any_args
-    mock(Pliny).log(hash_including(
+    expect(Pliny).to receive(:log)
+    expect(Pliny).to receive(:log).with(hash_including(
       status: 404
     ))
     get "/error"

@@ -14,12 +14,12 @@ describe Pliny::Middleware::RequestStore do
   end
 
   it "clears the store" do
-    mock(Pliny::RequestStore).clear!
+    expect(Pliny::RequestStore).to receive(:clear!)
     get "/"
   end
 
   it "seeds the store" do
-    mock(Pliny::RequestStore).seed.with_any_args
+    expect(Pliny::RequestStore).to receive(:seed)
     get "/"
   end
 end
