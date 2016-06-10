@@ -5,6 +5,7 @@ describe Pliny::Middleware::Versioning do
   before do
     @io = StringIO.new
     Pliny.stdout = @io
+    Pliny::RequestStore.store[:log_context] = {}
   end
 
   def app

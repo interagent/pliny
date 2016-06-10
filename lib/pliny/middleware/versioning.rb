@@ -56,7 +56,9 @@ Please specify a version along with the MIME type. For example, `Accept: applica
     end
 
     def set_log_context(version, variant)
-      Pliny.default_context[:api_version] = [version, variant].join(".")
+      Pliny::RequestStore.store[:log_context].merge!(
+        api_version: [version, variant].join(".")
+      )
     end
 
     def accept_headers

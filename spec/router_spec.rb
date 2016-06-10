@@ -33,6 +33,10 @@ describe Pliny::Router do
       end
     end
 
+    before do
+      Pliny::RequestStore.store[:log_context] = {}
+    end
+
     it "should not run on any api" do
       get '/'
       assert_equal 'No API', last_response.body

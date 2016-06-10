@@ -16,7 +16,7 @@ describe Pliny::Helpers::Versioning do
   end
 
   before do
-    stub(Config).pretty_json { false }
+    allow(Config).to receive(:pretty_json) { false }
   end
 
   it "has no version and not variant" do
