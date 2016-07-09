@@ -1,7 +1,6 @@
 require "spec_helper"
 
 describe Pliny::Router do
-
   describe "specifying a version" do
     def app
       Rack::Builder.new do
