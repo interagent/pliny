@@ -1,7 +1,6 @@
-
 require "spec_helper"
 
-describe Pliny::ErrorReporter do
+describe Pliny::ErrorReporters do
   subject(:reporter) { described_class }
 
   let(:reporter_double) { double("reporter").as_null_object }
@@ -16,7 +15,7 @@ describe Pliny::ErrorReporter do
     end
 
     before do
-      Pliny::ErrorReporter.error_reporters << reporter_double
+      Pliny::ErrorReporters.error_reporters << reporter_double
 
       allow(reporter_double).to receive(:notify)
     end

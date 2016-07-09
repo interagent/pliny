@@ -1,6 +1,4 @@
-require_relative 'error_reporters/rollbar'
-
-module Pliny::ErrorReporter
+module Pliny::ErrorReporters
   extend self
 
   @error_reporters = []

@@ -28,7 +28,7 @@ describe Pliny::Middleware::RescueErrors do
 
   it "intercepts exceptions and renders" do
     @app = new_rack_app
-    expect(Pliny::ErrorReporter).to receive(:notify)
+    expect(Pliny::ErrorReporters).to receive(:notify)
     get "/"
     assert_equal 500, last_response.status
     error_json = MultiJson.decode(last_response.body)
