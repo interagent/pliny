@@ -1,10 +1,16 @@
 require_relative 'error_reporters/rollbar'
 
-class Pliny::ErrorReporter
-  def self.notify(exception, context: {}, rack_env: {})
+module Pliny::ErrorReporter
+  extend self
+
+  @error_reporters = []
+
+  attr_accessor :error_reporters
+
+  def notify(exception, context: {}, rack_env: {})
     Pliny.log_exception(exception)
 
-    REPORTERS.each do |reporter|
+    error_reporters.each do |reporter|
       begin
         reporter.new.notify(exception, context: context, rack_env: rack_env)
       rescue
@@ -12,6 +18,4 @@ class Pliny::ErrorReporter
       end
     end
   end
-
-  REPORTERS = [Pliny::ErrorReporters::Rollbar]
 end

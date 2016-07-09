@@ -4,6 +4,8 @@ require "spec_helper"
 describe Pliny::ErrorReporter do
   subject(:reporter) { described_class }
 
+  let(:reporter_double) { double("reporter").as_null_object }
+
   describe ".notify" do
     let(:exception) { RuntimeError.new }
     let(:context)   { { context: "foo" } }
@@ -13,12 +15,18 @@ describe Pliny::ErrorReporter do
       reporter.notify(exception, context: context, rack_env: rack_env)
     end
 
-    it "notifies rollbar" do
-      expect_any_instance_of(Pliny::ErrorReporters::Rollbar).
-        to receive(:notify).
-        with(exception, context: context, rack_env: rack_env)
+    before do
+      Pliny::ErrorReporter.error_reporters << reporter_double
 
+      allow(reporter_double).to receive(:notify)
+    end
+
+    it "notifies rollbar" do
       notify_reporter
+
+      expect(reporter_double).to have_received(:notify)
+        .once
+        .with(exception, context: context, rack_env: rack_env)
     end
   end
 end
