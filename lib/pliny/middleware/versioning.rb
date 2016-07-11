@@ -57,7 +57,7 @@ Please specify a version along with the MIME type. For example, `Accept: applica
 
     def set_log_context(version, variant)
       Pliny::RequestStore.store[:log_context].merge!(
-        api_version: [version, variant].join(".")
+        api_version: [version, variant].compact.join(".")
       )
     end
 

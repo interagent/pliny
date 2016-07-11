@@ -49,6 +49,8 @@ Please specify a version along with the MIME type. For example, `Accept: applica
     json = MultiJson.decode(last_response.body)
     assert_equal 'application/json', json['HTTP_ACCEPT']
     assert_equal '3', json["api.version"]
+    assert_equal nil, json["api.variant"]
+    assert_equal '3', Pliny::RequestStore.store[:log_context][:api_version]
   end
 
   it "handles a version with a variant" do
@@ -57,6 +59,7 @@ Please specify a version along with the MIME type. For example, `Accept: applica
     assert_equal 'application/json', json['HTTP_ACCEPT']
     assert_equal '3', json["api.version"]
     assert_equal 'variant_feature', json["api.variant"]
+    assert_equal '3.variant_feature', Pliny::RequestStore.store[:log_context][:api_version]
   end
 
   # this behavior is pretty sketchy, but a pretty extreme edge case
