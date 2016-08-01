@@ -12,7 +12,7 @@ module Pliny::Middleware
     rescue => e
       raise if @raise
 
-      Pliny::ErrorReporter.notify(e, rack_env: env)
+      Pliny::ErrorReporters.notify(e, rack_env: env)
       Pliny::Errors::Error.render(Pliny::Errors::InternalServerError.new)
     end
   end
