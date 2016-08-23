@@ -3,6 +3,7 @@ module Pliny::Middleware
     def initialize(app, options = {})
       @app = app
       @raise = options[:raise]
+      @message = options[:message]
     end
 
     def call(env)
@@ -13,7 +14,7 @@ module Pliny::Middleware
       raise if @raise
 
       Pliny::ErrorReporters.notify(e, rack_env: env)
-      Pliny::Errors::Error.render(Pliny::Errors::InternalServerError.new)
+      Pliny::Errors::Error.render(Pliny::Errors::InternalServerError.new(@message))
     end
   end
 end
