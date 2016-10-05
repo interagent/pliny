@@ -7,10 +7,7 @@ module Pliny::Middleware
     def call(env)
       start = Time.now
 
-      request_ids = env["REQUEST_IDS"] ? env["REQUEST_IDS"].join(",") : nil
-
       data = {
-        request_id:      request_ids,
         instrumentation: true,
         method:          env["REQUEST_METHOD"],
         path:            env["PATH_INFO"]
