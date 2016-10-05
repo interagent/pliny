@@ -1,21 +1,16 @@
 require "spec_helper"
 
-describe Pliny::Middleware::RequestStore do
+describe Pliny::Middleware::RequestStore::Seed do
   def app
     Rack::Builder.new do
       use Rack::Lint
-      use Pliny::Middleware::RequestStore, store: Pliny::RequestStore
+      use Pliny::Middleware::RequestStore::Seed, store: Pliny::RequestStore
       run Sinatra.new {
         get "/" do
           "hi"
         end
       }
     end
-  end
-
-  it "clears the store" do
-    expect(Pliny::RequestStore).to receive(:clear!)
-    get "/"
   end
 
   it "seeds the store" do
