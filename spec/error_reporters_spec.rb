@@ -20,6 +20,10 @@ describe Pliny::ErrorReporters do
       allow(reporter_double).to receive(:notify)
     end
 
+    after do
+      Pliny::ErrorReporters.error_reporters = []
+    end
+
     it "notifies rollbar" do
       notify_reporter
 

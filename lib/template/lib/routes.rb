@@ -1,9 +1,10 @@
 Routes = Rack::Builder.new do
+  use Pliny::Middleware::RequestStore::Clear, store: Pliny::RequestStore
   use Pliny::Middleware::CORS
   use Pliny::Middleware::RequestID
+  use Pliny::Middleware::RequestStore::Seed, store: Pliny::RequestStore
   use Pliny::Middleware::Instruments
   use Pliny::Middleware::RescueErrors, raise: Config.raise_errors?
-  use Pliny::Middleware::RequestStore, store: Pliny::RequestStore
   use Rack::Timeout,
       service_timeout: Config.timeout if Config.timeout > 0
   use Pliny::Middleware::Versioning,

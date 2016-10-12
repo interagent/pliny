@@ -6,10 +6,15 @@ describe Pliny::Metrics do
   subject(:metrics) { Pliny::Metrics }
 
   before do
+    @stdout = Pliny.stdout
     Pliny.stdout = io
 
     allow(io).to receive(:print)
     allow(Config).to receive(:app_name).and_return('pliny')
+  end
+
+  after do
+    Pliny.stdout = @stdout
   end
 
   context "#count" do
