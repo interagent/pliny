@@ -50,11 +50,19 @@ module Pliny
     end
 
     def rack_env
-      if pliny_env == "development" || pliny_env == "test"
+      if app_env == "development" || app_env == "test"
         "development"
       else
         "deployment"
       end
+    end
+    
+    # DEPRECATED: PLINY_ENV is deprecated in favour of APP_ENV.
+    #             See more at https://github.com/interagent/pliny/issues/277
+    def pliny_env
+      warn "Config.pliny_env is deprecated and will be removed, " \
+           "use Config.app_env instead."
+      app_env
     end
 
     private
