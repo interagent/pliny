@@ -48,6 +48,40 @@ describe Pliny::CastingConfigHelpers do
 
       assert_equal "deployment", config.rack_env
     end
+
+    context "when legacy PLINY_ENV is still defined" do
+      before do
+        ENV['ORIGINAL_PLINY_ENV'] = ENV['PLINY_ENV']
+        ENV['PLINY_ENV'] = 'staging'
+      end
+
+      after do
+        ENV['PLINY_ENV'] = ENV.delete('ORIGINAL_PLINY_ENV')
+      end
+
+      it "uses PLINY_ENV value instead of app_env" do
+        config = Class.new do
+          extend Pliny::CastingConfigHelpers
+          override :app_env, 'development', string
+        end
+
+        assert_equal "deployment", config.rack_env
+      end
+
+      it "displays deprecation warning" do
+        config = Class.new do
+          extend Pliny::CastingConfigHelpers
+          override :app_env, 'development', string
+        end
+
+        io = StringIO.new
+        $stderr = io
+        config.rack_env
+        $stderr = STDERR
+
+        assert_includes io.string, "PLINY_ENV is deprecated"
+      end
+    end
   end
 
   describe "#pliny_env" do

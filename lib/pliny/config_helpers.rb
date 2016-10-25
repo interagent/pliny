@@ -50,19 +50,21 @@ module Pliny
     end
 
     def rack_env
-      if app_env == "development" || app_env == "test"
+      if env == "development" || env == "test"
         "development"
       else
         "deployment"
       end
     end
-    
-    # DEPRECATED: PLINY_ENV is deprecated in favour of APP_ENV.
+
+    # DEPRECATED: pliny_env is deprecated in favour of app_env.
     #             See more at https://github.com/interagent/pliny/issues/277
+    #
+    # This method is kept temporary in case it is used somewhere in the app.
     def pliny_env
       warn "Config.pliny_env is deprecated and will be removed, " \
            "use Config.app_env instead."
-      app_env
+      env
     end
 
     private
@@ -76,6 +78,20 @@ module Pliny
       instance_eval "def #{name}; @#{name} end", __FILE__, __LINE__
       if value.kind_of?(TrueClass) || value.kind_of?(FalseClass) || value.kind_of?(NilClass)
         instance_eval "def #{name}?; !!@#{name} end", __FILE__, __LINE__
+      end
+    end
+
+    # This method helps with transition from PLINY_ENV to APP_ENV.
+    def env
+      legacy_env || app_env
+    end
+
+    # PLINY_ENV is deprecated, but it might be still used by someone.
+    def legacy_env
+      if ENV.key?('PLINY_ENV')
+        warn "PLINY_ENV is deprecated in favour of APP_ENV, " \
+             "update .env file or application configuration."
+        ENV['PLINY_ENV']
       end
     end
   end
