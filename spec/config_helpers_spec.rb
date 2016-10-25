@@ -59,7 +59,7 @@ describe Pliny::CastingConfigHelpers do
         ENV['PLINY_ENV'] = ENV.delete('ORIGINAL_PLINY_ENV')
       end
 
-      it "uses PLINY_ENV value instead of app_env" do
+      it "uses PLINY_ENV value instead of APP_ENV" do
         config = Class.new do
           extend Pliny::CastingConfigHelpers
           override :app_env, 'development', string
@@ -106,6 +106,26 @@ describe Pliny::CastingConfigHelpers do
       end
 
       assert_equal "foo", config.pliny_env
+    end
+
+    context "when legacy PLINY_ENV is still defined" do
+      before do
+        ENV['ORIGINAL_PLINY_ENV'] = ENV['PLINY_ENV']
+        ENV['PLINY_ENV'] = 'staging'
+      end
+
+      after do
+        ENV['PLINY_ENV'] = ENV.delete('ORIGINAL_PLINY_ENV')
+      end
+
+      it "returns PLINY_ENV value" do
+        config = Class.new do
+          extend Pliny::CastingConfigHelpers
+          override :app_env, 'development', string
+        end
+
+        assert_equal "staging", config.pliny_env
+      end
     end
   end
 end
