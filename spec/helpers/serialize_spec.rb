@@ -12,7 +12,7 @@ describe Pliny::Helpers::Serialize do
       end
     end
 
-    it "sets the Content-Type" do
+    it "raises a runtime error" do
       assert_raises(RuntimeError) do
         get "/"
       end
