@@ -1,0 +1,22 @@
+require:
+ - rubocop-rspec
+AllCops:
+  TargetRubyVersion: 2.3
+# Offense count: 8
+# Configuration parameters: AllowHeredoc, AllowURI, URISchemes, IgnoreCopDirectives.
+# URISchemes: http, https
+Metrics/LineLength:
+  Enabled: false
+
+# Offense count: 1
+# Configuration parameters: Max.
+RSpec/ExampleLength:
+  Enabled: false
+
+# Offense count: 1
+Style/ClassVars:
+  Enabled: false
+
+# Offense count: 6
+Style/Documentation:
+  Enabled: false

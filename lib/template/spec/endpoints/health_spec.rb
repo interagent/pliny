@@ -1,4 +1,5 @@
-require "spec_helper"
+# frozen_string_literal: true
+require 'spec_helper'
 
 RSpec.describe Endpoints::Health do
   include Rack::Test::Methods

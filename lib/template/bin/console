@@ -1,21 +1,22 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
 require_relative '../lib/application'
 
 def basic_prompt(target_self, nest_level, pry)
   # override DEPLOYMENT to identify console sessions (eg: staging/production/etc)
-  nesting = nest_level.zero? ? "" : ":#{nest_level}"
+  nesting = nest_level.zero? ? '' : ":#{nest_level}"
   "[#{pry.input_array.size}] #{Config.deployment}(#{Pry.view_clip(target_self)})#{nesting}"
 end
 
 Pry.prompt = [
-   proc { |target_self, nest_level, pry|
-     basic_prompt(target_self, nest_level, pry) + "> "
-   },
+  proc do |target_self, nest_level, pry|
+    basic_prompt(target_self, nest_level, pry) + '> '
+  end,
 
-   proc { |target_self, nest_level, pry|
-     basic_prompt(target_self, nest_level, pry) + "* "
-   }
+  proc do |target_self, nest_level, pry|
+    basic_prompt(target_self, nest_level, pry) + '* '
+  end
 ]
 
 Pry.start

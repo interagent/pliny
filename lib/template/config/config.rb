@@ -1,4 +1,5 @@
-require "pliny/config_helpers"
+# frozen_string_literal: true
+require 'pliny/config_helpers'
 
 # Access all config keys like the following:
 #
@@ -29,7 +30,7 @@ module Config
   override :puma_min_threads, 1,            int
   override :puma_workers,     3,            int
   override :raise_errors,     false,        bool
-  override :root,             File.expand_path("../../", __FILE__), string
+  override :root,             File.expand_path('../../', __FILE__), string
   override :timeout,          10,           int
   override :versioning,       false,        bool
 end

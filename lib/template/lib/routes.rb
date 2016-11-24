@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 Routes = Rack::Builder.new do
   use Pliny::Middleware::RequestStore::Clear, store: Pliny::RequestStore
   use Pliny::Middleware::CORS
@@ -6,11 +7,15 @@ Routes = Rack::Builder.new do
   use Pliny::Middleware::Metrics
   use Pliny::Middleware::Instruments
   use Pliny::Middleware::RescueErrors, raise: Config.raise_errors?
-  use Rack::Timeout,
-      service_timeout: Config.timeout if Config.timeout > 0
-  use Pliny::Middleware::Versioning,
-      default: Config.versioning_default,
-      app_name: Config.versioning_app_name if Config.versioning?
+  if Config.timeout.positive?
+    use Rack::Timeout,
+        service_timeout: Config.timeout
+  end
+  if Config.versioning?
+    use Pliny::Middleware::Versioning,
+        default: Config.versioning_default,
+        app_name: Config.versioning_app_name
+  end
   use Rack::Deflater
   use Rack::MethodOverride
   use Rack::SSL if Config.force_ssl?

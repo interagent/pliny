@@ -1,9 +1,10 @@
+# frozen_string_literal: true
 module Serializers
   class Base
     @@structures = {}
 
     def self.structure(type, &blk)
-      @@structures["#{self.name}::#{type}"] = blk
+      @@structures["#{name}::#{type}"] = blk
     end
 
     def initialize(type)
@@ -11,7 +12,7 @@ module Serializers
     end
 
     def serialize(object)
-      object.respond_to?(:map) ? object.map{|item| serializer.call(item)} : serializer.call(object)
+      object.respond_to?(:map) ? object.map { |item| serializer.call(item) } : serializer.call(object)
     end
 
     private
@@ -19,6 +20,5 @@ module Serializers
     def serializer
       @@structures["#{self.class.name}::#{@type}"]
     end
-
   end
 end
