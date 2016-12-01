@@ -17,7 +17,7 @@ describe Pliny::Middleware::CORS do
     get "/"
     assert_equal 200, last_response.status
     assert_equal "hi", last_response.body
-    assert_equal nil, last_response.headers["Access-Control-Allow-Origin"]
+    assert_nil last_response.headers["Access-Control-Allow-Origin"]
   end
 
   it "intercepts OPTION requests to render a stub (preflight request)" do
