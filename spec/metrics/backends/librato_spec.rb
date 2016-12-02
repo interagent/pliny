@@ -26,4 +26,27 @@ describe Pliny::Metrics::Backends::Librato do
       backend.report_counts('pliny.foo' => 1, 'pliny.bar' => 2)
     end
   end
+
+  context "#report_measures" do
+    it "reports a single measure to librato" do
+      expect(Librato::Metrics).to receive(:submit).with(
+        gauges: [
+          { name: 'pliny.foo', value: 1.002 }
+        ]
+      )
+
+      backend.report_measures('pliny.foo' => 1.002)
+    end
+
+    it "reports multiple measures to librato" do
+      expect(Librato::Metrics).to receive(:submit).with(
+        gauges: [
+          { name: 'pliny.foo', value: 1.5 },
+          { name: 'pliny.bar', value: 2.04 }
+        ]
+      )
+
+      backend.report_measures('pliny.foo' => 1.5, 'pliny.bar' => 2.04)
+    end
+  end
 end
