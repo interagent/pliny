@@ -1,9 +1,13 @@
 begin
   require "librato/metrics"
-rescue LoadError
+  require "concurrent"
+rescue LoadError => error
   puts <<-MSG
-! librato-metrics gem not found. Please add `gem "librato-metrics"` to
-! your gemfile and run `bundle install` if you wish to use the Librato
+! #{error.message}
+! Please add:
+!   gem "librato-metrics"
+!   gem "concurrent-ruby"
+! to your gemfile and run `bundle install` if you wish to use the Librato
 ! metrics backend
 
   MSG
@@ -14,18 +18,28 @@ end
 module Pliny
   module Metrics
     module Backends
-      module Librato
-        def self.report_counts(counts)
+      class Librato
+        include Concurrent::Async
+
+        def report_counts(counts)
+          self.async._report_counts(counts)
+        end
+
+        def report_measures(measures)
+          self.async._report_measures(measures)
+        end
+
+        def _report_counts(counts)
           ::Librato::Metrics.submit(counters: expand_metrics(counts))
         end
 
-        def self.report_measures(measures)
+        def _report_measures(measures)
           ::Librato::Metrics.submit(gauges: expand_metrics(measures))
         end
 
         private
 
-        def self.expand_metrics(metrics)
+        def expand_metrics(metrics)
           metrics.map do |k, v|
             { name: k, value: v }
           end

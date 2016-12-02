@@ -42,7 +42,6 @@ module Pliny
     def report_and_catch
       yield
     rescue => error
-      p error
       Pliny.log_exception(error)
     end
   end
