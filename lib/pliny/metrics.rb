@@ -1,36 +1,49 @@
 module Pliny
   module Metrics
-    def self.backend=(klass)
-      @backend = klass
+    extend self
+
+    attr_accessor :backends
+
+    @backends = []
+
+    def reset_backends
+      @backends = []
     end
 
-    def self.backend
-      @backend || Pliny::Metrics::Backends::Logger
-    end
-
-    def self.reset_backend
-      remove_instance_variable(:@backend) if defined?(@backend)
-    end
-
-    def self.count(*names, value: 1)
+    def count(*names, value: 1)
       counts = Hash[names.map { |n| ["#{Config.app_name}.#{n}", value] }]
-      backend.report_counts(counts)
+
+      backends.each do |backend|
+        report_and_catch { backend.report_counts(counts) }
+      end
+
       counts
     end
 
-    def self.measure(*names, &block)
+    def measure(*names, &block)
       elapsed, return_value = time_elapsed(&block)
       measures = Hash[names.map { |n| ["#{Config.app_name}.#{n}", elapsed] }]
 
-      backend.report_measures(measures)
+      backends.each do |backend|
+        report_and_catch { backend.report_measures(measures) }
+      end
 
       return_value
     end
 
-    def self.time_elapsed(&block)
+    private
+
+    def time_elapsed(&block)
       start = Time.now
       return_value = block.call
       [Time.now - start, return_value]
+    end
+
+    def report_and_catch
+      yield
+    rescue => error
+      p error
+      Pliny.log_exception(error)
     end
   end
 end

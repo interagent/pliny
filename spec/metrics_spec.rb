@@ -3,28 +3,20 @@ require "spec_helper"
 describe Pliny::Metrics do
   subject(:metrics) { Pliny::Metrics }
 
-  let(:test_backend) { double(report_counts: nil, report_measures: nil) }
+  let(:test_backend) do
+    double(:test_backend, report_counts: nil, report_measures: nil)
+  end
 
   before do
+    Pliny::Metrics.backends << test_backend
     allow(Config).to receive(:app_name).and_return('pliny')
   end
 
   after do
-    Pliny::Metrics.reset_backend
-  end
-
-  it "defaults to the Logger backend" do
-    assert_equal Pliny::Metrics.backend, Pliny::Metrics::Backends::Logger
-  end
-
-  it "can set a different backend" do
-    Pliny::Metrics.backend = test_backend
-    assert_equal Pliny::Metrics.backend, test_backend
+    Pliny::Metrics.reset_backends
   end
 
   describe "#count" do
-    before { Pliny::Metrics.backend = test_backend }
-
     it "sends a hash to the backend with a default value" do
       metrics.count(:foo)
       expect(test_backend).to have_received(:report_counts).once.with("pliny.foo" => 1)
@@ -45,8 +37,8 @@ describe Pliny::Metrics do
   end
 
   describe "#measure" do
-    before { Pliny::Metrics.backend = test_backend }
     let(:block) { Proc.new {} }
+
     before do
       Timecop.freeze(Time.now)
     end
