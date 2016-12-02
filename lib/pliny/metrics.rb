@@ -6,10 +6,6 @@ module Pliny
 
     @backends = []
 
-    def reset_backends
-      @backends = []
-    end
-
     def count(*names, value: 1)
       counts = Hash[names.map { |n| ["#{Config.app_name}.#{n}", value] }]
 

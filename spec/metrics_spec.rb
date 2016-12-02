@@ -13,7 +13,7 @@ describe Pliny::Metrics do
   end
 
   after do
-    Pliny::Metrics.reset_backends
+    Pliny::Metrics.backends = []
   end
 
   describe "#count" do
