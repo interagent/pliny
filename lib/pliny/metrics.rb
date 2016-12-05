@@ -4,7 +4,7 @@ module Pliny
 
     attr_accessor :backends
 
-    @backends = []
+    @backends = [Backends::Logger]
 
     def count(*names, value: 1)
       counts = Hash[names.map { |n| ["#{Config.app_name}.#{n}", value] }]

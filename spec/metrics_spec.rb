@@ -8,15 +8,22 @@ describe Pliny::Metrics do
   end
 
   before do
-    Pliny::Metrics.backends << test_backend
     allow(Config).to receive(:app_name).and_return('pliny')
   end
 
-  after do
-    Pliny::Metrics.backends = []
+  around do |example|
+    original_backends = Pliny::Metrics.backends
+    example.run
+    Pliny::Metrics.backends = original_backends
+  end
+
+  it "uses the logger as the default backend" do
+    expect(metrics.backends).to eql([Pliny::Metrics::Backends::Logger])
   end
 
   describe "#count" do
+    before { Pliny::Metrics.backends = [test_backend] }
+
     it "sends a hash to the backend with a default value" do
       metrics.count(:foo)
       expect(test_backend).to have_received(:report_counts).once.with("pliny.foo" => 1)
@@ -37,14 +44,13 @@ describe Pliny::Metrics do
   end
 
   describe "#measure" do
-    let(:block) { Proc.new {} }
-
     before do
       Timecop.freeze(Time.now)
+      Pliny::Metrics.backends = [test_backend]
     end
 
     it "measures a single key" do
-      metrics.measure(:foo, &block)
+      metrics.measure(:foo) { }
       expect(test_backend).to have_received(:report_measures).once.with(
         "pliny.foo" => 0
       )
