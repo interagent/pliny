@@ -21,7 +21,7 @@ describe Pliny::Metrics do
   end
 
   it "uses the logger as the default backend" do
-    expect(metrics.backends).to eql?([Pliny::Metrics::Backends::Logger])
+    assert_equal(metrics.backends, [Pliny::Metrics::Backends::Logger])
   end
 
   describe "#count" do
