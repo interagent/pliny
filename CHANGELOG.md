@@ -5,6 +5,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 
+### Added
+- `Pliny::Metrics.backends` is a configurable list of metrics handlers that
+  enable sending metrics to various providers.
+- `Pliny::Metrics::Backends::Logger` is a a new (and default) metrics handler
+  that reports metrics data to logs in l2met format.
+
 ## [0.19.0] - 2016-10-12
 ### Security
 - Split `Pliny::Middleware::RequestStore` into `::Clear` and `::Seed` to avoid leaks across requests. This is a breaking change, requiring updates to `routes.rb`. Be aware that middleware ordering is important. See [here for correct ordering](https://github.com/interagent/pliny/blob/2ea455ddcfeac3be8dd6d919d1517753fcbc0fda/lib/template/lib/routes.rb#L2-L7). ([#280](https://github.com/interagent/pliny/pull/280))
