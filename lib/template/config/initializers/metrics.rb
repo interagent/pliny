@@ -1,1 +1,1 @@
-Pliny::Metrics.backends << Pliny::Metrics::Backends::Logger
+Pliny::Metrics.backends = [Pliny::Metrics::Backends::Logger]
