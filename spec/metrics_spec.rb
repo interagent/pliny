@@ -13,8 +13,11 @@ describe Pliny::Metrics do
 
   around do |example|
     original_backends = Pliny::Metrics.backends
-    example.run
-    Pliny::Metrics.backends = original_backends
+    begin
+      example.run
+    ensure
+      Pliny::Metrics.backends = original_backends
+    end
   end
 
   it "uses the logger as the default backend" do
