@@ -1,29 +1,44 @@
 module Pliny
   module Metrics
-    def self.count(*names, value: 1)
-      counts = Hash[names.map { |n| [metric_prefix(:count, n), value] }]
-      Pliny.log(counts)
+    extend self
+
+    attr_accessor :backends
+
+    @backends = [Backends::Logger]
+
+    def count(*names, value: 1)
+      counts = Hash[names.map { |n| ["#{Config.app_name}.#{n}", value] }]
+
+      backends.each do |backend|
+        report_and_catch { backend.report_counts(counts) }
+      end
+
+      counts
     end
 
-    def self.measure(*names, &block)
+    def measure(*names, &block)
       elapsed, return_value = time_elapsed(&block)
-      measures = Hash[names.map { |n| [metric_prefix(:measure, n), elapsed] }]
-      Pliny.log(measures)
+      measures = Hash[names.map { |n| ["#{Config.app_name}.#{n}", elapsed] }]
+
+      backends.each do |backend|
+        report_and_catch { backend.report_measures(measures) }
+      end
 
       return_value
     end
 
     private
 
-    def self.metric_prefix(type, name)
-      "#{type.to_s}##{Config.app_name}.#{name}"
-    end
-
-    def self.time_elapsed(&block)
+    def time_elapsed(&block)
       start = Time.now
       return_value = block.call
       [Time.now - start, return_value]
     end
+
+    def report_and_catch
+      yield
+    rescue => error
+      Pliny.log_exception(error)
+    end
   end
 end
-

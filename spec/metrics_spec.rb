@@ -1,61 +1,80 @@
 require "spec_helper"
 
 describe Pliny::Metrics do
-  let(:io) { double }
-
   subject(:metrics) { Pliny::Metrics }
 
-  before do
-    @stdout = Pliny.stdout
-    Pliny.stdout = io
+  let(:test_backend) do
+    double(:test_backend, report_counts: nil, report_measures: nil)
+  end
 
-    allow(io).to receive(:print)
+  before do
     allow(Config).to receive(:app_name).and_return('pliny')
   end
 
-  after do
-    Pliny.stdout = @stdout
+  around do |example|
+    original_backends = Pliny::Metrics.backends
+    begin
+      example.run
+    ensure
+      Pliny::Metrics.backends = original_backends
+    end
   end
 
-  context "#count" do
-    it "counts a single key with a default value" do
+  it "uses the logger as the default backend" do
+    assert_equal(metrics.backends, [Pliny::Metrics::Backends::Logger])
+  end
+
+  describe "#count" do
+    before { Pliny::Metrics.backends = [test_backend] }
+
+    it "sends a hash to the backend with a default value" do
       metrics.count(:foo)
-      expect(io).to have_received(:print).with("count#pliny.foo=1\n")
+      expect(test_backend).to have_received(:report_counts).once.with("pliny.foo" => 1)
     end
 
-    it "counts a single key with a provided value" do
+    it "sends a hash to the backend with a provided value" do
       metrics.count(:foo, value: 2)
-      expect(io).to have_received(:print).with("count#pliny.foo=2\n")
+      expect(test_backend).to have_received(:report_counts).once.with("pliny.foo" => 2)
     end
 
-    it "counts multiple keys" do
+    it "sends a hash with multiple key counts to the backend" do
       metrics.count(:foo, :bar)
-      expect(io).to have_received(:print).with(
-        "count#pliny.foo=1 count#pliny.bar=1\n")
+      expect(test_backend).to have_received(:report_counts).once.with(
+        "pliny.foo" => 1,
+        "pliny.bar" => 1
+      )
     end
   end
 
-  context "#measure" do
+  describe "#measure" do
     before do
       Timecop.freeze(Time.now)
+      Pliny::Metrics.backends = [test_backend]
     end
 
     it "measures a single key" do
       metrics.measure(:foo) { }
-      expect(io).to have_received(:print).with("measure#pliny.foo=0.000\n")
+      expect(test_backend).to have_received(:report_measures).once.with(
+        "pliny.foo" => 0
+      )
     end
 
     it "measures a single key over a minute" do
       metrics.measure(:foo) do
         Timecop.travel(60)
       end
-      expect(io).to have_received(:print).with("measure#pliny.foo=60.000\n")
+
+      expect(test_backend).to have_received(:report_measures) do |opts|
+        assert(60 <= opts['pliny.foo'] && opts['pliny.foo'] <= 61)
+      end
     end
 
     it "measures multiple keys" do
       metrics.measure(:foo, :bar) { }
-      expect(io).to have_received(:print).with(
-        "measure#pliny.foo=0.000 measure#pliny.bar=0.000\n")
+      expect(test_backend).to have_received(:report_measures).once.with(
+        "pliny.foo" => 0,
+        "pliny.bar" => 0
+      )
     end
   end
 end
