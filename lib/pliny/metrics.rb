@@ -24,7 +24,7 @@ module Pliny
       measurement =
         if opts.has_key?(:value)
           opts[:value]
-        elsif !elapsed.nil?
+        elsif block
           elapsed
         else
           0
@@ -36,7 +36,7 @@ module Pliny
         report_and_catch { backend.report_measures(measures) }
       end
 
-      return_value
+      block ? return_value : measures
     end
 
     private
