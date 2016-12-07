@@ -19,6 +19,8 @@ module Pliny
         [file.count("/"), file]
       end
 
+      raise LoadError, "empty glob path: #{path}" if files.empty?
+
       files.each do |file|
         require file
       end

@@ -29,7 +29,7 @@ module Initializer
   end
 
   def self.require_initializers
-    Pliny::Utils.require_glob("#{Config.root}/config/initializers/*.rb")
+    require!("config/initializers/*")
   end
 
   def self.require!(globs)
