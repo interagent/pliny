@@ -16,9 +16,21 @@ module Pliny
       counts
     end
 
-    def measure(*names, &block)
-      elapsed, return_value = time_elapsed(&block)
-      measures = Hash[names.map { |n| ["#{Config.app_name}.#{n}", elapsed] }]
+    def measure(*names, **opts, &block)
+      if block
+        elapsed, return_value = time_elapsed(&block)
+      end
+
+      measurement =
+        if opts.has_key?(:value)
+          opts[:value]
+        elsif !elapsed.nil?
+          elapsed
+        else
+          0
+        end
+
+      measures = Hash[names.map { |n| ["#{Config.app_name}.#{n}", measurement] }]
 
       backends.each do |backend|
         report_and_catch { backend.report_measures(measures) }
