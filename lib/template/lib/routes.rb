@@ -3,6 +3,7 @@ Routes = Rack::Builder.new do
   use Pliny::Middleware::CORS
   use Pliny::Middleware::RequestID
   use Pliny::Middleware::RequestStore::Seed, store: Pliny::RequestStore
+  use Pliny::Middleware::Metrics
   use Pliny::Middleware::Instruments
   use Pliny::Middleware::RescueErrors, raise: Config.raise_errors?
   use Rack::Timeout,
