@@ -5,12 +5,24 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 
-## [0.20.0] - 2016-10-12
+## [0.20.1] - 2016-12-08
+### Added
+- `Pliny::Metrics.measure` now supports `value` as a keyword parameter as well
+  as a block. If provided, it'll be the value reported.
+  ([#288](https://github.com/interagent/pliny/pull/288))
+
+### Changed
+- `require!` raises `LoadError` if non-existent path is provided.
+  ([#287](https://github.com/interagent/pliny/pull/287))
+
+## [0.20.0] - 2016-12-06
 ### Added
 - `Pliny::Metrics.backends` is a configurable list of metrics handlers that
   enable sending metrics to various providers.
+  ([#286](https://github.com/interagent/pliny/pull/286))
 - `Pliny::Metrics::Backends::Logger` is a a new (and default) metrics handler
   that reports metrics data to logs in l2met format.
+  ([#286](https://github.com/interagent/pliny/pull/286))
 
 ## [0.19.0] - 2016-10-12
 ### Security
@@ -57,7 +69,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Useless code coverage reports. ([#255](https://github.com/interagent/pliny/pull/255))
 - Cleanup of active database connections after migration runs. ([#257](https://github.com/interagent/pliny/pull/257))
 
-[Unreleased]: https://github.com/interagent/pliny/compare/v0.20.0...HEAD
+[Unreleased]: https://github.com/interagent/pliny/compare/v0.21.0...HEAD
+[0.20.1]: https://github.com/interagent/pliny/compare/v0.20.0...v0.21.0
 [0.20.0]: https://github.com/interagent/pliny/compare/v0.19.0...v0.20.0
 [0.19.0]: https://github.com/interagent/pliny/compare/v0.18.0...v0.19.0
 [0.18.0]: https://github.com/interagent/pliny/compare/v0.17.1...v0.18.0
