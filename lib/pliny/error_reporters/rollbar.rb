@@ -18,9 +18,11 @@ module Pliny
       private
 
       def fetch_scope(context:, rack_env:)
-        {
-          request: proc { extract_request_data_from_rack(rack_env) }
-        }
+        scope = {}
+        if rack_env.respond_to?(:body)
+          scope[:request] = proc { extract_request_data_from_rack(rack_env) }
+        end
+        scope
       rescue Exception => e
         report_exception_to_rollbar(rack_env, e)
         raise
