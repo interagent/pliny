@@ -26,6 +26,10 @@ describe Pliny::Middleware::Instruments do
     allow(Pliny::Metrics).to receive(:measure)
   end
 
+  after do
+    Timecop.return
+  end
+
   it "counts total requests" do
     expect(Pliny::Metrics).to receive(:count).with("requests").once
 

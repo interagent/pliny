@@ -52,6 +52,10 @@ describe Pliny::Metrics do
       Pliny::Metrics.backends = [test_backend]
     end
 
+    after do
+      Timecop.return
+    end
+
     it "measures a block's execution time with a single key" do
       metrics.measure(:foo) { }
       expect(test_backend).to have_received(:report_measures).once.with(
