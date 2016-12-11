@@ -96,6 +96,11 @@ module Pliny
     end
   end
 
+  # DEPRECATED: ConfigHelpers was a slightly more primitive version
+  # of CastingConfigHelpers above that didn't contain any of the
+  # latter's features around typing. It's been left here for
+  # backwards compatibility in apps based on old templates that may
+  # be using it.
   module ConfigHelpers
     def optional(*attrs)
       attrs.each do |attr|
