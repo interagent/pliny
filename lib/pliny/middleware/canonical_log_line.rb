@@ -62,50 +62,57 @@ module Pliny::Middleware
         start = Time.now
         status, headers, response = @app.call(env)
       ensure
-        line = CanonicalLogLine.new
+        begin
+          line = CanonicalLogLine.new
 
-        #
-        # error
-        #
+          #
+          # error
+          #
 
-        if error = env["pliny.error"]
-          line.error_class = error.class.name
-          line.error_message = error.message
-          if error.is_a?(Pliny::Errors::Error)
-            line.error_id = error.id.to_s
+          if error = env["pliny.error"]
+            line.error_class = error.class.name
+            line.error_message = error.message
+            if error.is_a?(Pliny::Errors::Error)
+              line.error_id = error.id.to_s
+            end
           end
+
+          #
+          # request
+          #
+
+          request = Rack::Request.new(env)
+          line.request_id = env["REQUEST_ID"]
+          line.request_ip = request.ip
+          line.request_method = request.request_method
+          line.request_path = request.path_info
+          line.request_user_agent = request.user_agent
+          if route = env["sinatra.route"]
+            line.request_route_signature = route.split(" ").last
+          end
+
+          #
+          # response
+          #
+
+          if length = headers["Content-Length"]
+            line.response_length = length.to_i
+          end
+          line.response_status = status
+
+          #
+          # timing
+          #
+
+          line.timing_total_elapsed = (Time.now - start).to_f
+
+          @emitter.call(line.to_h)
+        rescue => e
+          # We hope that a canonical log line never fails, but in case it
+          # does, do not fail the request because it did.
+          Pliny.log(message: "Failed to emit canonical log line")
+          Pliny.log_exception(e)
         end
-
-        #
-        # request
-        #
-
-        request = Rack::Request.new(env)
-        line.request_id = env["REQUEST_ID"]
-        line.request_ip = request.ip
-        line.request_method = request.request_method
-        line.request_path = request.path_info
-        line.request_user_agent = request.user_agent
-        if route = env["sinatra.route"]
-          line.request_route_signature = route.split(" ").last
-        end
-
-        #
-        # response
-        #
-
-        if length = headers["Content-Length"]
-          line.response_length = length.to_i
-        end
-        line.response_status = status
-
-        #
-        # timing
-        #
-
-        line.timing_total_elapsed = (Time.now - start).to_f
-
-        @emitter.call(line.to_h)
       end
 
       [status, headers, response]

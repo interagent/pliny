@@ -46,6 +46,15 @@ describe Pliny::Middleware::CanonicalLogLine do
     assert_equal 201, data[:response_status]
   end
 
+  it "never fails a request on failure" do
+    expect(Pliny).to receive(:log).with(
+      message: "Failed to emit canonical log line")
+    expect(Pliny).to receive(:log_without_context) { |d| raise "bang!" }
+
+    get "/apps/123"
+    assert_equal 201, last_response.status
+  end
+
   it "emits on generic error" do
     data = {}
     expect(Pliny).to receive(:log_without_context) { |d| data = d }
