@@ -34,8 +34,9 @@ module Pliny
         raise ArgumentError, "Field #{name} undefined"
       end
 
-      unless value.is_a?(type)
-        raise ArgumentError, "Expected #{name} to be type #{type}"
+      if !value.nil? && !value.is_a?(type)
+        raise ArgumentError,
+          "Expected #{name} to be type #{type} (was #{value.class.name})"
       end
 
       @values ||= {}
