@@ -2,6 +2,7 @@ require "multi_json"
 require "sinatra/base"
 
 require_relative "pliny/version"
+require_relative "pliny/canonical_log_line_helpers"
 require_relative "pliny/error_reporters"
 require_relative "pliny/errors"
 require_relative "pliny/helpers/encode"
