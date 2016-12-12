@@ -18,7 +18,7 @@ module Pliny::Middleware
       Pliny::ErrorReporters.notify(e, rack_env: env)
       Pliny::Errors::Error.render(Pliny::Errors::InternalServerError.new)
     ensure
-      # Leave this in env for CanonicalLogLineEmitter.
+      # Leave this in env for CanonicalLogLine.
       env["pliny.error"] = e
     end
   end

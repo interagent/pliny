@@ -15,7 +15,7 @@ module Pliny::Middleware
   #     * Name of the service, HEAD revision, release number.
   #     * Name of the internal system that initiated the request.
   #
-  class CanonicalLogLineEmitter
+  class CanonicalLogLine
     class CanonicalLogLine
       include Pliny::CanonicalLogLineHelpers
 

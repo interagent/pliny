@@ -1,12 +1,12 @@
 require "spec_helper"
 
-describe Pliny::Middleware::CanonicalLogLineEmitter do
+describe Pliny::Middleware::CanonicalLogLine do
   def app
     Rack::Builder.new do
       run Sinatra.new {
         use Pliny::Middleware::RequestID
 
-        use Pliny::Middleware::CanonicalLogLineEmitter,
+        use Pliny::Middleware::CanonicalLogLine,
           emitter: -> (data) { Pliny.log_without_context(data) }
 
         use Pliny::Middleware::RescueErrors, raise: false

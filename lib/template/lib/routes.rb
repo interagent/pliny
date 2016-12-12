@@ -4,7 +4,7 @@ Routes = Rack::Builder.new do
   use Pliny::Middleware::RequestID
   use Pliny::Middleware::RequestStore::Seed, store: Pliny::RequestStore
   use Pliny::Middleware::Metrics
-  use Pliny::Middleware::CanonicalLogLineEmitter,
+  use Pliny::Middleware::CanonicalLogLine,
       emitter: -> (data) {
         Pliny.log_without_context({ canonical_log_line: true }.merge(data)
       }
