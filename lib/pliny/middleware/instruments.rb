@@ -1,22 +1,5 @@
 module Pliny::Middleware
   class Instruments
-    class CanonicalLogLine
-      include CanonicalLogLineHelpers
-
-      log_field :error_class, String
-      log_field :error_id, String
-      log_field :error_message, String
-
-      log_field :request_method, String
-      log_field :request_path, String
-      log_field :request_route_signature, String
-
-      log_field :response_length, Integer
-      log_field :response_status, Integer
-
-      log_field :timing_total_elapsed, Float
-    end
-
     def initialize(app)
       @app = app
     end
