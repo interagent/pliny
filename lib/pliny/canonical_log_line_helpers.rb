@@ -1,4 +1,7 @@
 module Pliny
+  # Helpers to produce a canonical log line. This mostly amounts to a set of
+  # accessors that do basic type checking combined with tracking an internal
+  # schema so that we can produce a hash of everything that's been set so far.
   module CanonicalLogLineHelpers
     module ClassMethods
       def log_field(name, type)
@@ -6,6 +9,7 @@ module Pliny
           raise ArgumentError, "Expected first argument to be a symbol"
         end
 
+        @fields ||= {}
         @fields[name] = type
         define_method(:"#{name}=") do |val|
           set_field(name, val)
@@ -30,10 +34,11 @@ module Pliny
         raise ArgumentError, "Field #{name} undefined"
       end
 
-      unless val.is_a?(type)
+      unless value.is_a?(type)
         raise ArgumentError, "Expected #{name} to be type #{type}"
       end
 
+      @values ||= {}
       @values[name] = value
     end
   end
