@@ -13,6 +13,7 @@ module Pliny::Middleware
   #     * ID of API key used, OAuth application and scope.
   #     * Remaining and total rate limits.
   #     * Name of the service, HEAD revision, release number.
+  #     * Name of the internal system that initiated the request.
   #
   class CanonicalLogLineEmitter
     class CanonicalLogLine
