@@ -16,7 +16,11 @@ module Pliny::Middleware
   #     * Name of the internal system that initiated the request.
   #
   class CanonicalLogLine
-    class CanonicalLogLine
+    # LogLine is a nested model that allows us to construct a canonical log
+    # line in a way that's reasonably well organized and somewhat type safe.
+    # It's responsible for hashifying its defined fields for emission into a
+    # log stream or elsewhere.
+    class LogLine
       include Pliny::CanonicalLogLineHelpers
 
       #
@@ -63,7 +67,7 @@ module Pliny::Middleware
         status, headers, response = @app.call(env)
       ensure
         begin
-          line = CanonicalLogLine.new
+          line = LogLine.new
 
           #
           # error
