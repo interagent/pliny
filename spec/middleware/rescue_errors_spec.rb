@@ -43,12 +43,22 @@ describe Pliny::Middleware::RescueErrors do
     end
   end
 
+  it "uses a custom error message with the message option" do
+    @app = new_rack_app(message: "Please stand by")
+    allow(Pliny::ErrorReporters).to receive(:notify)
+    get "/"
+    assert_equal 500, last_response.status
+    error_json = MultiJson.decode(last_response.body)
+    assert_equal "internal_server_error", error_json["id"]
+    assert_equal "Please stand by", error_json["message"]
+  end
+
   private
 
   def new_rack_app(options = {})
     Rack::Builder.new do
       use Rack::Lint
-      use Pliny::Middleware::RescueErrors, raise: options[:raise]
+      use Pliny::Middleware::RescueErrors, raise: options[:raise], message: options[:message]
       run BadMiddleware.new
     end
   end
