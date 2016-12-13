@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ## [Unreleased]
 
 ## [0.21.0] - 2016-12-13
+### Added
+- Optionally specify `message` on `RescueError` middleware to override the
+  default error message for `500 Internal Server Error`.
+  ([#276](https://github.com/interagent/pliny/pull/276))
+
 ### Changed
 - Ruby 2.3.3 is now the default, also brings in Ruby 2.3 to Travis CI matrix.
   ([#290](https://github.com/interagent/pliny/pull/290))
