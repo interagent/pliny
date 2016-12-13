@@ -6,19 +6,21 @@ module Pliny::Middleware
     end
 
     def call(env)
-      error = nil
       @app.call(env)
     rescue Pliny::Errors::Error => e
-      error = e
+      set_error_in_env(env, e)
       Pliny::Errors::Error.render(e)
     rescue => e
-      error = e
+      set_error_in_env(env, e)
       raise if @raise
 
       Pliny::ErrorReporters.notify(e, rack_env: env)
       Pliny::Errors::Error.render(Pliny::Errors::InternalServerError.new)
-    ensure
-      # Leave this in env for CanonicalLogLine.
+    end
+
+    # Sets the error in a predefined env key for use by the upstream
+    # CanonicalLogLine middleware.
+    def set_error_in_env(env, e)
       env["pliny.error"] = e
     end
   end
