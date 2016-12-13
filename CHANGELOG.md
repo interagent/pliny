@@ -4,9 +4,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [0.21.0] - 2016-12-13
 ### Changed
 - Ruby 2.3.3 is now the default, also brings in Ruby 2.3 to Travis CI matrix.
   ([#290](https://github.com/interagent/pliny/pull/290))
+- Add deprecation note to `Pliny::ConfigHelpers`, `Pliny::CastingConfigHelpers`
+  is the preferred way.
+  ([#292](https://github.com/interagent/pliny/pull/292))
+
+### Fixed
+- Handle empty `rack_env` when passing to Rollbar reporter.
+  ([#291](https://github.com/interagent/pliny/pull/291))
 
 ## [0.20.2] - 2016-12-09
 ### Added
@@ -78,7 +87,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Useless code coverage reports. ([#255](https://github.com/interagent/pliny/pull/255))
 - Cleanup of active database connections after migration runs. ([#257](https://github.com/interagent/pliny/pull/257))
 
-[Unreleased]: https://github.com/interagent/pliny/compare/v0.20.2...HEAD
+[Unreleased]: https://github.com/interagent/pliny/compare/v0.21.0...HEAD
+[0.21.0]: https://github.com/interagent/pliny/compare/v0.20.2...v0.21.0
 [0.20.2]: https://github.com/interagent/pliny/compare/v0.20.1...v0.20.2
 [0.20.1]: https://github.com/interagent/pliny/compare/v0.20.0...v0.20.1
 [0.20.0]: https://github.com/interagent/pliny/compare/v0.19.0...v0.20.0
