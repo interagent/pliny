@@ -115,7 +115,7 @@ module Pliny::Middleware
           # We hope that a canonical log line never fails, but in case it
           # does, do not fail the request because it did.
           Pliny.log(message: "Failed to emit canonical log line")
-          Pliny.log_exception(e)
+          Pliny::ErrorReporters.notify(e, rack_env: env)
         end
       end
 
