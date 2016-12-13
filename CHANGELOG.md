@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Changed
+- Ruby 2.3.3 is now the default, also brings in Ruby 2.3 to Travis CI matrix.
+  ([#290](https://github.com/interagent/pliny/pull/290))
 
 ## [0.20.2] - 2016-12-09
 ### Added
