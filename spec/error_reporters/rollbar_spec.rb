@@ -8,7 +8,7 @@ describe Pliny::ErrorReporters::Rollbar do
   describe "#notify" do
     let(:exception) { StandardError.new("Something went wrong") }
     let(:context)   { {} }
-    let(:rack_env)  { double(:rack_env, body: StringIO.new) }
+    let(:rack_env)  { { "rack.input" => StringIO.new } }
 
     subject(:notify) do
       reporter.notify(exception, context: context, rack_env: rack_env)
