@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 Routes = Rack::Builder.new do
   use Pliny::Middleware::RequestStore::Clear, store: Pliny::RequestStore
   use Pliny::Middleware::CORS

@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
-# frozen_string_literal: true
+
 # rubocop:disable Lint/Eval
 
-require_relative '../lib/application'
+require_relative "../lib/application"
 
-eval ARGV.join(' ')
+eval ARGV.join(" ")

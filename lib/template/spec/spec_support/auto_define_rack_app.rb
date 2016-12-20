@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 RSpec.configure do |config|
   config.before(:context) do |spec|
     # weird ruby syntax, but test if the described_class inherits Sinatra::Base:

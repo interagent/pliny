@@ -1,5 +1,4 @@
-# frozen_string_literal: true
-require './config/config'
+require "./config/config"
 
 environment Config.rack_env
 port Config.port

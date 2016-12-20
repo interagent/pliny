@@ -1,5 +1,4 @@
-# frozen_string_literal: true
-require 'bundler'
+require "bundler"
 Bundler.require
 
-require_relative 'initializer'
+require_relative "initializer"

@@ -1,5 +1,4 @@
-# frozen_string_literal: true
-require 'pliny/config_helpers'
+require "pliny/config_helpers"
 
 # Access all config keys like the following:
 #
@@ -21,16 +20,16 @@ module Config
   # Override -- value is returned or the set default.
   override :database_timeout, 10,           int
   override :db_pool,          5,            int
-  override :deployment,       'production', string
+  override :deployment,       "production", string
   override :force_ssl,        true,         bool
-  override :app_env,          'production', string
+  override :app_env,          "production", string
   override :port,             5000,         int
   override :pretty_json,      false,        bool
   override :puma_max_threads, 16,           int
   override :puma_min_threads, 1,            int
   override :puma_workers,     3,            int
   override :raise_errors,     false,        bool
-  override :root,             File.expand_path('../../', __FILE__), string
+  override :root,             File.expand_path("../../", __FILE__), string
   override :timeout,          10,           int
   override :versioning,       false,        bool
 end

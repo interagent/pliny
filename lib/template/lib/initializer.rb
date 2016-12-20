@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 module Initializer
   def self.run
     require_config
@@ -8,7 +7,7 @@ module Initializer
   end
 
   def self.require_config
-    require_relative '../config/config'
+    require_relative "../config/config"
   end
 
   def self.require_lib

@@ -20,3 +20,10 @@ Style/ClassVars:
 # Offense count: 6
 Style/Documentation:
   Enabled: false
+
+Style/StringLiterals:
+  Enabled: true
+  EnforcedStyle: double_quotes
+
+Style/FrozenStringLiteralComment:
+  Enabled: false

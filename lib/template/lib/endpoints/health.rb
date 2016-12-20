@@ -1,12 +1,11 @@
-# frozen_string_literal: true
 module Endpoints
   class Health < Base
-    namespace '/health' do
+    namespace "/health" do
       get do
         encode({})
       end
 
-      get '/db' do
+      get "/db" do
         database?
         database_available?
         encode({})
@@ -22,7 +21,7 @@ module Endpoints
         raise Pliny::Errors::ServiceUnavailable unless DB.test_connection
       rescue Sequel::Error => e
         message = e.message.strip
-        Pliny.log(db: true, health: true, at: 'exception', message: message)
+        Pliny.log(db: true, health: true, at: "exception", message: message)
         raise Pliny::Errors::ServiceUnavailable
       end
     end
