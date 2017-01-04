@@ -41,6 +41,10 @@ describe Pliny::ErrorReporters::Rollbar do
     context "given an empty rack_env" do
       let(:rack_env) { {} }
 
+      it "expects rack_env to be a hash" do
+        assert_kind_of(Hash, rack_env)
+      end
+
       it "reports to Rollbar with an empty scope" do
         notify
         expect(Rollbar).to have_received(:scoped).once.with({})
