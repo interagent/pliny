@@ -3,9 +3,9 @@ require "spec_helper"
 RSpec.describe Endpoints::Schema do
   include Rack::Test::Methods
 
-  let(:schema_filename) { "#{Config.root}/schema/schema.json" }
-
   subject(:get_schema) { get "/schema.json" }
+
+  let(:schema_filename) { "#{Config.root}/schema/schema.json" }
 
   context "without a schema.json" do
     before do

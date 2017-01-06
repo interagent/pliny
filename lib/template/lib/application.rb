@@ -1,4 +1,4 @@
-require 'bundler'
+require "bundler"
 Bundler.require
 
-require_relative 'initializer'
+require_relative "initializer"

@@ -7,48 +7,48 @@ RSpec.describe Endpoints::Health do
     Endpoints::Health
   end
 
-  describe 'GET /health' do
-    it 'returns a 200' do
-      get '/health'
+  describe "GET /health" do
+    it "returns a 200" do
+      get "/health"
       assert_equal(200, last_response.status)
-      assert_equal('application/json;charset=utf-8', last_response.headers['Content-Type'])
-      assert_equal(2, last_response.headers['Content-Length'].to_i)
+      assert_equal("application/json;charset=utf-8", last_response.headers["Content-Type"])
+      assert_equal(2, last_response.headers["Content-Length"].to_i)
       assert_equal({}, MultiJson.decode(last_response.body))
     end
   end
 
-  describe 'GET /health/db' do
-    it 'raises a 404 when no database is available' do
+  describe "GET /health/db" do
+    it "raises a 404 when no database is available" do
       allow(DB).to receive(:nil?).and_return(true)
 
       assert_raises Pliny::Errors::NotFound do
-        get '/health/db'
+        get "/health/db"
       end
     end
 
-    it 'raises a 503 on Sequel exceptions' do
+    it "raises a 503 on Sequel exceptions" do
       allow(DB).to receive(:test_connection).and_raise(Sequel::Error)
 
       assert_raises Pliny::Errors::ServiceUnavailable do
-        get '/health/db'
+        get "/health/db"
       end
     end
 
-    it 'raises a 503 when connection testing fails' do
+    it "raises a 503 when connection testing fails" do
       allow(DB).to receive(:test_connection).and_return(false)
 
       assert_raises Pliny::Errors::ServiceUnavailable do
-        get '/health/db'
+        get "/health/db"
       end
     end
 
-    it 'returns a 200' do
+    it "returns a 200" do
       allow(DB).to receive(:test_connection).and_return(true)
 
-      get '/health/db'
+      get "/health/db"
       assert_equal(200, last_response.status)
-      assert_equal('application/json;charset=utf-8', last_response.headers['Content-Type'])
-      assert_equal(2, last_response.headers['Content-Length'].to_i)
+      assert_equal("application/json;charset=utf-8", last_response.headers["Content-Type"])
+      assert_equal(2, last_response.headers["Content-Length"].to_i)
       assert_equal({}, MultiJson.decode(last_response.body))
     end
   end

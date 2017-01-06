@@ -21,13 +21,15 @@ gem "sucker_punch"
 
 group :development, :test do
   gem "pry-byebug"
+  gem "rubocop", "~> 0.46.0", require: false
+  gem "rubocop-rspec", require: false
 end
 
 group :test do
-  gem "simplecov", require: false
   gem "committee"
   gem "database_cleaner"
   gem "dotenv"
   gem "rack-test"
   gem "rspec"
+  gem "simplecov", require: false
 end

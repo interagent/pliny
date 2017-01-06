@@ -10,7 +10,7 @@ ENV["RACK_ENV"] = "test"
 require "bundler"
 require "dotenv"
 Bundler.require(:default, :test)
-Dotenv.load('.env.test')
+Dotenv.load(".env.test")
 
 # Get only App Config first, to avoid pulling in libraries until
 # spec_support has a chance to run, which is important for at least
@@ -29,7 +29,7 @@ RSpec.configure do |config|
   end
 
   config.before :all do
-    load('db/seeds.rb') if File.exist?('db/seeds.rb')
+    load("db/seeds.rb") if File.exist?("db/seeds.rb")
   end
 
   config.before :each do
@@ -49,10 +49,10 @@ RSpec.configure do |config|
   # order dependency and want to debug it, you can fix the order by providing
   # the seed, which is printed after each run.
   #     --seed 1234
-  config.order = 'random'
+  config.order = "random"
 
   # the rack app to be tested with rack-test:
   def app
-    @rack_app || fail("Missing @rack_app")
+    @rack_app || raise("Missing @rack_app")
   end
 end

@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require_relative '../lib/application'
+require_relative "../lib/application"
 
 def basic_prompt(target_self, nest_level, pry)
   # override DEPLOYMENT to identify console sessions (eg: staging/production/etc)
@@ -9,13 +9,13 @@ def basic_prompt(target_self, nest_level, pry)
 end
 
 Pry.prompt = [
-   proc { |target_self, nest_level, pry|
-     basic_prompt(target_self, nest_level, pry) + "> "
-   },
+  proc do |target_self, nest_level, pry|
+    basic_prompt(target_self, nest_level, pry) + "> "
+  end,
 
-   proc { |target_self, nest_level, pry|
-     basic_prompt(target_self, nest_level, pry) + "* "
-   }
+  proc do |target_self, nest_level, pry|
+    basic_prompt(target_self, nest_level, pry) + "* "
+  end
 ]
 
 Pry.start

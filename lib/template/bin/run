@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
-require_relative '../lib/application'
+# rubocop:disable Lint/Eval
+
+require_relative "../lib/application"
 
 eval ARGV.join(" ")

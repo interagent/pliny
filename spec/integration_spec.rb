@@ -7,34 +7,36 @@ describe "Pliny integration test" do
     Dir.chdir("/tmp/plinytest")
 
     bash "pliny-new myapp"
-    bash_app "bin/setup"
+
+    Dir.chdir("/tmp/plinytest/myapp")
+    bash "bin/setup"
   end
 
   describe "bin/setup" do
     it "generates .env" do
-      assert File.exists?("./myapp/.env")
+      assert File.exists?("./.env")
     end
   end
 
   describe "pliny-generate scaffold" do
     before(:all) do
-      bash_app "pliny-generate scaffold artist"
+      bash "pliny-generate scaffold artist"
     end
 
     it "creates the model file" do
-      assert File.exists?("./myapp/lib/models/artist.rb")
+      assert File.exists?("./lib/models/artist.rb")
     end
 
     it "creates the endpoint file" do
-      assert File.exists?("./myapp/lib/endpoints/artists.rb")
+      assert File.exists?("./lib/endpoints/artists.rb")
     end
 
     it "creates the serializer file" do
-      assert File.exists?("./myapp/lib/serializers/artist.rb")
+      assert File.exists?("./lib/serializers/artist.rb")
     end
 
     it "creates the schema file" do
-      assert File.exists?("./myapp/schema/schemata/artist.yaml")
+      assert File.exists?("./schema/schemata/artist.yaml")
     end
   end
 
@@ -45,9 +47,5 @@ describe "Pliny integration test" do
     unless system(env, "#{cmd} > /dev/null")
       raise "Failed to run #{cmd}"
     end
-  end
-
-  def bash_app(cmd)
-    bash "cd myapp && #{cmd}"
   end
 end

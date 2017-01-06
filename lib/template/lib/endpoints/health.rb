@@ -1,11 +1,11 @@
 module Endpoints
   class Health < Base
-    namespace '/health' do
+    namespace "/health" do
       get do
         encode({})
       end
 
-      get '/db' do
+      get "/db" do
         database?
         database_available?
         encode({})
@@ -14,14 +14,14 @@ module Endpoints
       private
 
       def database?
-        fail Pliny::Errors::NotFound if DB.nil?
+        raise Pliny::Errors::NotFound if DB.nil?
       end
 
       def database_available?
-        fail Pliny::Errors::ServiceUnavailable unless DB.test_connection
+        raise Pliny::Errors::ServiceUnavailable unless DB.test_connection
       rescue Sequel::Error => e
         message = e.message.strip
-        Pliny.log(db: true, health: true, at: 'exception', message: message)
+        Pliny.log(db: true, health: true, at: "exception", message: message)
         raise Pliny::Errors::ServiceUnavailable
       end
     end

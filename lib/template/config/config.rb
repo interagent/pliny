@@ -20,9 +20,9 @@ module Config
   # Override -- value is returned or the set default.
   override :database_timeout, 10,           int
   override :db_pool,          5,            int
-  override :deployment,       'production', string
+  override :deployment,       "production", string
   override :force_ssl,        true,         bool
-  override :app_env,          'production', string
+  override :app_env,          "production", string
   override :port,             5000,         int
   override :pretty_json,      false,        bool
   override :puma_max_threads, 16,           int
