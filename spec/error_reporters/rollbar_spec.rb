@@ -8,7 +8,7 @@ describe Pliny::ErrorReporters::Rollbar do
   describe "#notify" do
     let(:exception) { StandardError.new("Something went wrong") }
     let(:context)   { {} }
-    let(:rack_env)  { double(:rack_env, body: StringIO.new) }
+    let(:rack_env)  { { "rack.input" => StringIO.new } }
 
     subject(:notify) do
       reporter.notify(exception, context: context, rack_env: rack_env)
@@ -40,6 +40,10 @@ describe Pliny::ErrorReporters::Rollbar do
 
     context "given an empty rack_env" do
       let(:rack_env) { {} }
+
+      it "expects rack_env to be a hash" do
+        assert_kind_of(Hash, rack_env)
+      end
 
       it "reports to Rollbar with an empty scope" do
         notify
