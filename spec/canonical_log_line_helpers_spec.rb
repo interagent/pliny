@@ -24,7 +24,7 @@ describe Pliny::CanonicalLogLineHelpers do
     e = assert_raises ArgumentError do
       line.field_string = 42
     end
-    assert_equal "Expected field_string to be type String (was Fixnum)",
+    assert_match /Expected field_string to be type String \(was (Integer|Fixnum)\)/,
       e.message
   end
 
