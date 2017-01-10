@@ -5,6 +5,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 
+## [0.23.0] - 2017-01-10
+### Changed
+- Puma 3 is now the default. ([#297](https://github.com/interagent/pliny/pull/297))
+
+### Fixed
+- Conditionally load Rubocop rake tasks if Rubocop is present. ([#299](https://github.com/interagent/pliny/pull/299))
+- Automatic Rubocop refactor missed a `File.exists?` mock. ([#300](https://github.com/interagent/pliny/pull/300))
+
 ## [0.22.0] - 2017-01-06
 ### Added
 - Add and apply Rubocop to the template. ([#294](https://github.com/interagent/pliny/pull/294))
@@ -99,7 +107,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Useless code coverage reports. ([#255](https://github.com/interagent/pliny/pull/255))
 - Cleanup of active database connections after migration runs. ([#257](https://github.com/interagent/pliny/pull/257))
 
-[Unreleased]: https://github.com/interagent/pliny/compare/v0.22.0...HEAD
+[Unreleased]: https://github.com/interagent/pliny/compare/v0.23.0...HEAD
+[0.23.0]: https://github.com/interagent/pliny/compare/v0.22.0...v0.23.0
 [0.22.0]: https://github.com/interagent/pliny/compare/v0.21.0...v0.22.0
 [0.21.0]: https://github.com/interagent/pliny/compare/v0.20.2...v0.21.0
 [0.20.2]: https://github.com/interagent/pliny/compare/v0.20.1...v0.20.2
