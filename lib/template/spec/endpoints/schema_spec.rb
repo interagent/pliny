@@ -9,7 +9,7 @@ RSpec.describe Endpoints::Schema do
 
   context "without a schema.json" do
     before do
-      allow(File).to receive(:exists?).and_return(false)
+      allow(File).to receive(:exist?).and_return(false)
     end
 
     it "raises a 404 on missing schema" do
@@ -23,7 +23,7 @@ RSpec.describe Endpoints::Schema do
     let(:contents) { "contents" }
 
     before do
-      allow(File).to receive(:exists?).and_return(true)
+      allow(File).to receive(:exist?).and_return(true)
       allow(File).to receive(:read).and_return(contents)
     end
 
