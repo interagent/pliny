@@ -23,7 +23,7 @@ describe Pliny::Middleware::RescueErrors do
     assert_equal 503, last_response.status
     error_json = MultiJson.decode(last_response.body)
     assert_equal "service_unavailable", error_json["id"]
-    assert_equal "Service unavailable.", error_json["message"]
+    assert_equal "Service unavailable", error_json["message"]
   end
 
   it "intercepts exceptions and renders" do
@@ -33,7 +33,7 @@ describe Pliny::Middleware::RescueErrors do
     assert_equal 500, last_response.status
     error_json = MultiJson.decode(last_response.body)
     assert_equal "internal_server_error", error_json["id"]
-    assert_equal "Internal server error.", error_json["message"]
+    assert_equal "Internal server error", error_json["message"]
   end
 
   it "raises given the raise option" do

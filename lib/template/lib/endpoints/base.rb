@@ -17,7 +17,7 @@ module Endpoints
       also_reload "#{Config.root}/lib/**/*.rb"
     end
 
-    error Sinatra::NotFound do
+    error Sinatra::NotFound, Sequel::NoMatchingRow do
       raise Pliny::Errors::NotFound
     end
   end

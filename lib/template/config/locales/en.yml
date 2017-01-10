@@ -1,0 +1,27 @@
+en:
+  errors:
+    bad_gateway: Bad gateway
+    bad_request: Bad request
+    conflict: Conflict
+    expectation_failed: Expectation failed
+    forbidden: Forbidden
+    gateway_timeout: Gateway timed out
+    gone: Gone
+    internal_server_error: Internal server error
+    length_required: Length required
+    method_not_allowed: Method not allowed
+    not_acceptable: Not acceptable
+    not_found: Not found
+    not_implemented: Not implemented
+    payment_required: Payment required
+    precondition_failed: Precondition failed
+    proxy_authentication_required: Proxy authentication required
+    request_entity_too_large: Request entity too large
+    request_timeout: Request timed out
+    request_uri_too_long: Requrest URI too long
+    requested_range_not_satisfiable: Requested range not satisfiable
+    service_unavailable: Service unavailable
+    too_many_requests: Too many requests
+    unauthorized: Unauthorized
+    unprocessable_entity: Unprocessable entity
+    unsupported_media_type: Unsupported media type

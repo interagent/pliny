@@ -16,6 +16,7 @@ Gem::Specification.new do |gem|
   gem.files = %x{ git ls-files }.split("\n").select { |d| d =~ %r{^(License|README|bin/|data/|ext/|lib/|spec/|test/)} }
 
   gem.add_dependency "activesupport",  "~> 4.1",  ">= 4.1.0"
+  gem.add_dependency "i18n",           "~> 0.7",  ">= 0.7"
   gem.add_dependency "multi_json",     "~> 1.9",  ">= 1.9.3"
   gem.add_dependency "prmd",           "~> 0.11", ">= 0.11.4"
 
