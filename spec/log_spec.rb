@@ -38,6 +38,12 @@ describe Pliny::Log do
     Pliny.log(foo: "bar")
   end
 
+  it "logs without context" do
+    Pliny.default_context = { app: "pliny" }
+    expect(@io).to receive(:print).with("foo=bar\n")
+    Pliny.log_without_context(foo: "bar")
+  end
+
   it "merges context from RequestStore" do
     Pliny::RequestStore.store[:log_context] = { app: "pliny" }
     expect(@io).to receive(:print).with("app=pliny foo=bar\n")
