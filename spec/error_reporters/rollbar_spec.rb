@@ -7,7 +7,7 @@ describe Pliny::ErrorReporters::Rollbar do
 
   describe "#notify" do
     let(:exception) { StandardError.new("Something went wrong") }
-    let(:context)   { {} }
+    let(:context)   { { step: :foo } }
     let(:rack_env)  { { "rack.input" => StringIO.new } }
 
     subject(:notify) do
@@ -28,7 +28,8 @@ describe Pliny::ErrorReporters::Rollbar do
     it "scopes the rollbar notification" do
       notify
       expect(::Rollbar).to have_received(:scoped).once.with(hash_including(
-        request: instance_of(Proc)
+        request: instance_of(Proc),
+        custom: { step: :foo }
       ))
     end
 
@@ -45,9 +46,9 @@ describe Pliny::ErrorReporters::Rollbar do
         assert_kind_of(Hash, rack_env)
       end
 
-      it "reports to Rollbar with an empty scope" do
+      it "reports to Rollbar without request data in the scope" do
         notify
-        expect(Rollbar).to have_received(:scoped).once.with({})
+        expect(Rollbar).to have_received(:scoped).once.with({ custom: {step: :foo} })
       end
 
       it "delegates to #report_exception_to_rollbar" do

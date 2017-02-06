@@ -18,7 +18,7 @@ module Pliny
       private
 
       def fetch_scope(context:, rack_env:)
-        scope = {}
+        scope = { custom: context }
         unless rack_env.empty?
           scope[:request] = proc { extract_request_data_from_rack(rack_env) }
         end
