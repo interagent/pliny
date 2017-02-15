@@ -22,9 +22,9 @@ describe Pliny::CanonicalLogLineHelpers do
   it "rejects values that are of the wrong type" do
     line = TestCanonicalLogLine.new
     e = assert_raises ArgumentError do
-      line.field_string = 42
+      line.field_string = true
     end
-    assert_equal "Expected field_string to be type String (was Fixnum)",
+    assert_equal "Expected field_string to be type String (was TrueClass)",
       e.message
   end
 
