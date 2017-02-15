@@ -6,7 +6,7 @@ Routes = Rack::Builder.new do
   use Pliny::Middleware::Metrics
   use Pliny::Middleware::CanonicalLogLine,
       emitter: -> (data) {
-        Pliny.log_without_context({ canonical_log_line: true }.merge(data)
+        Pliny.log_without_context({ canonical_log_line: true }.merge(data))
       }
   use Pliny::Middleware::RescueErrors, raise: Config.raise_errors?
   if Config.timeout.positive?
