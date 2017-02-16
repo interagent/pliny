@@ -5,6 +5,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 
+## [0.24.0] - 2017-02-16
+### Added
+- Ruby 2.4 support. Requires `activesupport` 5+ which drops support for Ruby 2.2.1 and below. ([#302](https://github.com/interagent/pliny/pull/302))
+- [Canonical Log Lines](https://brandur.org/canonical-log-lines) ([#294](https://github.com/interagent/pliny/pull/294))
+
 ## [0.23.0] - 2017-01-10
 ### Changed
 - Puma 3 is now the default. ([#297](https://github.com/interagent/pliny/pull/297))
@@ -107,7 +112,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Useless code coverage reports. ([#255](https://github.com/interagent/pliny/pull/255))
 - Cleanup of active database connections after migration runs. ([#257](https://github.com/interagent/pliny/pull/257))
 
-[Unreleased]: https://github.com/interagent/pliny/compare/v0.23.0...HEAD
+[Unreleased]: https://github.com/interagent/pliny/compare/v0.24.0...HEAD
+[0.24.0]: https://github.com/interagent/pliny/compare/v0.23.0...v0.24.0
 [0.23.0]: https://github.com/interagent/pliny/compare/v0.22.0...v0.23.0
 [0.22.0]: https://github.com/interagent/pliny/compare/v0.21.0...v0.22.0
 [0.21.0]: https://github.com/interagent/pliny/compare/v0.20.2...v0.21.0
