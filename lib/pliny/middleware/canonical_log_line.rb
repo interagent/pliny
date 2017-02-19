@@ -48,12 +48,14 @@ module Pliny::Middleware
 
       log_field :response_length, Integer
       log_field :response_status, Integer
+      log_field :serialization_arity, Integer
 
       #
       # timing
       #
 
       log_field :timing_total_elapsed, Float
+      log_field :timing_serialization, Float
     end
 
     def initialize(app, emitter:)
@@ -103,12 +105,14 @@ module Pliny::Middleware
             line.response_length = length.to_i
           end
           line.response_status = status
+          line.serialization_arity = env["serialization_arity"]
 
           #
           # timing
           #
 
           line.timing_total_elapsed = (Time.now - start).to_f
+          line.timing_serialization = env["timing_serialization"]
 
           @emitter.call(line.to_h)
         rescue => e
