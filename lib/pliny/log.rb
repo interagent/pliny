@@ -4,6 +4,10 @@ module Pliny
       log_to_stream(stdout || $stdout, merge_log_contexts(data), &block)
     end
 
+    def log_with_default_context(data, &block)
+      log_to_stream(stdout || $stdout, default_context.merge(data), &block)
+    end
+
     def log_without_context(data, &block)
       log_to_stream(stdout || $stdout, data, &block)
     end
