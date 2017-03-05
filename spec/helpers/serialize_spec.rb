@@ -44,5 +44,9 @@ describe Pliny::Helpers::Serialize do
       assert_equal 200, last_response.status
       assert_equal MultiJson.encode([]), last_response.body
     end
+
+    it "measures time for serialiation" do
+      get "/"
+    end
   end
 end
