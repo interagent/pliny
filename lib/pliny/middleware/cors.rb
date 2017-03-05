@@ -8,8 +8,11 @@ module Pliny::Middleware
     EXPOSE_HEADERS =
       %w( Cache-Control Content-Language Content-Type Expires Last-Modified Pragma ).freeze
 
-    def initialize(app)
+    def initialize(app, allow_methods: ALLOW_METHODS,
+                   allow_headers: ALLOW_HEADERS)
       @app = app
+      @allow_methods = allow_methods
+      @allow_headers = allow_headers
     end
 
     def call(env)
@@ -35,8 +38,8 @@ module Pliny::Middleware
     def cors_headers(env)
       {
         'Access-Control-Allow-Origin'      => env["HTTP_ORIGIN"],
-        'Access-Control-Allow-Methods'     => ALLOW_METHODS.join(', '),
-        'Access-Control-Allow-Headers'     => ALLOW_HEADERS.join(', '),
+        'Access-Control-Allow-Methods'     => @allow_methods.join(', '),
+        'Access-Control-Allow-Headers'     => @allow_headers.join(', '),
         'Access-Control-Allow-Credentials' => "true",
         'Access-Control-Max-Age'           => "1728000",
         'Access-Control-Expose-Headers'    => EXPOSE_HEADERS.join(', ')

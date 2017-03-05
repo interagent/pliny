@@ -39,4 +39,48 @@ describe Pliny::Middleware::CORS do
     assert_equal "http://localhost",
       last_response.headers["Access-Control-Allow-Origin"]
   end
+
+  describe "allows specifying allowed methods" do
+    def app
+      Rack::Builder.new do
+        use Rack::Lint
+        use Pliny::Middleware::CORS, allow_methods: ["GET"]
+        run Sinatra.new {
+          get "/" do
+            "hi"
+          end
+        }
+      end
+    end
+
+    it "sets the allow methods" do
+      header "Origin", "http://localhost"
+      options "/"
+      assert_equal 200, last_response.status
+      assert_equal "GET",
+        last_response.headers["Access-Control-Allow-Methods"]
+    end
+  end
+
+  describe "allows specifying allowed headers" do
+    def app
+      Rack::Builder.new do
+        use Rack::Lint
+        use Pliny::Middleware::CORS, allow_headers: ["Content-Type"]
+        run Sinatra.new {
+          get "/" do
+            "hi"
+          end
+        }
+      end
+    end
+
+    it "sets the allow methods" do
+      header "Origin", "http://localhost"
+      options "/"
+      assert_equal 200, last_response.status
+      assert_equal "Content-Type",
+        last_response.headers["Access-Control-Allow-Headers"]
+    end
+  end
 end
