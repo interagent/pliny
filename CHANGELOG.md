@@ -5,6 +5,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 
+## [0.25.0] - 2017-03-24
+### Changed
+- Ruby 2.4 is now the default. ([#308](https://github.com/interagent/pliny/pull/308))
+- Log canonical log lines with default log context. ([#307](https://github.com/interagent/pliny/pull/307))
+
+### Fixed
+- Include custom data in scope sent to Rollbar. ([#303](https://github.com/interagent/pliny/pull/303))
+
 ## [0.24.0] - 2017-02-16
 ### Added
 - Ruby 2.4 support. Requires `activesupport` 5+ which drops support for Ruby 2.2.1 and below. ([#302](https://github.com/interagent/pliny/pull/302))
@@ -112,7 +120,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Useless code coverage reports. ([#255](https://github.com/interagent/pliny/pull/255))
 - Cleanup of active database connections after migration runs. ([#257](https://github.com/interagent/pliny/pull/257))
 
-[Unreleased]: https://github.com/interagent/pliny/compare/v0.24.0...HEAD
+[Unreleased]: https://github.com/interagent/pliny/compare/v0.25.0...HEAD
+[0.25.0]: https://github.com/interagent/pliny/compare/v0.24.0...v0.25.0
 [0.24.0]: https://github.com/interagent/pliny/compare/v0.23.0...v0.24.0
 [0.23.0]: https://github.com/interagent/pliny/compare/v0.22.0...v0.23.0
 [0.22.0]: https://github.com/interagent/pliny/compare/v0.21.0...v0.22.0
