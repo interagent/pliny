@@ -36,6 +36,10 @@ describe Pliny::Helpers::Serialize do
         get "/" do
           MultiJson.encode(serialize([]))
         end
+
+        get "/env" do
+          MultiJson.encode(serialize(env))
+        end
       end
     end
 
@@ -45,8 +49,12 @@ describe Pliny::Helpers::Serialize do
       assert_equal MultiJson.encode([]), last_response.body
     end
 
-    it "measures time for serialiation" do
-      get "/"
+    it "emits information for canonical log lines" do
+      get "/env"
+      assert_equal 200, last_response.status
+      body = MultiJson.decode(last_response.body)
+      assert body["pliny.serializer_arity"] > 1
+      assert body["pliny.serializer_timing"] > 0
     end
   end
 end
