@@ -105,14 +105,14 @@ module Pliny::Middleware
             line.response_length = length.to_i
           end
           line.response_status = status
-          line.serialization_arity = env["serialization_arity"]
+          line.serialization_arity = env["pliny.serialization_arity"]
 
           #
           # timing
           #
 
           line.timing_total_elapsed = (Time.now - start).to_f
-          line.timing_serialization = env["timing_serialization"]
+          line.timing_serialization = env["pliny.serialization_timing"]
 
           @emitter.call(line.to_h)
         rescue => e
