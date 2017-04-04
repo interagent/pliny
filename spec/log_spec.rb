@@ -94,4 +94,40 @@ describe Pliny::Log do
     expect(@io).to receive(:print).with("app=pliny exception class=RuntimeError message=RuntimeError exception_id=#{e.object_id}\n")
     Pliny.log_exception(e)
   end
+
+  describe "scrubbing" do
+
+    it "allows a Proc to be assigned as a log scrubber" do
+      Pliny.log_scrubber = -> (hash) { hash }
+
+      begin
+        Pliny.log_scrubber = Object.new
+        fail
+      rescue ArgumentError; end
+    end
+
+    describe "when a scrubber is present" do
+      before do
+        Pliny.log_scrubber = -> (hash) {
+          Hash.new.tap do |h|
+            hash.keys.each do |k|
+              h[k] = "*SCRUBBED*"
+            end
+          end
+        }
+      end
+
+      after do
+        Pliny.log_scrubber = nil
+      end
+
+      it "scrubs the log when a scrubber is present" do
+        Pliny::RequestStore.store[:log_context] = { app: "pliny" }
+
+        expect(@io).to receive(:print).with("app=*SCRUBBED* foo=*SCRUBBED*\n")
+
+        Pliny.log(foo: "bar")
+      end
+    end
+  end
 end

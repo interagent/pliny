@@ -72,6 +72,17 @@ module Pliny
       @stderr
     end
 
+    def log_scrubber=(scrubber)
+      if scrubber && !scrubber.respond_to?(:call)
+        raise(ArgumentError, "Must respond to 'call'")
+      end
+      @scrubber = scrubber
+    end
+
+    def log_scrubber
+      @scrubber
+    end
+
     private
 
     def merge_log_contexts(data)
@@ -92,6 +103,7 @@ module Pliny
 
     def log_to_stream(stream, data, &block)
       unless block
+        data = log_scrubber.call(data) if log_scrubber
         str = unparse(data)
         stream.print(str + "\n")
       else
