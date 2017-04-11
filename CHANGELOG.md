@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 
+## [0.25.1] - 2017-04-11
+### Added
+- Allow an injectable log scrubber. ([#309](https://github.com/interagent/pliny/pull/308))
+
 ## [0.25.0] - 2017-03-24
 ### Changed
 - Ruby 2.4 is now the default. ([#308](https://github.com/interagent/pliny/pull/308))
@@ -120,7 +124,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Useless code coverage reports. ([#255](https://github.com/interagent/pliny/pull/255))
 - Cleanup of active database connections after migration runs. ([#257](https://github.com/interagent/pliny/pull/257))
 
-[Unreleased]: https://github.com/interagent/pliny/compare/v0.25.0...HEAD
+[Unreleased]: https://github.com/interagent/pliny/compare/v0.25.1...HEAD
+[0.25.1]: https://github.com/interagent/pliny/compare/v0.25.0...v0.25.1
 [0.25.0]: https://github.com/interagent/pliny/compare/v0.24.0...v0.25.0
 [0.24.0]: https://github.com/interagent/pliny/compare/v0.23.0...v0.24.0
 [0.23.0]: https://github.com/interagent/pliny/compare/v0.22.0...v0.23.0
