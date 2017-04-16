@@ -13,7 +13,7 @@ module Pliny::Commands
                         url_path: url_path)
         display "created endpoint file #{endpoint}"
         display 'add the following to lib/routes.rb:'
-        display "  mount Endpoints::#{plural_class_name}"
+        display "  run Endpoints::#{plural_class_name}"
       end
 
       def create_test
