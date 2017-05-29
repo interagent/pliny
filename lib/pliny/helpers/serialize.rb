@@ -5,14 +5,21 @@ module Pliny::Helpers
     end
 
     def serialize(data, structure = :default)
-      if self.class.serializer_class.nil?
+      serializer_class = self.class.serializer_class
+
+      if serializer_class.nil?
         raise <<-eos.strip
 No serializer has been specified for this endpoint. Please specify one with
 `serializer Serializers::ModelName` in the endpoint.
         eos
       end
 
-      self.class.serializer_class.new(structure).serialize(data)
+      env['pliny.serializer_arity'] = data.respond_to?(:size) ? data.size : 1
+
+      start = Time.now
+      serializer_class.new(structure).serialize(data).tap do
+        env['pliny.serializer_timing'] = (Time.now - start).to_f
+      end
     end
 
     module ClassMethods
