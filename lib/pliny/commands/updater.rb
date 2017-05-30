@@ -5,7 +5,7 @@ require 'pliny/commands/creator'
 require 'uri'
 
 module Pliny::Commands
-  class Updater < Creator
+  class Updater
     attr_accessor :stream
 
     def self.run(stream = $stdout)
@@ -35,6 +35,35 @@ module Pliny::Commands
         display app_dir
         FileUtils.copy_entry template_dir, app_dir
         parse_erb_files
+      end
+    end
+
+    private
+
+    def display(msg)
+      stream.puts msg
+    end
+
+    def template_dir
+      File.expand_path('../../template', File.dirname(__FILE__))
+    end
+
+    def app_dir
+      Pathname.new(name).expand_path
+    end
+
+    def parse_erb_files
+      Dir.glob("#{app_dir}/{*,.*}.erb").each do |file|
+        static_file = file.gsub(/\.erb$/, '')
+
+        template = ERB.new(File.read(file), 0)
+        context = OpenStruct.new(app_name: name)
+        content = template.result(context.instance_eval { binding })
+
+        File.open(static_file, "w") do |f|
+          f.write content
+        end
+        FileUtils.rm(file)
       end
     end
 
