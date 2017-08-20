@@ -50,16 +50,25 @@ module Pliny
     end
 
     def rollback
-      return unless db.tables.include?(:schema_migrations)
-      return unless current = db[:schema_migrations].order(Sequel.desc(:filename)).first
+      target = timestamp_migrations_target if db.tables.include?(:schema_migrations)
+      target = integer_migrations_target if db.tables.include?(:schema_info)
+      Sequel::Migrator.apply(db, "./db/migrate", target) if target
+    end
 
+    def timestamp_migrations_target
+      return unless current = db[:schema_migrations].order(Sequel.desc(:filename)).first
       migrations = Dir["./db/migrate/*.rb"].map { |f| File.basename(f).to_i }.sort
-      target     = 0 # by default, rollback everything
-      index      = migrations.index(current[:filename].to_i)
-      if index > 0
-        target = migrations[index - 1]
-      end
-      Sequel::Migrator.apply(db, "./db/migrate", target)
+      target = 0 # by default, rollback everything
+      index = migrations.index(current[:filename].to_i)
+      target = migrations[index - 1] if index > 0
+      target
+    end
+
+    def integer_migrations_target
+      return unless current = db[:schema_info].first
+      version = current[:version]
+      target = version > 0 ? version - 1 : 0 # by default, rollback everything
+      target
     end
 
     def disconnect
