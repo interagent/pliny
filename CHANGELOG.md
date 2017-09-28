@@ -5,6 +5,15 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 
+## [0.26.0] - 2017-09-28
+### Added
+- Add serializer arity and length to canonical log lines. ([#306](https://github.com/interagent/pliny/pull/306))
+- Support for Sinatra 2.0 ([#310](https://github.com/interagent/pliny/pull/310))
+- Reintroduce instruments middleware as a default middleware. ([#312](https://github.com/interagent/pliny/pull/312))
+
+### Removed
+- Deprecated HipChat channel notifier. ([#311](https://github.com/interagent/pliny/pull/311))
+
 ## [0.25.1] - 2017-04-11
 ### Added
 - Allow an injectable log scrubber. ([#309](https://github.com/interagent/pliny/pull/308))
@@ -124,7 +133,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Useless code coverage reports. ([#255](https://github.com/interagent/pliny/pull/255))
 - Cleanup of active database connections after migration runs. ([#257](https://github.com/interagent/pliny/pull/257))
 
-[Unreleased]: https://github.com/interagent/pliny/compare/v0.25.1...HEAD
+[Unreleased]: https://github.com/interagent/pliny/compare/v0.26.0...HEAD
+[0.26.0]: https://github.com/interagent/pliny/compare/v0.25.1...v0.26.0
 [0.25.1]: https://github.com/interagent/pliny/compare/v0.25.0...v0.25.1
 [0.25.0]: https://github.com/interagent/pliny/compare/v0.24.0...v0.25.0
 [0.24.0]: https://github.com/interagent/pliny/compare/v0.23.0...v0.24.0
