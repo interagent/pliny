@@ -8,11 +8,11 @@ module Pliny::Helpers
 
     def parse_body_params
       if request.media_type == "application/json"
-        p = indifferent_params(MultiJson.decode(request.body.read))
+        p = Sinatra::IndifferentHash[MultiJson.decode(request.body.read)]
         request.body.rewind
         p
       elsif request.form_data?
-        indifferent_params(request.POST)
+        Sinatra::IndifferentHash[request.POST]
       else
         {}
       end
