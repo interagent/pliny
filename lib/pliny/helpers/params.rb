@@ -8,13 +8,22 @@ module Pliny::Helpers
 
     def parse_body_params
       if request.media_type == "application/json"
-        p = Sinatra::IndifferentHash[MultiJson.decode(request.body.read)]
+        p = load_params(MultiJson.decode(request.body.read))
         request.body.rewind
         p
       elsif request.form_data?
-        Sinatra::IndifferentHash[request.POST]
+        load_params(request.POST)
       else
         {}
+      end
+    end
+
+    def load_params(data)
+      # Sinatra 1.x only supports the method. Sinatra 2.x only supports the class
+      if respond_to?(:indifferent_params)
+        indifferent_params(data)
+      else
+        Sinatra::IndifferentHash[data]
       end
     end
   end
