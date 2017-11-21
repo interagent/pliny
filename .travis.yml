@@ -3,6 +3,9 @@ rvm:
   - 2.4.0
   - 2.3.3
   - 2.2.2
+env:
+  - SINATRA_MAJOR=1
+  - SINATRA_MAJOR=2
 addons:
   postgresql: '9.3'
 before_install:
