@@ -20,10 +20,10 @@ module Pliny::Helpers
 
     def load_params(data)
       # Sinatra 1.x only supports the method. Sinatra 2.x only supports the class
-      if respond_to?(:indifferent_params)
-        indifferent_params(data)
-      else
+      if defined?(Sinatra::IndifferentHash)
         Sinatra::IndifferentHash[data]
+      else
+        indifferent_params(data)
       end
     end
   end
