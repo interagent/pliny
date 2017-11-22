@@ -26,6 +26,14 @@ module Pliny::Commands
           Prmd.combine(schemata_path, meta: meta_path)
         end
         display "rebuilt #{schema_json_path}"
+
+        Dir["#{schema_path}/variants/*"].each do |variant|
+          paths = ["#{schema_path}/schemata", "#{variant}/schemata"]
+          write_file("#{variant}/schema.json") do
+            Prmd.combine(paths, meta: "#{schema_path}/meta.json").to_s
+          end
+          display "rebuilt #{variant}/schema.json"
+        end
       end
 
       def legacy?
@@ -38,32 +46,36 @@ module Pliny::Commands
         @warned_legacy = true
       end
 
+      def schema_path
+        if legacy?
+          "./docs/schema"
+        else
+          "./schema"
+        end
+      end
+
       def schema_json_path
         if legacy?
-          "./docs/schema.json"
+          "#{schema_path}.json"
         else
-          "./schema/schema.json"
+          "#{schema_path}/schema.json"
         end
       end
 
       def meta_path
         if legacy?
-          "./docs/schema/meta.json"
+          "#{schema_path}/meta.json"
         else
-          "./schema/meta.json"
+          "#{schema_path}/meta.json"
         end
       end
 
       def schemata_path
         if legacy?
-          "./docs/schema/schemata"
+          "#{schema_path}/schemata"
         else
-          "./schema/schemata"
+          "#{schema_path}/schemata"
         end
-      end
-
-      def schema_base
-        Pathname.new("./schema")
       end
 
       def schema_yaml_path(field_name)

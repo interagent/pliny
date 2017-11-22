@@ -5,6 +5,7 @@ describe Pliny::Middleware::Versioning do
   before do
     @io = StringIO.new
     Pliny.stdout = @io
+    Pliny::RequestStore.store[:log_context] = {}
   end
 
   def app
@@ -23,7 +24,7 @@ describe Pliny::Middleware::Versioning do
     get '/', {}, {'HTTP_ACCEPT' => 'application/json'}
     json = MultiJson.decode(last_response.body)
     assert_equal 'application/json', json['HTTP_ACCEPT']
-    assert_equal '2', json['HTTP_X_API_VERSION']
+    assert_equal '2', json["api.version"]
   end
 
   it "errors without a version specified on application/vnd.pliny+json" do
@@ -40,14 +41,25 @@ Please specify a version along with the MIME type. For example, `Accept: applica
     get '/', {}, {'HTTP_ACCEPT' => 'application/vnd.chuck_norris+json'}
     json = MultiJson.decode(last_response.body)
     assert_equal 'application/vnd.chuck_norris+json', json['HTTP_ACCEPT']
-    assert_equal '2', json['HTTP_X_API_VERSION']
+    assert_equal '2', json["api.version"]
   end
 
   it "produces a version on application/vnd.pliny+json; version=3" do
     get '/', {}, {'HTTP_ACCEPT' => 'application/vnd.pliny+json; version=3'}
     json = MultiJson.decode(last_response.body)
     assert_equal 'application/json', json['HTTP_ACCEPT']
-    assert_equal '3', json['HTTP_X_API_VERSION']
+    assert_equal '3', json["api.version"]
+    assert_equal nil, json["api.variant"]
+    assert_equal '3', Pliny::RequestStore.store[:log_context][:api_version]
+  end
+
+  it "handles a version with a variant" do
+    get '/', {}, {'HTTP_ACCEPT' => 'application/vnd.pliny+json; version=3.variant_feature'}
+    json = MultiJson.decode(last_response.body)
+    assert_equal 'application/json', json['HTTP_ACCEPT']
+    assert_equal '3', json["api.version"]
+    assert_equal 'variant_feature', json["api.variant"]
+    assert_equal '3.variant_feature', Pliny::RequestStore.store[:log_context][:api_version]
   end
 
   # this behavior is pretty sketchy, but a pretty extreme edge case
@@ -55,13 +67,21 @@ Please specify a version along with the MIME type. For example, `Accept: applica
     get '/', {}, {'HTTP_ACCEPT' => 'application/vnd.pliny+json; version=3; q=0.5, text/xml'}
     json = MultiJson.decode(last_response.body)
     assert_equal 'text/xml, application/json; q=0.5', json['HTTP_ACCEPT']
-    assert_equal '3', json['HTTP_X_API_VERSION']
+    assert_equal '3', json["api.version"]
+  end
+
+  it "handles multiple MIME types with variants" do
+    get '/', {}, {'HTTP_ACCEPT' => 'application/vnd.pliny+json; version=3.variant; q=0.5, text/xml'}
+    json = MultiJson.decode(last_response.body)
+    assert_equal 'text/xml, application/json; q=0.5', json['HTTP_ACCEPT']
+    assert_equal '3', json["api.version"]
+    assert_equal 'variant', json["api.variant"]
   end
 
   it "produces the priority version on multiple types" do
     get '/', {}, {'HTTP_ACCEPT' => 'application/vnd.pliny+json; version=4; q=0.5, application/vnd.pliny+json; version=3'}
     json = MultiJson.decode(last_response.body)
     assert_equal 'application/json, application/json; q=0.5', json['HTTP_ACCEPT']
-    assert_equal '3', json['HTTP_X_API_VERSION']
+    assert_equal '3', json["api.version"]
   end
 end

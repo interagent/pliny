@@ -6,6 +6,7 @@ module Endpoints
     helpers Pliny::Helpers::Encode
     helpers Pliny::Helpers::Params
     helpers Pliny::Helpers::Serialize
+    helpers Pliny::Helpers::Versioning
 
     set :dump_errors, false
     set :raise_errors, true

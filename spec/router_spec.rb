@@ -9,6 +9,14 @@ describe Pliny::Router do
 
         use Pliny::Router do
           version '3' do
+            variant 'test_variant' do
+              mount Sinatra.new {
+                get '/' do
+                  "API V3 with variant"
+                end
+              }
+            end
+
             mount Sinatra.new {
               get '/' do
                 "API V3"
@@ -25,6 +33,10 @@ describe Pliny::Router do
       end
     end
 
+    before do
+      Pliny::RequestStore.store[:log_context] = {}
+    end
+
     it "should not run on any api" do
       get '/'
       assert_equal 'No API', last_response.body
@@ -33,6 +45,11 @@ describe Pliny::Router do
     it "should run on API V3" do
       get '/', {}, {'HTTP_ACCEPT' => 'application/vnd.pliny+json; version=3'}
       assert_equal 'API V3', last_response.body
+    end
+
+    it "should run API with a variant" do
+      get '/', {}, {'HTTP_ACCEPT' => 'application/vnd.pliny+json; version=3.test_variant'}
+      assert_equal 'API V3 with variant', last_response.body
     end
   end
 end
