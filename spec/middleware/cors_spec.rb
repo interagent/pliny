@@ -39,4 +39,15 @@ describe Pliny::Middleware::CORS do
     assert_equal "http://localhost",
       last_response.headers["Access-Control-Allow-Origin"]
   end
+
+  it "allows additional headers to be added to every response" do
+    Pliny::Middleware::CORS.add_additional_header("X-Origin")
+
+    header "Origin", "http://localhost"
+    get "/"
+    assert_equal 200, last_response.status
+    assert_equal "hi", last_response.body
+
+    assert last_response.headers["Access-Control-Allow-Headers"].include?("X-Origin")
+  end
 end
