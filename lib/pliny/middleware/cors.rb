@@ -8,6 +8,12 @@ module Pliny::Middleware
     EXPOSE_HEADERS =
       %w( Cache-Control Content-Language Content-Type Expires Last-Modified Pragma ).freeze
 
+    @@additional_headers = []
+
+    def self.add_additional_header(header)
+      @@additional_headers << header
+    end
+
     def initialize(app)
       @app = app
     end
@@ -19,7 +25,7 @@ module Pliny::Middleware
       else
         status, headers, response = @app.call(env)
 
-        # regualar CORS request: append CORS headers to response
+        # regular CORS request: append CORS headers to response
         if cors_request?(env)
           headers.merge!(cors_headers(env))
         end
@@ -32,11 +38,15 @@ module Pliny::Middleware
       env.has_key?("HTTP_ORIGIN")
     end
 
+    def allow_headers
+      ALLOW_HEADERS + @@additional_headers
+    end
+
     def cors_headers(env)
       {
         'Access-Control-Allow-Origin'      => env["HTTP_ORIGIN"],
         'Access-Control-Allow-Methods'     => ALLOW_METHODS.join(', '),
-        'Access-Control-Allow-Headers'     => ALLOW_HEADERS.join(', '),
+        'Access-Control-Allow-Headers'     => allow_headers.join(', '),
         'Access-Control-Allow-Credentials' => "true",
         'Access-Control-Max-Age'           => "1728000",
         'Access-Control-Expose-Headers'    => EXPOSE_HEADERS.join(', ')
