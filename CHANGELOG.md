@@ -5,6 +5,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 
+## [0.26.1] - 2017-12-04
+### Added
+- Enable Sinatra 1.x tests for Travis. ([#318](https://github.com/interagent/pliny/pull/318))
+- Allow customizing additional CORS headers. ([#320](https://github.com/interagent/pliny/pull/320))
+
+### Fixed
+- Support using `IndifferentHash` rather than `indifferent_hash` for Sinatra 2. ([#317](https://github.com/interagent/pliny/pull/317), [#319](https://github.com/interagent/pliny/pull/319))
+
 ## [0.26.0] - 2017-09-28
 ### Added
 - Add serializer arity and length to canonical log lines. ([#306](https://github.com/interagent/pliny/pull/306))
@@ -133,7 +141,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Useless code coverage reports. ([#255](https://github.com/interagent/pliny/pull/255))
 - Cleanup of active database connections after migration runs. ([#257](https://github.com/interagent/pliny/pull/257))
 
-[Unreleased]: https://github.com/interagent/pliny/compare/v0.26.0...HEAD
+[Unreleased]: https://github.com/interagent/pliny/compare/v0.26.1...HEAD
+[0.26.1]: https://github.com/interagent/pliny/compare/v0.26.0...v0.26.1
 [0.26.0]: https://github.com/interagent/pliny/compare/v0.25.1...v0.26.0
 [0.25.1]: https://github.com/interagent/pliny/compare/v0.25.0...v0.25.1
 [0.25.0]: https://github.com/interagent/pliny/compare/v0.24.0...v0.25.0
