@@ -1,5 +1,7 @@
 module Serializers
   class Base
+    extend Pliny::Helpers::ZuluTime
+
     @@structures = {}
 
     def self.structure(type, &blk)
