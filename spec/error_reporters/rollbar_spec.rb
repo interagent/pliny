@@ -34,14 +34,20 @@ describe Pliny::ErrorReporters::Rollbar do
     end
 
     context "given a rack_env with person data" do
-      let(:rack_env) { { "rollbar.person_data" => { email: "foo@bar.com" } } }
+      let(:rack_env) do
+        { "rollbar.person_data" => {
+          id: SecureRandom.uuid,
+          email: "foo@bar.com",
+          username: "foo"
+        }}
+      end
 
       it "adds person to the rollbar notification" do
         scope = nil
         allow(::Rollbar).to receive(:scoped) { |arg| scope = arg }
         notify
         assert_kind_of(Proc, scope[:person])
-        assert_equal({ email: "foo@bar.com" }, scope[:person].call)
+        assert_equal(rack_env["rollbar.person_data"], scope[:person].call)
       end
     end
 
