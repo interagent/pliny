@@ -37,10 +37,11 @@ describe Pliny::ErrorReporters::Rollbar do
       let(:rack_env) { { "rollbar.person_data" => { email: "foo@bar.com" } } }
 
       it "adds person to the rollbar notification" do
+        scope = nil
+        allow(::Rollbar).to receive(:scoped) { |arg| scope = arg }
         notify
-        expect(::Rollbar).to have_received(:scoped).once.with(hash_including(
-          person: instance_of(Proc)
-        ))
+        assert_kind_of(Proc, scope[:person])
+        assert_equal({ email: "foo@bar.com" }, scope[:person].call)
       end
     end
 
