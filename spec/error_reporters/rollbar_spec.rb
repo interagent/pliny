@@ -33,6 +33,17 @@ describe Pliny::ErrorReporters::Rollbar do
       ))
     end
 
+    context "given a rack_env with person data" do
+      let(:rack_env) { { "rollbar.person_data" => { email: "foo@bar.com" } } }
+
+      it "adds person to the rollbar notification" do
+        notify
+        expect(::Rollbar).to have_received(:scoped).once.with(hash_including(
+          person: instance_of(Proc)
+        ))
+      end
+    end
+
     it "delegates to #report_exception_to_rollbar" do
       notify
       expect(reporter).to have_received(:report_exception_to_rollbar)
