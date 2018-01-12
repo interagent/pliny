@@ -107,7 +107,7 @@ begin
           search_path = db.dataset.with_sql("SHOW search_path").single_value
           schema << "SET search_path = #{search_path};\n\n"
 
-          db[:schema_migrations].each do |migration|
+          db[:schema_migrations].order_by(:filename).each do |migration|
             schema << db[:schema_migrations].insert_sql(migration) + ";\n"
           end
         end
