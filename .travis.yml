@@ -1,8 +1,9 @@
 language: ruby
 rvm:
-  - 2.4.0
-  - 2.3.3
-  - 2.2.2
+  - 2.5
+  - 2.4
+  - 2.3
+  - 2.2
 env:
   - SINATRA_MAJOR=1
   - SINATRA_MAJOR=2
