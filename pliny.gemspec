@@ -35,5 +35,5 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency "pg",             "~> 0.17", ">= 0.17.1"
   gem.add_development_dependency "rollbar",        "~> 2.11",  ">= 2.11.0"
   gem.add_development_dependency "sequel",         "~> 4.9",  ">= 4.9.0"
-  gem.add_development_dependency "rubocop",        "~> 0.46", ">= 0.46.0"
+  gem.add_development_dependency "rubocop",        "~> 0.52", ">= 0.52.1"
 end
