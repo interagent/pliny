@@ -21,7 +21,7 @@ gem "sucker_punch"
 
 group :development, :test do
   gem "pry-byebug"
-  gem "rubocop", "~> 0.46.0", require: false
+  gem "rubocop", "~> 0.52.1", require: false
   gem "rubocop-rspec", require: false
 end
 
