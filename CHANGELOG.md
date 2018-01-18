@@ -5,6 +5,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 
+## [0.27.0] - 2018-01-18
+### Changed
+- Upgrade Rubocop to fix a security vulnerability. ([#325](https://github.com/interagent/pliny/pull/325))
+- Have Travis CI build against Ruby 2.2 - 2.5. ([#326](https://github.com/interagent/pliny/pull/326))
+
+### Fixed
+- Sort migrations by filename. ([#324](https://github.com/interagent/pliny/pull/324))
+
 ## [0.26.2] - 2017-12-15
 ### Added
 - Add person data to Rollbar scope on error reporting. ([#323](https://github.com/interagent/pliny/pull/323))
@@ -146,7 +154,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Useless code coverage reports. ([#255](https://github.com/interagent/pliny/pull/255))
 - Cleanup of active database connections after migration runs. ([#257](https://github.com/interagent/pliny/pull/257))
 
-[Unreleased]: https://github.com/interagent/pliny/compare/v0.26.2...HEAD
+[Unreleased]: https://github.com/interagent/pliny/compare/v0.27.0...HEAD
+[0.27.0]: https://github.com/interagent/pliny/compare/v0.26.2...v0.27.0
 [0.26.2]: https://github.com/interagent/pliny/compare/v0.26.1...v0.26.2
 [0.26.1]: https://github.com/interagent/pliny/compare/v0.26.0...v0.26.1
 [0.26.0]: https://github.com/interagent/pliny/compare/v0.25.1...v0.26.0
