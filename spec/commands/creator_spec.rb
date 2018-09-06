@@ -52,5 +52,22 @@ describe Pliny::Commands::Creator do
       end
       assert_equal "  \"name\": \"foobar\",", db_url
     end
+
+    it "changes ruby version in Gemfile" do
+      @gen.run!
+      db_url = File.read("./foobar/Gemfile").split("\n").detect do |line|
+        line.include?("ruby \"")
+      end
+      assert_equal "ruby \"#{RUBY_VERSION}\"", db_url
+    end
+
+    it "defaults to a minimum ruby version if the current one is too low" do
+      stub_const("RUBY_VERSION", "1.8.7")
+      @gen.run!
+      db_url = File.read("./foobar/Gemfile").split("\n").detect do |line|
+        line.include?("ruby \"")
+      end
+      assert_equal "ruby \"2.4.0\"", db_url
+    end
   end
 end

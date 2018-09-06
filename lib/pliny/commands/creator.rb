@@ -8,6 +8,7 @@ require 'ostruct'
 module Pliny::Commands
   class Creator
     attr_accessor :args, :opts, :stream
+    MINIMUM_RUBY_VERSION = "2.4.0"
 
     def self.run(args, opts = {}, stream = $stdout)
       new(args, opts, stream).run!
@@ -36,7 +37,7 @@ module Pliny::Commands
         static_file = file.gsub(/\.erb$/, '')
 
         template = ERB.new(File.read(file), 0)
-        context = OpenStruct.new(app_name: name)
+        context = OpenStruct.new(app_name: name, ruby_version: ruby_version)
         content = template.result(context.instance_eval { binding })
 
         File.open(static_file, "w") do |f|
@@ -52,6 +53,14 @@ module Pliny::Commands
 
     def name
       args.first
+    end
+
+    def ruby_version
+      version = RUBY_VERSION.split('.').map { |x| x.to_i }
+      min_version = MINIMUM_RUBY_VERSION.split('.').map { |x| x.to_i }
+
+      return RUBY_VERSION if (version <=> min_version) >= 1
+      MINIMUM_RUBY_VERSION
     end
 
     def template_dir
