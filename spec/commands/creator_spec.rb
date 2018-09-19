@@ -54,11 +54,12 @@ describe Pliny::Commands::Creator do
     end
 
     it "changes ruby version in Gemfile" do
+      stub_const("RUBY_VERSION", "2.4.0")
       @gen.run!
       db_url = File.read("./foobar/Gemfile").split("\n").detect do |line|
         line.include?("ruby \"")
       end
-      assert_equal "ruby \"#{RUBY_VERSION}\"", db_url
+      assert_equal "ruby \"2.4.0\"", db_url
     end
 
     it "defaults to a minimum ruby version if the current one is too low" do
