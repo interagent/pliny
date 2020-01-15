@@ -5,6 +5,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 
+## [0.27.1] - 2018-01-18
+### Changed
+- Have Travis CI build against Ruby 2.4 - 2.6. ([#329](https://github.com/interagent/pliny/pull/329))
+
+### Fixed
+- Handle a JSON Array of parameters. ([#328](https://github.com/interagent/pliny/pull/328))
+
 ## [0.27.0] - 2018-01-18
 ### Changed
 - Upgrade Rubocop to fix a security vulnerability. ([#325](https://github.com/interagent/pliny/pull/325))
@@ -154,7 +161,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Useless code coverage reports. ([#255](https://github.com/interagent/pliny/pull/255))
 - Cleanup of active database connections after migration runs. ([#257](https://github.com/interagent/pliny/pull/257))
 
-[Unreleased]: https://github.com/interagent/pliny/compare/v0.27.0...HEAD
+[Unreleased]: https://github.com/interagent/pliny/compare/v0.27.1...HEAD
+[0.27.1]: https://github.com/interagent/pliny/compare/v0.27.0...v0.27.1
 [0.27.0]: https://github.com/interagent/pliny/compare/v0.26.2...v0.27.0
 [0.26.2]: https://github.com/interagent/pliny/compare/v0.26.1...v0.26.2
 [0.26.1]: https://github.com/interagent/pliny/compare/v0.26.0...v0.26.1
