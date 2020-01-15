@@ -32,7 +32,7 @@ module Pliny::Helpers
       when Hash
         Sinatra::IndifferentHash[data]
       when Array
-        data.map { |item| Sinatra::IndifferentHash[item] }
+        data.map { |item| indifferent_params_v2(item) }
       else
         data
       end
