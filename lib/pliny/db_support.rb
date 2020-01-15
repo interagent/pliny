@@ -1,6 +1,7 @@
 require "logger"
 require "sequel"
 require "sequel/extensions/migration"
+require "stringio"
 
 module Pliny
   class DbSupport
