@@ -21,9 +21,20 @@ module Pliny::Helpers
     def load_params(data)
       # Sinatra 1.x only supports the method. Sinatra 2.x only supports the class
       if defined?(Sinatra::IndifferentHash)
-        Sinatra::IndifferentHash[data]
+        indifferent_params_v2(data)
       else
         indifferent_params(data)
+      end
+    end
+
+    def indifferent_params_v2(data)
+      case data
+      when Hash
+        Sinatra::IndifferentHash[data]
+      when Array
+        data.map { |item| indifferent_params_v2(item) }
+      else
+        data
       end
     end
   end
