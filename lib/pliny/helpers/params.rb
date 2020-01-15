@@ -28,10 +28,11 @@ module Pliny::Helpers
     end
 
     def indifferent_params_v2(data)
-      if data.respond_to?(:to_hash)
-        Sinatra::IndifferentHash[data.to_hash]
-      elsif data.respond_to?(:to_ary)
-        data.to_ary.map { |item| Sinatra::IndifferentHash[item] }
+      case data
+      when Hash
+        Sinatra::IndifferentHash[data]
+      when Array
+        data.map { |item| Sinatra::IndifferentHash[item] }
       else
         data
       end
