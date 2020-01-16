@@ -142,8 +142,6 @@ begin
           env_path = "./#{env_file}"
           if File.exist?(env_path)
             Pliny::Utils.parse_env(env_path)["DATABASE_URL"]
-          else
-            nil
           end
         }.compact
       end
