@@ -2,14 +2,19 @@ require "spec_helper"
 
 describe "Pliny integration test" do
   before(:all) do
-    FileUtils.rm_rf("/tmp/plinytest")
-    FileUtils.mkdir_p("/tmp/plinytest")
-    Dir.chdir("/tmp/plinytest")
+    @original_dir = Dir.pwd
+
+    test_dir = Dir.mktmpdir("plinytest-")
+    Dir.chdir(test_dir)
 
     bash "pliny-new myapp"
 
-    Dir.chdir("/tmp/plinytest/myapp")
+    Dir.chdir("myapp")
     bash "bin/setup"
+  end
+
+  after(:all) do
+    Dir.chdir(@original_dir)
   end
 
   describe "bin/setup" do
