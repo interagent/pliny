@@ -19,7 +19,7 @@ describe "Pliny integration test" do
 
   describe "bin/setup" do
     it "generates .env" do
-      assert File.exists?("./.env")
+      assert File.exist?("./.env")
     end
   end
 
@@ -29,19 +29,19 @@ describe "Pliny integration test" do
     end
 
     it "creates the model file" do
-      assert File.exists?("./lib/models/artist.rb")
+      assert File.exist?("./lib/models/artist.rb")
     end
 
     it "creates the endpoint file" do
-      assert File.exists?("./lib/endpoints/artists.rb")
+      assert File.exist?("./lib/endpoints/artists.rb")
     end
 
     it "creates the serializer file" do
-      assert File.exists?("./lib/serializers/artist.rb")
+      assert File.exist?("./lib/serializers/artist.rb")
     end
 
     it "creates the schema file" do
-      assert File.exists?("./schema/schemata/artist.yaml")
+      assert File.exist?("./schema/schemata/artist.yaml")
     end
   end
 
