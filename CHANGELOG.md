@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+  - Ruby warning about `File.exists?` being deprecated. ([#330](https://github.com/interagent/pliny/pull/330))
 
 ## [0.27.1] - 2018-01-18
 ### Changed
