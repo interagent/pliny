@@ -6,15 +6,18 @@ describe Pliny::DbSupport do
   let(:logger) { Logger.new(StringIO.new) }
   let(:support) { Pliny::DbSupport.new(url, logger) }
 
-  before do
-    @path = "/tmp/pliny-test"
+  around do |example|
+    Dir.mktmpdir("plinytest-") do |dir|
+      Dir.chdir(dir) do
+        FileUtils.mkdir_p("./db/migrate")
+
+        example.run
+      end
+    end
   end
 
-  before(:each) do
+  before do
     DB.tables.each { |t| DB.drop_table(t) }
-    FileUtils.rm_rf(@path)
-    FileUtils.mkdir_p("#{@path}/db/migrate")
-    Dir.chdir(@path)
   end
 
   describe ".admin_url" do
@@ -33,7 +36,7 @@ describe Pliny::DbSupport do
 
   describe "#migrate" do
     before do
-      File.open("#{@path}/db/migrate/#{Time.now.to_i}_create_foo.rb", "w") do |f|
+      File.open("./db/migrate/#{Time.now.to_i}_create_foo.rb", "w") do |f|
         f.puts "
           Sequel.migration do
             change do
@@ -57,11 +60,11 @@ describe Pliny::DbSupport do
   describe "#rollback" do
     before do
       @t = Time.now
-      File.open("#{@path}/db/migrate/#{(@t-2).to_i}_first.rb", "w") do |f|
+      File.open("./db/migrate/#{(@t - 2).to_i}_first.rb", "w") do |f|
         f.puts "Sequel.migration { change { create_table(:first) } }"
       end
 
-      File.open("#{@path}/db/migrate/#{(@t-1).to_i}_second.rb", "w") do |f|
+      File.open("./db/migrate/#{(@t - 1).to_i}_second.rb", "w") do |f|
         f.puts "Sequel.migration { change { create_table(:second) } }"
       end
     end
@@ -80,7 +83,7 @@ describe Pliny::DbSupport do
     end
 
     it "handles databases not migrated (schema_migrations is empty)" do
-      support.migrate (@t-2).to_i
+      support.migrate((@t - 2).to_i)
       support.rollback # destroy table, leave schema_migrations
       support.rollback # should noop
     end

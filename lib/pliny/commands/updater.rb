@@ -1,7 +1,7 @@
-require 'fileutils'
-require 'pathname'
-require 'pliny/version'
-require 'uri'
+require "fileutils"
+require "pathname"
+require "pliny/version"
+require "uri"
 
 module Pliny::Commands
   class Updater
@@ -37,7 +37,7 @@ module Pliny::Commands
 
     # we need a local copy of the pliny repo to produce a diff
     def ensure_repo_available
-      if File.exists?(repo_dir)
+      if File.exist?(repo_dir)
         unless system("cd #{repo_dir} && git fetch --tags")
           abort("Could not update Pliny repo at #{repo_dir}")
         end

@@ -2,19 +2,24 @@ require "spec_helper"
 
 describe "Pliny integration test" do
   before(:all) do
-    FileUtils.rm_rf("/tmp/plinytest")
-    FileUtils.mkdir_p("/tmp/plinytest")
-    Dir.chdir("/tmp/plinytest")
+    @original_dir = Dir.pwd
+
+    test_dir = Dir.mktmpdir("plinytest-")
+    Dir.chdir(test_dir)
 
     bash "pliny-new myapp"
 
-    Dir.chdir("/tmp/plinytest/myapp")
+    Dir.chdir("myapp")
     bash "bin/setup"
+  end
+
+  after(:all) do
+    Dir.chdir(@original_dir)
   end
 
   describe "bin/setup" do
     it "generates .env" do
-      assert File.exists?("./.env")
+      assert File.exist?("./.env")
     end
   end
 
@@ -24,19 +29,19 @@ describe "Pliny integration test" do
     end
 
     it "creates the model file" do
-      assert File.exists?("./lib/models/artist.rb")
+      assert File.exist?("./lib/models/artist.rb")
     end
 
     it "creates the endpoint file" do
-      assert File.exists?("./lib/endpoints/artists.rb")
+      assert File.exist?("./lib/endpoints/artists.rb")
     end
 
     it "creates the serializer file" do
-      assert File.exists?("./lib/serializers/artist.rb")
+      assert File.exist?("./lib/serializers/artist.rb")
     end
 
     it "creates the schema file" do
-      assert File.exists?("./schema/schemata/artist.yaml")
+      assert File.exist?("./schema/schemata/artist.yaml")
     end
   end
 

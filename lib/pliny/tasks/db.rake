@@ -32,12 +32,12 @@ begin
 
     desc "Seed the database with data"
     task :seed do
-      if File.exist?('./db/seeds.rb')
+      if File.exist?("./db/seeds.rb")
         database_urls.each do |database_url|
           # make a DB instance available to the seeds file
-          self.class.send(:remove_const, 'DB') if self.class.const_defined?('DB')
-          self.class.const_set('DB', Sequel.connect(database_url))
-          load 'db/seeds.rb'
+          self.class.send(:remove_const, "DB") if self.class.const_defined?("DB")
+          self.class.const_set("DB", Sequel.connect(database_url))
+          load "db/seeds.rb"
         end
         disconnect
       end
@@ -66,7 +66,7 @@ begin
         admin_url = Pliny::DbSupport.admin_url(database_url)
         db = Sequel.connect(admin_url)
         name = name_from_uri(database_url)
-        db.run(%{DROP DATABASE IF EXISTS "#{name}"})
+        db.run(%(DROP DATABASE IF EXISTS "#{name}"))
         puts "Dropped `#{name}`"
       end
       disconnect
@@ -75,7 +75,7 @@ begin
     namespace :schema do
       desc "Load the database schema"
       task :load do
-        if File.exists?("./db/schema.sql")
+        if File.exist?("./db/schema.sql")
           schema = File.read("./db/schema.sql")
           database_urls.each do |database_url|
             db = Sequel.connect(database_url)
@@ -118,14 +118,14 @@ begin
       end
 
       desc "Merges migrations into schema and removes them"
-      task :merge => ["db:setup", "db:schema:dump"] do
+      task merge: ["db:setup", "db:schema:dump"] do
         FileUtils.rm Dir["./db/migrate/*.rb"]
         puts "Removed migrations"
       end
     end
 
     desc "Setup the database"
-    task :setup => [:drop, :create, "schema:load", :migrate, :seed]
+    task setup: [:drop, :create, "schema:load", :migrate, :seed]
 
     private
 
@@ -138,12 +138,10 @@ begin
       if ENV["DATABASE_URL"]
         [ENV["DATABASE_URL"]]
       else
-        %w(.env .env.test).map { |env_file|
+        %w[.env .env.test].map { |env_file|
           env_path = "./#{env_file}"
-          if File.exists?(env_path)
+          if File.exist?(env_path)
             Pliny::Utils.parse_env(env_path)["DATABASE_URL"]
-          else
-            nil
           end
         }.compact
       end
@@ -153,7 +151,6 @@ begin
       URI.parse(uri).path[1..-1]
     end
   end
-
 rescue LoadError
   puts "Couldn't load sequel. Skipping database tasks"
 end
