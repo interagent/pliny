@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Changed
+  - Allow ActiveSupport 5 or 6. ([#331](https://github.com/interagent/pliny/pull/331))
+
 ### Fixed
   - Ruby warning about `File.exists?` being deprecated. ([#330](https://github.com/interagent/pliny/pull/330))
 
