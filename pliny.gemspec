@@ -25,8 +25,8 @@ Gem::Specification.new do |gem|
   gem.add_dependency "sinatra-router", "~> 0.2",  ">= 0.2.4"
   gem.add_dependency "thor",           "~> 0.19", ">= 0.19.1"
 
-  gem.add_development_dependency "rake",              "~> 0.8", ">= 0.8.7"
-  gem.add_development_dependency "rack-test",         "~> 0.6", ">= 0.6.2"
+  gem.add_development_dependency "rake",              "~> 13.0"
+  gem.add_development_dependency "rack-test",         "~> 1.1.0"
   gem.add_development_dependency "rspec",             "~> 3.1", ">= 3.1.0"
   gem.add_development_dependency "sinatra-contrib",   ">= 1.4", "< 3.0"
   gem.add_development_dependency "timecop", "~> 0.7", ">= 0.7.1"
