@@ -5,7 +5,6 @@ describe Pliny::Log do
     @io = StringIO.new
     Pliny.stdout = @io
     Pliny.stderr = @io
-    allow(@io).to receive(:print)
   end
 
   after do
