@@ -176,5 +176,19 @@ describe Pliny::Log do
       end
       Pliny.log(foo: klass.new)
     end
+
+    it "quotes strings that are generated from object interpolation" do
+      expect(@io).to receive(:print).with("foo=\"message with space\"\n")
+      expect(@io).to receive(:print).with("foo=\"bar with space\"\n")
+
+      Pliny.log(foo: StandardError.new("message with space"))
+
+      klass = Class.new do
+        def to_s
+          "bar with space"
+        end
+      end
+      Pliny.log(foo: klass.new)
+    end
   end
 end

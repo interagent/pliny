@@ -146,12 +146,15 @@ module Pliny
         k
       elsif v.is_a?(Float)
         "#{k}=#{format("%.3f", v)}"
-      elsif v.is_a?(String) && v =~ /\s/
-        quote_string(k, v)
       elsif v.is_a?(Time)
         "#{k}=#{v.iso8601}"
       else
-        "#{k}=#{v}"
+        v = "#{v}"
+        if v =~ /\s/
+          quote_string(k, v)
+        else
+          "#{k}=#{v}"
+        end
       end
     end
   end
