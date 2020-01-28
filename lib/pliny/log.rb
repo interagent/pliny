@@ -124,7 +124,6 @@ module Pliny
     end
 
     def quote_string(k, v)
-      # try to find a quote style that fits
       if !v.include?('"')
         %{#{k}="#{v}"}
       elsif !v.include?("'")
@@ -140,7 +139,7 @@ module Pliny
 
     def unparse_pair(k, v)
       v = v.call if v.is_a?(Proc)
-      # only quote strings if they include whitespace
+
       if v == nil
         nil
       elsif v == true
