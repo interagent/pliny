@@ -5,7 +5,6 @@ describe Pliny::Log do
     @io = StringIO.new
     Pliny.stdout = @io
     Pliny.stderr = @io
-    allow(@io).to receive(:print)
   end
 
   after do
@@ -128,6 +127,68 @@ describe Pliny::Log do
 
         Pliny.log(foo: "bar")
       end
+    end
+  end
+
+  describe "unparsing" do
+    it "removes nils from log" do
+      expect(@io).to receive(:print).with("\n")
+
+      Pliny.log(foo: nil)
+    end
+
+    it "leaves bare keys for true values" do
+      expect(@io).to receive(:print).with("foo\n")
+
+      Pliny.log(foo: true)
+    end
+
+    it "truncates floats" do
+      expect(@io).to receive(:print).with("foo=3.142\n")
+
+      Pliny.log(foo: Math::PI)
+    end
+
+    it "outputs times in ISO8601 format" do
+      expect(@io).to receive(:print).with("foo=2020-01-01T00:00:00Z\n")
+
+      Pliny.log(foo: Time.utc(2020))
+    end
+
+    it "quotes strings that contain spaces" do
+      expect(@io).to receive(:print).with("foo=\"string with spaces\"\n")
+
+      Pliny.log(foo: "string with spaces")
+    end
+
+    it "by default interpolates objects into strings" do
+      expect(@io).to receive(:print).with("foo=message\n")
+      expect(@io).to receive(:print).with("foo=42\n")
+      expect(@io).to receive(:print).with("foo=bar\n")
+
+      Pliny.log(foo: StandardError.new("message"))
+      Pliny.log(foo: 42)
+
+      klass = Class.new do
+        def to_s
+          "bar"
+        end
+      end
+      Pliny.log(foo: klass.new)
+    end
+
+    it "quotes strings that are generated from object interpolation" do
+      expect(@io).to receive(:print).with("foo=\"message with space\"\n")
+      expect(@io).to receive(:print).with("foo=\"bar with space\"\n")
+
+      Pliny.log(foo: StandardError.new("message with space"))
+
+      klass = Class.new do
+        def to_s
+          "bar with space"
+        end
+      end
+      Pliny.log(foo: klass.new)
     end
   end
 end
