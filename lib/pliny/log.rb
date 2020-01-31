@@ -123,13 +123,13 @@ module Pliny
       end
     end
 
-    def quote_string(k, v)
+    def quote_string(v)
       if !v.include?('"')
-        %{#{k}="#{v}"}
+        %{"#{v}"}
       elsif !v.include?("'")
-        %{#{k}='#{v}'}
+        %{'#{v}'}
       else
-        %{#{k}="#{v.gsub(/"/, '\\"')}"}
+        %{"#{v.gsub(/"/, '\\"')}"}
       end
     end
 
@@ -150,11 +150,9 @@ module Pliny
         "#{k}=#{v.iso8601}"
       else
         v = "#{v}"
-        if v =~ /\s/
-          quote_string(k, v)
-        else
-          "#{k}=#{v}"
-        end
+        v = quote_string(v) if v =~ /\s/
+
+        "#{k}=#{v}"
       end
     end
   end
