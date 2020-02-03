@@ -161,6 +161,12 @@ describe Pliny::Log do
       Pliny.log(foo: "string with spaces")
     end
 
+    it "replaces newlines in strings" do
+      expect(@io).to receive(:print).with("foo=\"string\\nwith newlines\\n\"\n")
+
+      Pliny.log(foo: "string\nwith newlines\n")
+    end
+
     it "by default interpolates objects into strings" do
       expect(@io).to receive(:print).with("foo=message\n")
       expect(@io).to receive(:print).with("foo=42\n")

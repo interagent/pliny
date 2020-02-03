@@ -123,6 +123,10 @@ module Pliny
       end
     end
 
+    def replace_newlines(v)
+      v.gsub("\n", "\\n")
+    end
+
     def quote_string(v)
       if !v.include?('"')
         %{"#{v}"}
@@ -150,6 +154,7 @@ module Pliny
         "#{k}=#{v.iso8601}"
       else
         v = "#{v}"
+        v = replace_newlines(v)
         v = quote_string(v) if v =~ /\s/
 
         "#{k}=#{v}"
