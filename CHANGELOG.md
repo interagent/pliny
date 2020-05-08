@@ -3,7 +3,7 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [0.28.0] - 2020-05-06
 ### Changed
   - Ensure all strings with spaces are quoted in logs. ([#332](https://github.com/interagent/pliny/pull/332))
   - Allow ActiveSupport 5 or 6. ([#331](https://github.com/interagent/pliny/pull/331))
