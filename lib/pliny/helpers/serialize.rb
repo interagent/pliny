@@ -1,6 +1,6 @@
 module Pliny::Helpers
   module Serialize
-    def self.included(base)
+    def self.prepended(base)
       base.send :extend, ClassMethods
     end
 

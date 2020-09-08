@@ -20,7 +20,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency "prmd",           "~> 0.11", ">= 0.11.4"
 
 
-  gem.add_dependency "sinatra",        ">= 1.4", "< 3.0"
+  gem.add_dependency "sinatra",        ">= 2.1", "< 3.0"
   gem.add_dependency "http_accept",    "~> 0.1",  ">= 0.1.5"
   gem.add_dependency "sinatra-router", "~> 0.2",  ">= 0.2.4"
   gem.add_dependency "thor",           "~> 0.19", ">= 0.19.1"
