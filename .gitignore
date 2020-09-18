@@ -2,3 +2,4 @@ Gemfile.lock
 .bundle
 .ruby-*
 .tags
+.byebug_history
