@@ -2,10 +2,11 @@ module Pliny::Helpers
   module Serialize
     def self.included(base)
       base.send :extend, ClassMethods
+      base.set :serializer_class, nil
     end
 
     def serialize(data, structure = :default)
-      serializer_class = self.class.serializer_class
+      serializer_class = settings.serializer_class
 
       if serializer_class.nil?
         raise <<~eos.strip
@@ -33,10 +34,8 @@ module Pliny::Helpers
       #   end
       # end
       def serializer(serializer_class)
-        @serializer_class = serializer_class
+        set :serializer_class, serializer_class
       end
-
-      attr_reader :serializer_class
     end
   end
 end
