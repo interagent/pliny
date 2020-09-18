@@ -8,9 +8,9 @@ module Pliny::Helpers
       serializer_class = self.class.serializer_class
 
       if serializer_class.nil?
-        raise <<-eos.strip
-No serializer has been specified for this endpoint. Please specify one with
-`serializer Serializers::ModelName` in the endpoint.
+        raise <<~eos.strip
+          No serializer has been specified for this endpoint. Please specify one with
+          `serializer Serializers::ModelName` in the endpoint.
         eos
       end
 
