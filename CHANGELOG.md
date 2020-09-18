@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+- **BREAKING**: Register `Serialize` sinatra extension correctly. This will require a change in `lib/endpoints/base.rb` - see [here](https://github.com/interagent/pliny/pull/337/files#diff-c7736e8c14f72274bc01c22fe809a6bb). ([#337](https://github.com/interagent/pliny/pull/337))
 
 ## [0.28.0] - 2020-05-06
 ### Changed
