@@ -4,7 +4,7 @@ describe Pliny::Helpers::Serialize do
   context "without a serializer" do
     def app
       Sinatra.new do
-        helpers Pliny::Helpers::Serialize
+        register Pliny::Helpers::Serialize
 
         get "/" do
           MultiJson.encode(serialize([]))
@@ -29,7 +29,7 @@ describe Pliny::Helpers::Serialize do
 
     def app
       Sinatra.new do
-        helpers Pliny::Helpers::Serialize
+        register Pliny::Helpers::Serialize
 
         serializer Serializer
 
