@@ -3,7 +3,7 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [0.29.0] - 2020-09-30
 ### Fixed
 - **BREAKING**: Register `Serialize` sinatra extension correctly. This will require a change in `lib/endpoints/base.rb` - see [here](https://github.com/interagent/pliny/pull/337/files#diff-c7736e8c14f72274bc01c22fe809a6bb). ([#337](https://github.com/interagent/pliny/pull/337))
 
@@ -171,7 +171,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Useless code coverage reports. ([#255](https://github.com/interagent/pliny/pull/255))
 - Cleanup of active database connections after migration runs. ([#257](https://github.com/interagent/pliny/pull/257))
 
-[Unreleased]: https://github.com/interagent/pliny/compare/v0.28.0...HEAD
+[0.29.0]: https://github.com/interagent/pliny/compare/v0.28.0...v0.29.0
 [0.28.0]: https://github.com/interagent/pliny/compare/v0.27.1...v0.28.0
 [0.27.1]: https://github.com/interagent/pliny/compare/v0.27.0...v0.27.1
 [0.27.0]: https://github.com/interagent/pliny/compare/v0.26.2...v0.27.0
