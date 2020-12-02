@@ -8,9 +8,13 @@ module Pliny::Helpers
 
     def parse_body_params
       if request.media_type == "application/json"
-        p = load_params(MultiJson.decode(request.body.read))
+        begin
+          decoded = MultiJson.decode(request.body.read)
+        rescue MultiJson::ParseError => e
+          raise Pliny::Errors::BadRequest, e.message
+        end
         request.body.rewind
-        p
+        load_params(decoded)
       elsif request.form_data?
         load_params(request.POST)
       else

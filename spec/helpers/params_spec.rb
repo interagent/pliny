@@ -34,4 +34,12 @@ describe Pliny::Helpers::Params do
     post "/", "<hello>world</hello>", {"CONTENT_TYPE" => "application/xml"}
     assert_equal "{}", last_response.body
   end
+
+  it "should throw bad request when receiving invalid json via post" do
+    err = assert_raises(Pliny::Errors::BadRequest) do
+      post "/", "{\"foo\"}", {"CONTENT_TYPE" => "application/json"}
+    end
+
+    assert_match /unexpected token/, err.message
+  end
 end
