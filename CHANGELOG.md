@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [0.28.0] - 2020-05-06
 ### Changed
+  - Ensure newline characters are removed from log strings. ([]())
   - Ensure all strings with spaces are quoted in logs. ([#332](https://github.com/interagent/pliny/pull/332))
   - Allow ActiveSupport 5 or 6. ([#331](https://github.com/interagent/pliny/pull/331))
 
