@@ -3,9 +3,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [0.30.0] - 2020-12-14
 ### Fixed
-  - Return Bad Request (400) instead of Internal Server Error (500) when the JSON request payload is unable to be parsed
+  - Return Bad Request (400) instead of Internal Server Error (500) when the JSON request payload is unable to be parsed ([#338]https://github.com/interagent/pliny/pull/338)
+  - Ensure newline characters are removed from log strings. ([#333](https://github.com/interagent/pliny/pull/333))
 
 ## [0.29.0] - 2020-09-30
 ### Fixed
@@ -13,7 +14,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [0.28.0] - 2020-05-06
 ### Changed
-  - Ensure newline characters are removed from log strings. ([]())
   - Ensure all strings with spaces are quoted in logs. ([#332](https://github.com/interagent/pliny/pull/332))
   - Allow ActiveSupport 5 or 6. ([#331](https://github.com/interagent/pliny/pull/331))
 
