@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Fixed
+  - Return Bad Request (400) instead of Internal Server Error (500) when the JSON request payload is unable to be parsed
+
 ## [0.29.0] - 2020-09-30
 ### Fixed
 - **BREAKING**: Register `Serialize` sinatra extension correctly. This will require a change in `lib/endpoints/base.rb` - see [here](https://github.com/interagent/pliny/pull/337/files#diff-c7736e8c14f72274bc01c22fe809a6bb). ([#337](https://github.com/interagent/pliny/pull/337))
