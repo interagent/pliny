@@ -58,9 +58,9 @@ module Pliny::Middleware
       log_field :timing_serializer, Float
     end
 
-    def initialize(app, emitter:)
+    def initialize(app, options)
       @app = app
-      @emitter = emitter
+      @emitter = options[:emitter]
     end
 
     def call(env)
