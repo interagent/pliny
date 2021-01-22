@@ -60,7 +60,7 @@ module Pliny::Middleware
 
     def initialize(app, options)
       @app = app
-      @emitter = options[:emitter]
+      @emitter = options.fetch(:emitter)
     end
 
     def call(env)
