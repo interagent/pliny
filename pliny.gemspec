@@ -23,7 +23,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency "sinatra",        ">= 1.4", "< 3.0"
   gem.add_dependency "http_accept",    "~> 0.1",  ">= 0.1.5"
   gem.add_dependency "sinatra-router", "~> 0.2",  ">= 0.2.4"
-  gem.add_dependency "thor",           "~> 0.19", ">= 0.19.1"
+  gem.add_dependency "thor",           ">= 0.19", "< 2.0"
 
   gem.add_development_dependency "rake",              "~> 13.0"
   gem.add_development_dependency "rack-test",         "~> 1.1.0"
@@ -32,8 +32,8 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency "timecop", "~> 0.7", ">= 0.7.1"
   gem.add_development_dependency "pry"
   gem.add_development_dependency "pry-byebug"
-  gem.add_development_dependency "pg",             "~> 0.17", ">= 0.17.1"
+  gem.add_development_dependency "pg",             "~> 1.0", "< 2.0"
   gem.add_development_dependency "rollbar",        "~> 2.11",  ">= 2.11.0"
-  gem.add_development_dependency "sequel",         "~> 5.39",  ">= 5.39"
+  gem.add_development_dependency "sequel",         "~> 5.4", "< 6.0"
   gem.add_development_dependency "rubocop",        "~> 0.52", ">= 0.52.1"
 end
