@@ -33,7 +33,7 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency "pry"
   gem.add_development_dependency "pry-byebug"
   gem.add_development_dependency "pg",             "~> 1.0", "< 2.0"
-  gem.add_development_dependency "rollbar",        "~> 2.11",  ">= 2.11.0"
+  gem.add_development_dependency "rollbar",        "~> 3.2"
   gem.add_development_dependency "sequel",         "~> 5.4", "< 6.0"
   gem.add_development_dependency "rubocop",        "~> 0.52", ">= 0.52.1"
 end
