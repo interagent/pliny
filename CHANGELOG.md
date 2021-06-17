@@ -3,9 +3,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]:
+
+## [0.30.1] - 2021-06-17
+### Changed
+- Drop Ruby 2.4, add 2.7 and 3.0 to CI runs.
+- Relax Thor constraint; allow 1.0, but not 2.0. ([#340](https://github.com/interagent/pliny/pull/340))
+
 ## [0.30.0] - 2020-12-14
 ### Fixed
-  - Return Bad Request (400) instead of Internal Server Error (500) when the JSON request payload is unable to be parsed ([#338]https://github.com/interagent/pliny/pull/338)
+  - Return Bad Request (400) instead of Internal Server Error (500) when the JSON request payload is unable to be parsed ([#338](https://github.com/interagent/pliny/pull/338))
   - Ensure newline characters are removed from log strings. ([#333](https://github.com/interagent/pliny/pull/333))
 
 ## [0.29.0] - 2020-09-30
@@ -176,6 +183,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Useless code coverage reports. ([#255](https://github.com/interagent/pliny/pull/255))
 - Cleanup of active database connections after migration runs. ([#257](https://github.com/interagent/pliny/pull/257))
 
+[Unreleased]: https://github.com/interagent/pliny/compare/v0.30.1...master
+[0.30.1]: https://github.com/interagent/pliny/compare/v0.30.0...v0.30.1
+[0.30.0]: https://github.com/interagent/pliny/compare/v0.29.0...v0.30.0
 [0.29.0]: https://github.com/interagent/pliny/compare/v0.28.0...v0.29.0
 [0.28.0]: https://github.com/interagent/pliny/compare/v0.27.1...v0.28.0
 [0.27.1]: https://github.com/interagent/pliny/compare/v0.27.0...v0.27.1
