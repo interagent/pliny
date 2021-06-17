@@ -1,5 +1,17 @@
-Gemfile.lock
-.bundle
-.ruby-*
-.tags
-.byebug_history
+# Ignore all logfiles and tempfiles
+/tmp/
+/.tags
+/tags
+/.byebug_history
+
+# Environment normalisation
+/.env
+
+# Gem packaging stuff
+/*.gem
+/pkg/
+
+# Dependencies and such
+/.bundle
+/.ruby-version
+/Gemfile.lock
