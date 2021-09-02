@@ -2,7 +2,7 @@
 
 [![Gem version](http://img.shields.io/gem/v/pliny.svg)](https://rubygems.org/gems/pliny)
 [![Build Status](https://travis-ci.org/interagent/pliny.svg?branch=master)](https://travis-ci.org/interagent/pliny)
-[![Github Actions CI](https://github.com/interagent/pliny/actions/workflows/CI/badge.svg)](https://github.com/interagent/pliny/actions)
+[![Github Actions CI](https://github.com/interagent/pliny/actions/workflows/ruby.yml/badge.svg)](https://github.com/interagent/pliny/actions)
 
 
 Pliny helps Ruby developers write and maintain excellent APIs.
