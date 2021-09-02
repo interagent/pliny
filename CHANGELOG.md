@@ -3,7 +3,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]:
+## [Unreleased] - 🔜
+### Changed
+- Add `rake db:version` to report the current DB schema version ([#343](https://github.com/interagent/pliny/pull/343)).
+  This is useful for debugging and building more [robust Heroku Release Phase scripts](https://gist.github.com/stevenharman/98576bf49b050b9e59fb26626b7cceff).
 
 ## [0.30.1] - 2021-06-17
 ### Changed

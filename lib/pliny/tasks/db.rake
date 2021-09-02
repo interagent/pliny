@@ -8,6 +8,13 @@ begin
   require "pliny/db_support"
 
   namespace :db do
+    desc "Get current schema version"
+    task :version do
+      Pliny::DbSupport.run(database_urls.first, $stdout) do |helper|
+        puts "Current version: #{helper.version}"
+      end
+    end
+
     desc "Run database migrations"
     task :migrate do
       next if Dir["./db/migrate/*.rb"].empty?

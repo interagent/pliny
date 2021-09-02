@@ -2,9 +2,9 @@ require "spec_helper"
 require "pliny/db_support"
 
 describe Pliny::DbSupport do
+  subject(:support) { Pliny::DbSupport.new(url, logger) }
   let(:url) { ENV["TEST_DATABASE_URL"] }
   let(:logger) { Logger.new(StringIO.new) }
-  let(:support) { Pliny::DbSupport.new(url, logger) }
 
   around do |example|
     Dir.mktmpdir("plinytest-") do |dir|
@@ -86,6 +86,32 @@ describe Pliny::DbSupport do
       support.migrate((@t - 2).to_i)
       support.rollback # destroy table, leave schema_migrations
       support.rollback # should noop
+    end
+  end
+
+  describe "#version" do
+    it "is zero if the migrations table doesn't exist" do
+      assert_equal 0, support.version
+    end
+
+    context "with migrations table" do
+      before do
+        DB.create_table(:schema_migrations) do
+          text :filename
+        end
+      end
+
+      it "is zero if the migrations table is empty" do
+        assert_equal 0, support.version
+      end
+
+      it "is the highest timestamp from a filename in the migrations table" do
+        migrations = DB[:schema_migrations]
+        migrations.insert(filename: "1630551344_latest_change.rb")
+        migrations.insert(filename: "1524000760_earlier_change.rb")
+
+        assert_equal 1630551344, support.version
+      end
     end
   end
 end
