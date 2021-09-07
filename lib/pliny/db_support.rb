@@ -89,6 +89,81 @@ module Pliny
       end
     end
 
+    class MigrationStatusPresenter
+      PADDING = 2
+      UP = "UP".freeze
+      DOWN = "DOWN".freeze
+      FILE_MISSING = "FILE MISSING".freeze
+
+      STATUS_MAP = {
+        up: UP,
+        down: DOWN,
+        file_missing: FILE_MISSING
+      }.freeze
+
+      STATUS_OPTIONS = [
+        UP,
+        DOWN,
+        FILE_MISSING
+      ].freeze
+
+      attr_reader :migration_statuses
+
+      def initialize(migration_statuses:)
+        @migration_statuses = migration_statuses
+      end
+
+      def to_s
+        rows.join("\n")
+      end
+
+      def rows
+        header + statuses + footer
+      end
+
+      def header
+        [
+          barrier_row,
+          header_row,
+          barrier_row
+        ]
+      end
+
+      def statuses
+        migration_statuses.map { |status|
+          status_row(status)
+        }
+      end
+
+      def footer
+        [
+          barrier_row
+        ]
+      end
+
+      def barrier_row
+        "+#{'-' * (longest_status + PADDING)}+#{'-' * (longest_migration_name + PADDING)}+"
+      end
+
+      def header_row
+        "|#{'STATUS'.center(longest_status + PADDING)}|#{'MIGRATION'.center(longest_migration_name + PADDING)}|"
+      end
+
+      def status_row(migration_status)
+        "|#{STATUS_MAP[migration_status.status].center(longest_status + PADDING)}|#{' ' * (PADDING / 2)}#{migration_status.filename.ljust(longest_migration_name)}#{' ' * (PADDING / 2)}|"
+      end
+
+      private
+
+      def longest_migration_name
+        @longest_migration_name ||= migration_statuses.map(&:filename).max_by(&:length).length
+      end
+
+      def longest_status
+        STATUS_OPTIONS.max_by(&:length).length
+      end
+    end
+
     def rollback
       current_version = version
       return if current_version.zero?
