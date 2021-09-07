@@ -62,6 +62,33 @@ module Pliny
       Integer(version)
     end
 
+    class MigrationStatus
+      attr_reader :filename
+      attr_accessor :present_on_disk, :present_in_database
+
+      def initialize(filename:)
+        @filename = filename
+        @present_on_disk = false
+        @present_in_database = false
+      end
+
+      def status
+        if present_on_disk
+          if present_in_database
+            :up
+          else
+            :down
+          end
+        else
+          if present_in_database
+            :file_missing
+          else
+            raise "error" # FIXME: better message
+          end
+        end
+      end
+    end
+
     def rollback
       current_version = version
       return if current_version.zero?

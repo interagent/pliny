@@ -114,4 +114,65 @@ describe Pliny::DbSupport do
       end
     end
   end
+
+  describe "MigrationStatus" do
+    let(:filename) { "1630551344_latest_change.rb" }
+    let(:migration_status) { described_class::MigrationStatus.new(filename: filename) }
+
+    describe "#status" do
+      context "given a migration present on disk" do
+        before do
+          migration_status.present_on_disk = true
+        end
+
+        context "and present in the database" do
+          before do
+            migration_status.present_in_database = true
+          end
+
+          it "is :up" do
+            assert_equal :up, migration_status.status
+          end
+        end
+
+        context "and is absent from the database" do
+          before do
+            migration_status.present_in_database = false
+          end
+
+          it "is :down" do
+            assert_equal :down, migration_status.status
+          end
+        end
+      end
+
+      context "given a migration absent from disk" do
+        before do
+          migration_status.present_on_disk = false
+        end
+
+        context "and present in the database" do
+          before do
+            migration_status.present_in_database = true
+          end
+
+          it "is :file_missing" do
+            assert_equal :file_missing, migration_status.status
+          end
+        end
+
+        context "and is absent from the database" do
+          before do
+            migration_status.present_in_database = false
+          end
+
+          it "is an error case" do
+            assert_raises RuntimeError do
+              migration_status.status
+            end
+          end
+        end
+      end
+    end
+  end
 end
