@@ -296,4 +296,61 @@ describe Pliny::DbSupport do
       end
     end
   end
+
+  describe '#status' do
+    let(:filename) { '1630551344_latest_change.rb' }
+    let(:up_migration) { "00#{filename}" }
+    let(:down_migration) { "0#{filename}" }
+    let(:file_missing_migration) { "000#{filename}" }
+
+    before do
+      DB.create_table(:schema_migrations) do
+        text :filename
+      end
+
+      migrations = DB[:schema_migrations]
+      migrations.insert(filename: up_migration)
+      migrations.insert(filename: file_missing_migration)
+
+      File.open("./db/migrate/#{up_migration}", "w") do |f|
+        f.puts "
+          Sequel.migration do
+            change do
+              create_table(:foo) do
+                primary_key :id
+                text        :bar
+              end
+            end
+          end
+        "
+      end
+
+      File.open("./db/migrate/#{down_migration}", "w") do |f|
+        f.puts "
+          Sequel.migration do
+            change do
+              create_table(:foo) do
+                primary_key :id
+                text        :bar
+              end
+            end
+          end
+        "
+      end
+    end
+
+    it 'returns a table string' do
+      expectation = <<~OUTPUT.chomp
+        +--------------+--------------------------------+
+        |    STATUS    |           MIGRATION            |
+        +--------------+--------------------------------+
+        | FILE MISSING | 0001630551344_latest_change.rb |
+        |      UP      | 001630551344_latest_change.rb  |
+        |     DOWN     | 01630551344_latest_change.rb   |
+        +--------------+--------------------------------+
+      OUTPUT
+
+      assert_equal expectation, support.status
+    end
+  end
 end

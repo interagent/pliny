@@ -164,6 +164,26 @@ module Pliny
       end
     end
 
+    def status
+      migrations_in_database = db[:schema_migrations].order(Sequel.asc(:filename)).select_map(:filename)
+      migrations_on_disk = Dir["#{MIGRATION_DIR}/*.rb"].map { |f| File.basename(f) }
+      total_set_of_migrations = (migrations_in_database | migrations_on_disk).sort_by(&:to_i)
+
+      migration_statuses = total_set_of_migrations.map { |filename|
+        status = MigrationStatus.new(filename: filename)
+        if migrations_on_disk.include?(filename)
+          status.present_on_disk = true
+        end
+
+        if migrations_in_database.include?(filename)
+          status.present_in_database = true
+        end
+        status
+      }
+
+      MigrationStatusPresenter.new(migration_statuses: migration_statuses).to_s
+    end
+
     def rollback
       current_version = version
       return if current_version.zero?
