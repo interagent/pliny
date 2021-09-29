@@ -189,6 +189,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Cleanup of active database connections after migration runs. ([#257](https://github.com/interagent/pliny/pull/257))
 
 [Unreleased]: https://github.com/interagent/pliny/compare/v0.30.1...master
+[0.32.0]: https://github.com/interagent/pliny/compare/v0.31.0...v0.32.0
+[0.31.0]: https://github.com/interagent/pliny/compare/v0.30.1...v0.31.0
 [0.30.1]: https://github.com/interagent/pliny/compare/v0.30.0...v0.30.1
 [0.30.0]: https://github.com/interagent/pliny/compare/v0.29.0...v0.30.0
 [0.29.0]: https://github.com/interagent/pliny/compare/v0.28.0...v0.29.0
