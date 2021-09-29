@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased] - 🔜
 
+## [0.32.0] - 2021-09-29
+### Changed
+- Add `rake db:migrate:status` to report the status of database migrations ([#345](https://github.com/interagent/pliny/pull/345)).
+
 ## [0.31.0] - 2021-09-02
 ### Changed
 - Add `rake db:version` to report the current DB schema version ([#343](https://github.com/interagent/pliny/pull/343)).
