@@ -15,6 +15,16 @@ begin
       end
     end
 
+    namespace :migrate do
+      desc "Get the status of migrations"
+      task :status do
+        # TODO: figure out how to handle multiple databases. Also why do we support multiple databases this way?
+        Pliny::DbSupport.run(database_urls.first, $stdout) do |helper|
+          puts helper.status
+        end
+      end
+    end
+
     desc "Run database migrations"
     task :migrate do
       next if Dir["./db/migrate/*.rb"].empty?

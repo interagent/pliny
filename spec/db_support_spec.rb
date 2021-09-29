@@ -114,4 +114,243 @@ describe Pliny::DbSupport do
       end
     end
   end
+
+  describe "MigrationStatus" do
+    let(:filename) { "1630551344_latest_change.rb" }
+    let(:migration_status) { described_class::MigrationStatus.new(filename: filename) }
+
+    describe "#status" do
+      context "given a migration present on disk" do
+        before do
+          migration_status.present_on_disk = true
+        end
+
+        context "and present in the database" do
+          before do
+            migration_status.present_in_database = true
+          end
+
+          it "is :up" do
+            assert_equal :up, migration_status.status
+          end
+        end
+
+        context "and is absent from the database" do
+          before do
+            migration_status.present_in_database = false
+          end
+
+          it "is :down" do
+            assert_equal :down, migration_status.status
+          end
+        end
+      end
+
+      context "given a migration absent from disk" do
+        before do
+          migration_status.present_on_disk = false
+        end
+
+        context "and present in the database" do
+          before do
+            migration_status.present_in_database = true
+          end
+
+          it "is :file_missing" do
+            assert_equal :file_missing, migration_status.status
+          end
+        end
+
+        context "and is absent from the database" do
+          before do
+            migration_status.present_in_database = false
+          end
+
+          it "is an error case" do
+            assert_raises RuntimeError do
+              migration_status.status
+            end
+          end
+        end
+      end
+    end
+  end
+
+  describe 'MigrationStatusPresenter' do
+    let(:filename) { '1630551344_latest_change.rb' }
+    let(:up_migration) { described_class::MigrationStatus.new(filename: "00#{filename}") }
+    let(:down_migration) { described_class::MigrationStatus.new(filename: "0#{filename}") }
+    let(:file_missing_migration) { described_class::MigrationStatus.new(filename: "000#{filename}") }
+    let(:migration_statuses) { [up_migration, down_migration, file_missing_migration] }
+    let(:presenter) { described_class::MigrationStatusPresenter.new(migration_statuses: migration_statuses) }
+
+    before do
+      up_migration.present_in_database = true
+      up_migration.present_on_disk = true
+      down_migration.present_in_database = false
+      down_migration.present_on_disk = true
+      file_missing_migration.present_in_database = true
+      file_missing_migration.present_on_disk = false
+    end
+
+    describe '#barrier_row' do
+      it 'pads to the longest_migration name' do
+        expectation = '+--------------+--------------------------------+'
+        assert_equal expectation, presenter.barrier_row
+      end
+    end
+
+    describe '#header_row' do
+      it 'pads to the longest migration name' do
+        expectation = '|    STATUS    |           MIGRATION            |'
+        assert_equal expectation, presenter.header_row
+      end
+    end
+
+    describe '#header' do
+      let(:barrier) { '+--------------+--------------------------------+' }
+      let(:header)  { '|    STATUS    |           MIGRATION            |' }
+
+      it 'wraps the title in barriers' do
+        assert_equal [barrier, header, barrier], presenter.header
+      end
+    end
+
+    describe '#footer' do
+      let(:barrier) { '+--------------+--------------------------------+' }
+
+      it 'just a barrier' do
+        assert_equal [barrier], presenter.footer
+      end
+    end
+
+    describe '#status_row' do
+      context 'an up migration' do
+        it 'shows the correct details' do
+          expectation = '|      UP      | 001630551344_latest_change.rb  |'
+          assert_equal expectation, presenter.status_row(up_migration)
+        end
+      end
+
+      context 'a down migration' do
+        it 'shows the correct details' do
+          expectation = '|     DOWN     | 01630551344_latest_change.rb   |'
+          assert_equal expectation, presenter.status_row(down_migration)
+        end
+      end
+
+      context 'a file missing migration' do
+        it 'shows the correct details' do
+          expectation = '| FILE MISSING | 0001630551344_latest_change.rb |'
+          assert_equal expectation, presenter.status_row(file_missing_migration)
+        end
+      end
+    end
+
+    describe '#statuses' do
+      let(:up_expectation)           { '|      UP      | 001630551344_latest_change.rb  |' }
+      let(:down_expectation)         { '|     DOWN     | 01630551344_latest_change.rb   |' }
+      let(:file_missing_expectation) { '| FILE MISSING | 0001630551344_latest_change.rb |' }
+
+      it 'returns strings' do
+        assert_equal [up_expectation, down_expectation, file_missing_expectation], presenter.statuses
+      end
+    end
+
+    describe '#rows' do
+      let(:barrier)                  { '+--------------+--------------------------------+' }
+      let(:header)                   { '|    STATUS    |           MIGRATION            |' }
+      let(:up_expectation)           { '|      UP      | 001630551344_latest_change.rb  |' }
+      let(:down_expectation)         { '|     DOWN     | 01630551344_latest_change.rb   |' }
+      let(:file_missing_expectation) { '| FILE MISSING | 0001630551344_latest_change.rb |' }
+      let(:footer)                   { '+--------------+--------------------------------+' }
+
+      it 'is the table as an array' do
+        expectation = [
+          barrier,
+          header,
+          barrier,
+          up_expectation,
+          down_expectation,
+          file_missing_expectation,
+          footer
+        ]
+
+        assert_equal expectation, presenter.rows
+      end
+    end
+
+    describe '#to_s' do
+      it 'is the table as a string' do
+        expectation = <<~OUTPUT.chomp
+          +--------------+--------------------------------+
+          |    STATUS    |           MIGRATION            |
+          +--------------+--------------------------------+
+          |      UP      | 001630551344_latest_change.rb  |
+          |     DOWN     | 01630551344_latest_change.rb   |
+          | FILE MISSING | 0001630551344_latest_change.rb |
+          +--------------+--------------------------------+
+        OUTPUT
+
+        assert_equal expectation, presenter.to_s
+      end
+    end
+  end
+
+  describe '#status' do
+    let(:filename) { '1630551344_latest_change.rb' }
+    let(:up_migration) { "00#{filename}" }
+    let(:down_migration) { "0#{filename}" }
+    let(:file_missing_migration) { "000#{filename}" }
+
+    before do
+      DB.create_table(:schema_migrations) do
+        text :filename
+      end
+
+      migrations = DB[:schema_migrations]
+      migrations.insert(filename: up_migration)
+      migrations.insert(filename: file_missing_migration)
+
+      File.open("./db/migrate/#{up_migration}", "w") do |f|
+        f.puts "
+          Sequel.migration do
+            change do
+              create_table(:foo) do
+                primary_key :id
+                text        :bar
+              end
+            end
+          end
+        "
+      end
+
+      File.open("./db/migrate/#{down_migration}", "w") do |f|
+        f.puts "
+          Sequel.migration do
+            change do
+              create_table(:foo) do
+                primary_key :id
+                text        :bar
+              end
+            end
+          end
+        "
+      end
+    end
+
+    it 'returns a table string' do
+      expectation = <<~OUTPUT.chomp
+        +--------------+--------------------------------+
+        |    STATUS    |           MIGRATION            |
+        +--------------+--------------------------------+
+        | FILE MISSING | 0001630551344_latest_change.rb |
+        |      UP      | 001630551344_latest_change.rb  |
+        |     DOWN     | 01630551344_latest_change.rb   |
+        +--------------+--------------------------------+
+      OUTPUT
+
+      assert_equal expectation, support.status
+    end
+  end
 end

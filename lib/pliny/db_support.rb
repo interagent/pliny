@@ -62,6 +62,134 @@ module Pliny
       Integer(version)
     end
 
+    class MigrationStatus
+      attr_reader :filename
+      attr_accessor :present_on_disk, :present_in_database
+
+      def initialize(filename:)
+        @filename = filename
+        @present_on_disk = false
+        @present_in_database = false
+      end
+
+      def status
+        if present_on_disk
+          if present_in_database
+            :up
+          else
+            :down
+          end
+        else
+          if present_in_database
+            :file_missing
+          else
+            raise "error" # FIXME: better message
+          end
+        end
+      end
+    end
+
+    class MigrationStatusPresenter
+      PADDING = 2
+      UP = "UP".freeze
+      DOWN = "DOWN".freeze
+      FILE_MISSING = "FILE MISSING".freeze
+
+      STATUS_MAP = {
+        up: UP,
+        down: DOWN,
+        file_missing: FILE_MISSING
+      }.freeze
+
+      STATUS_OPTIONS = [
+        UP,
+        DOWN,
+        FILE_MISSING
+      ].freeze
+
+      attr_reader :migration_statuses
+
+      def initialize(migration_statuses:)
+        @migration_statuses = migration_statuses
+      end
+
+      def to_s
+        rows.join("\n")
+      end
+
+      def rows
+        header + statuses + footer
+      end
+
+      def header
+        [
+          barrier_row,
+          header_row,
+          barrier_row
+        ]
+      end
+
+      def statuses
+        migration_statuses.map { |status|
+          status_row(status)
+        }
+      end
+
+      def footer
+        [
+          barrier_row
+        ]
+      end
+
+      def barrier_row
+        "+#{'-' * (longest_status + PADDING)}+#{'-' * (longest_migration_name + PADDING)}+"
+      end
+
+      def header_row
+        "|#{'STATUS'.center(longest_status + PADDING)}|#{'MIGRATION'.center(longest_migration_name + PADDING)}|"
+      end
+
+      def status_row(migration_status)
+        "|#{STATUS_MAP[migration_status.status].center(longest_status + PADDING)}|#{' ' * (PADDING / 2)}#{migration_status.filename.ljust(longest_migration_name)}#{' ' * (PADDING / 2)}|"
+      end
+
+      private
+
+      def longest_migration_name
+        @longest_migration_name ||= migration_statuses.map(&:filename).max_by(&:length).length
+      end
+
+      def longest_status
+        STATUS_OPTIONS.max_by(&:length).length
+      end
+    end
+
+    def status
+      migrations_in_database = get_migrations_from_database
+      migrations_on_disk = Dir["#{MIGRATION_DIR}/*.rb"].map { |f| File.basename(f) }
+      total_set_of_migrations = (migrations_in_database | migrations_on_disk).sort_by(&:to_i)
+
+      migration_statuses = total_set_of_migrations.map { |filename|
+        status = MigrationStatus.new(filename: filename)
+        if migrations_on_disk.include?(filename)
+          status.present_on_disk = true
+        end
+
+        if migrations_in_database.include?(filename)
+          status.present_in_database = true
+        end
+        status
+      }
+
+      MigrationStatusPresenter.new(migration_statuses: migration_statuses).to_s
+    end
+
+    def get_migrations_from_database
+      return [] unless db.table_exists?(:schema_migrations)
+
+      db[:schema_migrations].order(Sequel.asc(:filename)).select_map(:filename)
+    end
+
     def rollback
       current_version = version
       return if current_version.zero?
