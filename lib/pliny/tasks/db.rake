@@ -6,6 +6,7 @@ begin
   require "sequel"
   require "sequel/extensions/migration"
   require "pliny/db_support"
+  require "shellwords"
 
   namespace :db do
     desc "Get current schema version"
@@ -109,7 +110,11 @@ begin
       task :dump do
         file = File.join("db", "schema.sql")
         database_url = database_urls.first
-        `pg_dump -s -x -O -f #{file} #{database_url}`
+        `pg_dump -s -x -O -f #{file.shellescape} #{database_url.shellescape}`
+        if $?.exitstatus != 0
+          puts "Failed to dump schema"
+          exit 1
+        end
 
         schema = File.read(file)
         # filter all COMMENT ON EXTENSION, only owners and the db
