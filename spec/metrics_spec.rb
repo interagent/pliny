@@ -102,5 +102,21 @@ describe Pliny::Metrics do
         "pliny.waldo" => 0
       )
     end
+
+    it "measures value in implicit hash with multiple metrics names" do
+      metrics.measure("metric.name", "another.name", value: 3.14, foo: :bar)
+      expect(test_backend).to have_received(:report_measures).once.with(
+        "pliny.metric.name" => 3.14,
+        "pliny.another.name" => 3.14
+      )
+    end
+
+    it "measures value in explicit hash with multiple metrics names" do
+      metrics.measure("metric.name", "another.name", { value: 3.14, foo: :bar })
+      expect(test_backend).to have_received(:report_measures).once.with(
+        "pliny.metric.name" => 3.14,
+        "pliny.another.name" => 3.14
+      )
+    end
   end
 end
