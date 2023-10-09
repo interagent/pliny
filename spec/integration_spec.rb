@@ -1,6 +1,5 @@
 require "spec_helper"
 require "open3"
-require 'active_support/core_ext/object/blank'
 
 describe "Pliny integration test" do
   describe "bin/setup" do
