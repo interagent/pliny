@@ -20,7 +20,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency "prmd",           "~> 0.11", ">= 0.11.4"
 
 
-  gem.add_dependency "sinatra",        ">= 1.4", "< 4.0"
+  gem.add_dependency "sinatra",        ">= 2.0", "< 4.0"
   gem.add_dependency "http_accept",    "~> 0.1",  ">= 0.1.5"
   gem.add_dependency "sinatra-router", "~> 0.2",  ">= 0.2.4"
   gem.add_dependency "thor",           ">= 0.19", "< 2.0"
@@ -28,7 +28,7 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency "rake",              "~> 13.0"
   gem.add_development_dependency "rack-test",         "~> 1.1.0"
   gem.add_development_dependency "rspec",             "~> 3.1", ">= 3.1.0"
-  gem.add_development_dependency "sinatra-contrib",   ">= 1.4", "< 4.0"
+  gem.add_development_dependency "sinatra-contrib",   ">= 2.0", "< 4.0"
   gem.add_development_dependency "timecop", "~> 0.7", ">= 0.7.1"
   gem.add_development_dependency "pry"
   gem.add_development_dependency "pry-byebug"
