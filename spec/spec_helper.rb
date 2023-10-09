@@ -13,6 +13,7 @@ require "sequel"
 require "sinatra/namespace"
 require "sinatra/router"
 require "timecop"
+require "active_support/all"
 
 require_relative "../lib/pliny"
 Pliny::Utils.require_glob("./spec/support/**/*.rb")
