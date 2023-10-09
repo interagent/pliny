@@ -35,7 +35,7 @@ module Pliny::Commands
       Dir.glob("#{app_dir}/{*,.*}.erb").each do |file|
         static_file = file.gsub(/\.erb$/, '')
 
-        template = ERB.new(File.read(file), 0)
+        template = ERB.new(File.read(file))
         context = OpenStruct.new(app_name: name)
         content = template.result(context.instance_eval { binding })
 
