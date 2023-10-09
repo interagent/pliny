@@ -7,6 +7,7 @@ ENV["TEST_DATABASE_URL"] ||= "postgres://localhost/pliny-gem-test"
 require "bundler"
 Bundler.require
 
+require "active_support/all"
 require "fileutils"
 require "rack/test"
 require "sequel"
