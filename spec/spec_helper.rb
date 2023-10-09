@@ -7,13 +7,13 @@ ENV["TEST_DATABASE_URL"] ||= "postgres://localhost/pliny-gem-test"
 require "bundler"
 Bundler.require
 
+require "active_support/all"
 require "fileutils"
 require "rack/test"
 require "sequel"
 require "sinatra/namespace"
 require "sinatra/router"
 require "timecop"
-require "active_support/all"
 
 require_relative "../lib/pliny"
 Pliny::Utils.require_glob("./spec/support/**/*.rb")
