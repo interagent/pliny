@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased] - 🔜
+### Changed
+- Add support for Ruby 3.1 and 3.2
+- Add support for Sinatra 3
+- Add support for ActiveSupport 7
+- Drop support for Ruby 2.5, 2.6 and 2.7
+- Drop support for Sinatra 1
+- Drop support for ActiveSupport 5
 
 ## [0.32.0] - 2021-09-29
 ### Changed
