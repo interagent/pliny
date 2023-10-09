@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased] - 🔜
+
+## [1.0.0] - 🔜
 ### Added
 - Add support for Ruby 3.1 and 3.2 ([#355](https://github.com/interagent/pliny/pull/355))
 - Add support for Sinatra 3 ([#356](https://github.com/interagent/pliny/pull/356))
@@ -204,7 +206,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Useless code coverage reports. ([#255](https://github.com/interagent/pliny/pull/255))
 - Cleanup of active database connections after migration runs. ([#257](https://github.com/interagent/pliny/pull/257))
 
-[Unreleased]: https://github.com/interagent/pliny/compare/v0.30.2...master
+[Unreleased]: https://github.com/interagent/pliny/compare/v1.0.0...master
+[1.0.0]: https://github.com/interagent/pliny/compare/v0.30.2...v1.0.0
 [0.32.0]: https://github.com/interagent/pliny/compare/v0.31.0...v0.32.0
 [0.31.0]: https://github.com/interagent/pliny/compare/v0.30.1...v0.31.0
 [0.30.1]: https://github.com/interagent/pliny/compare/v0.30.0...v0.30.1
