@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased] - 🔜
+### Added
+- Add support for Ruby 3.1 and 3.2 ([#355](https://github.com/interagent/pliny/pull/355))
+- Add support for Sinatra 3 ([#356](https://github.com/interagent/pliny/pull/356))
+- Add support for ActiveSupport 7 ([#357](https://github.com/interagent/pliny/pull/357))
+
+### Removed
+- Drop support for Ruby 2.5, 2.6 and 2.7 ([#355](https://github.com/interagent/pliny/pull/355))
+- Drop support for Sinatra 1 ([#356](https://github.com/interagent/pliny/pull/356))
+- Drop support for ActiveSupport 5 ([#357](https://github.com/interagent/pliny/pull/357))
+
+### Changed
+- update template Gemfile ([#359](https://github.com/interagent/pliny/pull/359))
 
 ## [0.32.0] - 2021-09-29
 ### Changed
