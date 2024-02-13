@@ -4,7 +4,7 @@ module Pliny
       attr_accessor :id
 
       def self.render(error)
-        headers = { "Content-Type" => "application/json; charset=utf-8" }
+        headers = { "content-type" => "application/json; charset=utf-8" }
         data = { id: error.id, message: error.message }
         [error.status, headers, [MultiJson.encode(data)]]
       end
