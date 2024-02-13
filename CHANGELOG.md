@@ -3,7 +3,8 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased] - 🔜
+## [Unreleased] - 🔜
+## [1.1.0] - 2024-02-13
 ### Added
 - Add support for Sinatra 4 ([#361](https://github.com/interagent/pliny/pull/361))
 
@@ -11,7 +12,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Switched branch from master to main ([#362](https://github.com/interagent/pliny/pull/362))
 - Updated dependencies for GitHub Actions ([#363](https://github.com/interagent/pliny/pull/363))
 
-## [1.0.0] - 🔜
+## [1.0.0] - 2023-10-09
 ### Added
 - Add support for Ruby 3.1 and 3.2 ([#355](https://github.com/interagent/pliny/pull/355))
 - Add support for Sinatra 3 ([#356](https://github.com/interagent/pliny/pull/356))
