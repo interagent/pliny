@@ -40,7 +40,7 @@ task :release do
   # build new gem and push
   sh "gem build pliny.gemspec"
   sh "gem push pliny-#{new_version}.gem"
-  sh "git push origin master --tags"
+  sh "git push origin main --tags"
   sh "rm pliny-#{new_version}.gem"
 end
 
