@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ### Changed
 - Switched branch from master to main ([#362](https://github.com/interagent/pliny/pull/362))
+- Updated dependencies for GitHub Actions ([#363](https://github.com/interagent/pliny/pull/363))
 
 ## [1.0.0] - 🔜
 ### Added
