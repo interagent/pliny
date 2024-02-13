@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased] - 🔜
+### Added
+- Add support for Sinatra 4 ([#361](https://github.com/interagent/pliny/pull/361))
+
 ### Changed
 - Switched branch from master to main ([#362](https://github.com/interagent/pliny/pull/362))
 

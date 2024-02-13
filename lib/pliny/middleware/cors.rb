@@ -44,12 +44,12 @@ module Pliny::Middleware
 
     def cors_headers(env)
       {
-        'Access-Control-Allow-Origin'      => env["HTTP_ORIGIN"],
-        'Access-Control-Allow-Methods'     => ALLOW_METHODS.join(', '),
-        'Access-Control-Allow-Headers'     => allow_headers.join(', '),
-        'Access-Control-Allow-Credentials' => "true",
-        'Access-Control-Max-Age'           => "1728000",
-        'Access-Control-Expose-Headers'    => EXPOSE_HEADERS.join(', ')
+        'access-control-allow-origin'      => env["HTTP_ORIGIN"],
+        'access-control-allow-methods'     => ALLOW_METHODS.join(', '),
+        'access-control-allow-headers'     => allow_headers.join(', '),
+        'access-control-allow-credentials' => "true",
+        'access-control-max-age'           => "1728000",
+        'access-control-expose-headers'    => EXPOSE_HEADERS.join(', ')
       }
     end
   end

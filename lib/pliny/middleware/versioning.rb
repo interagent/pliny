@@ -26,7 +26,7 @@ module Pliny::Middleware
             error = { id: :bad_version, message: <<-eos }
 Please specify a version along with the MIME type. For example, `Accept: application/vnd.#{@app_name}+json; version=1`.
             eos
-            return [400, { "Content-Type" => "application/json; charset=utf-8" },
+            return [400, { "content-type" => "application/json; charset=utf-8" },
               [MultiJson.encode(error)]]
           end
 
