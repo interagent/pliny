@@ -32,7 +32,7 @@ RSpec.describe Endpoints::<%= plural_class_name %> do
   describe 'POST <%= url_path %>' do
     it 'returns correct status code and conforms to schema' do
       header "Content-Type", "application/json"
-      post '<%= url_path %>', MultiJson.encode({})
+      post '<%= url_path %>', JSON.generate({})
       assert_equal 201, last_response.status
       assert_schema_conform
     end
@@ -50,7 +50,7 @@ RSpec.describe Endpoints::<%= plural_class_name %> do
   describe 'PATCH <%= url_path %>/:id' do
     it 'returns correct status code and conforms to schema' do
       header "Content-Type", "application/json"
-      patch "<%= url_path %>/#{@<%= field_name %>.id}", MultiJson.encode({})
+      patch "<%= url_path %>/#{@<%= field_name %>.id}", JSON.generate({})
       assert_equal 200, last_response.status
       assert_schema_conform
     end
