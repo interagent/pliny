@@ -8,6 +8,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Add support for Ruby 3.3 and 3.4 ([#366](https://github.com/interagent/pliny/pull/3366))
 - Add support for ActiveSupport 8 ([#366](https://github.com/interagent/pliny/pull/366))
 
+### Changed
+- use built-in JSON module instead of MultiJson ([#367](https://github.com/interagent/pliny/pull/367))
+
 ### Removed
 - Drop support for Ruby 3.0 and 3.1 ([#366](https://github.com/interagent/pliny/pull/366))
 - Drop support for Sinatra 2 ([#366](https://github.com/interagent/pliny/pull/366))

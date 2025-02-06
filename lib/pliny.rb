@@ -1,4 +1,4 @@
-require "multi_json"
+require "json"
 require "sinatra/base"
 
 require_relative "pliny/version"

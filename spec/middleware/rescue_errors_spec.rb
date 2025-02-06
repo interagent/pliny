@@ -21,7 +21,7 @@ describe Pliny::Middleware::RescueErrors do
     @app = new_rack_app
     get "/api-error"
     assert_equal 503, last_response.status
-    error_json = MultiJson.decode(last_response.body)
+    error_json = JSON.parse(last_response.body)
     assert_equal "service_unavailable", error_json["id"]
     assert_equal "Service unavailable.", error_json["message"]
   end
@@ -31,7 +31,7 @@ describe Pliny::Middleware::RescueErrors do
     expect(Pliny::ErrorReporters).to receive(:notify)
     get "/"
     assert_equal 500, last_response.status
-    error_json = MultiJson.decode(last_response.body)
+    error_json = JSON.parse(last_response.body)
     assert_equal "internal_server_error", error_json["id"]
     assert_equal "Internal server error.", error_json["message"]
   end
@@ -48,7 +48,7 @@ describe Pliny::Middleware::RescueErrors do
     allow(Pliny::ErrorReporters).to receive(:notify)
     get "/"
     assert_equal 500, last_response.status
-    error_json = MultiJson.decode(last_response.body)
+    error_json = JSON.parse(last_response.body)
     assert_equal "internal_server_error", error_json["id"]
     assert_equal "Please stand by", error_json["message"]
   end

@@ -23,19 +23,19 @@ describe Pliny::Helpers::Encode do
   it "encodes as json" do
     payload = { "foo" => "bar" }
     post "/", payload
-    assert_equal MultiJson.encode(payload), last_response.body
+    assert_equal JSON.generate(payload), last_response.body
   end
 
   it "encodes in pretty mode when pretty=true" do
     payload = { "foo" => "bar", "pretty" => "true" }
     post "/", payload
-    assert_equal MultiJson.encode(payload, pretty: true), last_response.body
+    assert_equal JSON.pretty_generate(payload), last_response.body
   end
 
   it "encodes in pretty mode when set by config" do
     allow(Config).to receive(:pretty_json) { true }
     payload = { "foo" => "bar" }
     post "/", payload
-    assert_equal MultiJson.encode(payload, pretty: true), last_response.body
+    assert_equal JSON.pretty_generate(payload), last_response.body
   end
 end

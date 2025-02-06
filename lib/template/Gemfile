@@ -1,8 +1,6 @@
 source "https://rubygems.org"
 ruby "2.4.0"
 
-gem "multi_json"
-gem "oj"
 gem "pg"
 gem "pliny", "~> 0.32"
 gem "pry"
