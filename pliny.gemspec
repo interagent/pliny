@@ -15,9 +15,9 @@ Gem::Specification.new do |gem|
   gem.executables = %x{ git ls-files }.split("\n").select { |d| d =~ /^bin\// }.map { |d| d.gsub(/^bin\//, "") }
   gem.files = %x{ git ls-files }.split("\n").select { |d| d =~ %r{^(License|README|bin/|data/|ext/|lib/|spec/|test/)} }
 
-  gem.required_ruby_version = ">= 3.0"
+  gem.required_ruby_version = ">= 3.2"
 
-  gem.add_dependency "activesupport",  ">= 6.0", "< 8.0"
+  gem.add_dependency "activesupport",  ">= 7.0", "< 9.0"
   gem.add_dependency "multi_json",     "~> 1.9",  ">= 1.9.3"
   gem.add_dependency "prmd",           "~> 0.11", ">= 0.11.4"
 
