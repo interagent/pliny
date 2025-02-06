@@ -13,7 +13,7 @@ jobs:
     strategy:
       matrix:
         ruby-version: ['3.1', '3.2', '3.3', '3.4']
-        activesupport-version: ['6', '7', '8']
+        activesupport-version: ['7', '8']
         sinatra-version: ['3', '4']
     env:
       ACTIVESUPPORT_MAJOR: ${{ matrix.activesupport-version }}
