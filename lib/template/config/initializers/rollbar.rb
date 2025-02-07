@@ -9,4 +9,5 @@ Rollbar.configure do |config|
   config.environment = ENV["ROLLBAR_ENV"]
   config.logger = Pliny::RollbarLogger.new
   config.use_sucker_punch
+  config.exception_level_filters.merge! "Sinatra::NotFound" => "warning"
 end
