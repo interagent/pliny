@@ -3,7 +3,7 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased] - 🔜
+## [1.2.0] - 2025-02-10
 ### Added
 - Add support for Ruby 3.3 and 3.4 ([#366](https://github.com/interagent/pliny/pull/3366))
 - Add support for ActiveSupport 8 ([#366](https://github.com/interagent/pliny/pull/366))
@@ -16,7 +16,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Drop support for Sinatra 2 ([#366](https://github.com/interagent/pliny/pull/366))
 - Drop support for ActiveSupport 6 ([#366](https://github.com/interagent/pliny/pull/366))
 
-## [1.1.0] - 2024-02-13
+## [1.1.0] - 2024-02-13
 ### Added
 - Add support for Sinatra 4 ([#361](https://github.com/interagent/pliny/pull/361))
 
