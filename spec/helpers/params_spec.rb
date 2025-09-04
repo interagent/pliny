@@ -40,6 +40,6 @@ describe Pliny::Helpers::Params do
       post "/", "{\"foo\"}", {"CONTENT_TYPE" => "application/json"}
     end
 
-    assert_match /unexpected token/, err.message
+    assert_match /expected ':' after object key at line 1 column 7/, err.message
   end
 end
