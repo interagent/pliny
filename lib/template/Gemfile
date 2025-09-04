@@ -1,25 +1,26 @@
 source "https://rubygems.org"
-ruby "2.4.0"
 
-gem "pg"
-gem "pliny", "~> 0.32"
+ruby "3.4.5"
+
+gem "pg", ">= 1.6"
+gem "pliny", ">= 1"
 gem "pry"
-gem "puma", "~> 6"
+gem "puma", ">= 7"
 gem "rack-ssl"
-gem "rack-timeout", "~> 0.6"
+gem "rack-timeout"
 gem "rake"
 gem "rollbar"
-gem "sequel", "~> 5.73"
+gem "sequel", ">= 5"
 gem "sequel-paranoid"
-gem "sequel_pg", "~> 1.17", require: "sequel"
-gem "sinatra", [">= 2.0", "< 3.0"], require: "sinatra/base"
+gem "sequel_pg", require: "sequel"
+gem "sinatra", ">= 4", require: "sinatra/base"
 gem "sinatra-contrib", require: ["sinatra/namespace", "sinatra/reloader"]
 gem "sinatra-router"
 gem "sucker_punch"
 
 group :development, :test do
   gem "pry-byebug"
-  gem "rubocop", "~> 1.56", require: false
+  gem "rubocop", require: false
   gem "rubocop-rspec", require: false
 end
 
