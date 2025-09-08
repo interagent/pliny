@@ -105,12 +105,6 @@ Style/NilComparison:
     - 'lib/pliny/log.rb'
 
 # Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-Style/OrAssignment:
-  Exclude:
-    - 'lib/pliny/middleware/versioning.rb'
-
-# Offense count: 1
 # This cop supports unsafe autocorrection (--autocorrect-all).
 Style/RedundantInterpolation:
   Exclude:

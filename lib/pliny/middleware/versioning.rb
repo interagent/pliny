@@ -32,9 +32,7 @@ module Pliny::Middleware
               [JSON.generate(error)],]
           end
 
-          unless version
-            version = media_type.params["version"]
-          end
+          version ||= media_type.params["version"]
 
           # replace the MIME with a simplified version for easier
           # parsing down the stack
