@@ -11,11 +11,9 @@ module Pliny::ErrorReporters
     Pliny.log_exception(exception)
 
     error_reporters.each do |reporter|
-      begin
-        reporter.new.notify(exception, context: context, rack_env: rack_env)
-      rescue
-        Pliny.log_exception($!)
-      end
+      reporter.new.notify(exception, context: context, rack_env: rack_env)
+    rescue
+      Pliny.log_exception($!)
     end
   end
 end

@@ -123,12 +123,6 @@ Style/PercentLiteralDelimiters:
     - 'pliny.gemspec'
 
 # Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-Style/RedundantBegin:
-  Exclude:
-    - 'lib/pliny/error_reporters.rb'
-
-# Offense count: 1
 # This cop supports unsafe autocorrection (--autocorrect-all).
 Style/RedundantInterpolation:
   Exclude:
