@@ -4,7 +4,7 @@ require 'http_accept'
 
 module Pliny::Middleware
   class Versioning
-    def initialize(app, options={})
+    def initialize(app, options = {})
       @app = app
       @default = options[:default] || raise("missing=default")
       @app_name = options[:app_name] || raise("missing=app_name")

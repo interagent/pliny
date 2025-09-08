@@ -2,17 +2,17 @@
 
 module Pliny
   module CastingConfigHelpers
-    def mandatory(name, method=nil)
+    def mandatory(name, method = nil)
       value = cast(ENV.fetch(name.to_s.upcase), method)
       create(name, value)
     end
 
-    def optional(name, method=nil)
+    def optional(name, method = nil)
       value = cast(ENV[name.to_s.upcase], method)
       create(name, value)
     end
 
-    def override(name, default, method=nil)
+    def override(name, default, method = nil)
       value = cast(ENV.fetch(name.to_s.upcase, default), method)
       create(name, value)
     end

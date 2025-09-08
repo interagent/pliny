@@ -22,7 +22,7 @@ module Pliny
       return false
     end
 
-    def self.run(url, sequel_log_io=StringIO.new)
+    def self.run(url, sequel_log_io = StringIO.new)
       logger = Logger.new(sequel_log_io)
       instance = new(url, logger)
       yield instance
