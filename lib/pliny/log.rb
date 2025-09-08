@@ -104,11 +104,7 @@ module Pliny
     end
 
     def log_to_stream(stream, data, &block)
-      unless block
-        data = log_scrubber.call(data) if log_scrubber
-        str = unparse(data)
-        stream.print(str + "\n")
-      else
+      if block
         data = data.dup
         start = Time.now
         log_to_stream(stream, data.merge(at: "start"))
@@ -124,6 +120,10 @@ module Pliny
           ),)
           raise $!
         end
+      else
+        data = log_scrubber.call(data) if log_scrubber
+        str = unparse(data)
+        stream.print(str + "\n")
       end
     end
 
