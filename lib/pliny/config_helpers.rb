@@ -78,7 +78,7 @@ module Pliny
     def create(name, value)
       instance_variable_set(:"@#{name}", value)
       instance_eval "def #{name}; @#{name} end", __FILE__, __LINE__
-      if value.kind_of?(TrueClass) || value.kind_of?(FalseClass) || value.kind_of?(NilClass)
+      if value.is_a?(TrueClass) || value.is_a?(FalseClass) || value.is_a?(NilClass)
         instance_eval "def #{name}?; !!@#{name} end", __FILE__, __LINE__
       end
     end
