@@ -7,11 +7,6 @@
 # versions of RuboCop, may require this file to be generated again.
 
 # Offense count: 1
-Lint/RescueException:
-  Exclude:
-    - 'lib/pliny/error_reporters/rollbar.rb'
-
-# Offense count: 1
 Security/Eval:
   Exclude:
     - 'spec/commands/generator/endpoint_spec.rb'

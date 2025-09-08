@@ -26,7 +26,7 @@ module Pliny
           scope[:person] = proc { extract_person_data_from_controller(rack_env) }
         end
         scope
-      rescue Exception => e
+      rescue Exception => e # rubocop:disable Lint/RescueException
         report_exception_to_rollbar(rack_env, e)
         raise
       end
