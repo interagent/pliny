@@ -18,13 +18,11 @@ module Pliny
       exception_id = e.object_id
 
       # Log backtrace in reverse order for easier digestion.
-      if e.backtrace
-        e.backtrace.reverse.each do |backtrace|
-          log_to_stream(stderr || $stderr, merge_log_contexts(
-            exception_id: exception_id,
-            backtrace: backtrace,
-          ),)
-        end
+      e.backtrace&.reverse&.each do |backtrace|
+        log_to_stream(stderr || $stderr, merge_log_contexts(
+          exception_id: exception_id,
+          backtrace: backtrace,
+        ),)
       end
 
       # then log the exception message last so that it's as close to the end of

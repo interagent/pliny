@@ -8,17 +8,6 @@
 
 # Offense count: 4
 # This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: ConvertCodeThatCanStartToReturnNil, AllowedMethods, MaxChainLength.
-# AllowedMethods: present?, blank?, presence, try, try!
-Style/SafeNavigation:
-  Exclude:
-    - 'lib/pliny/config_helpers.rb'
-    - 'lib/pliny/helpers/zulu_time.rb'
-    - 'lib/pliny/log.rb'
-    - 'lib/pliny/request_store.rb'
-
-# Offense count: 4
-# This cop supports unsafe autocorrection (--autocorrect-all).
 Style/SlicingWithRange:
   Exclude:
     - 'lib/pliny/tasks/db.rake'
