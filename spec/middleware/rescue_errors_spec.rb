@@ -15,9 +15,7 @@ describe Pliny::Middleware::RescueErrors do
     end
   end
 
-  def app
-    @app
-  end
+  attr_reader :app
 
   it "intercepts Pliny errors and renders" do
     @app = new_rack_app
