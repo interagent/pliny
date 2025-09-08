@@ -100,7 +100,7 @@ module Pliny
       STATUS_MAP = {
         up: UP,
         down: DOWN,
-        file_missing: FILE_MISSING
+        file_missing: FILE_MISSING,
       }.freeze
 
       STATUS_OPTIONS = [

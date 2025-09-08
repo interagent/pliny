@@ -40,7 +40,7 @@ describe Pliny::ErrorReporters::Rollbar do
         { "rollbar.person_data" => {
           id: SecureRandom.uuid,
           email: "foo@bar.com",
-          username: "foo"
+          username: "foo",
         } }
       end
 

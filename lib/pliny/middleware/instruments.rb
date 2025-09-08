@@ -12,7 +12,7 @@ module Pliny::Middleware
       data = {
         instrumentation: true,
         method: env["REQUEST_METHOD"],
-        path: env["PATH_INFO"]
+        path: env["PATH_INFO"],
       }
 
       Pliny.log(data.merge(at: "start"))

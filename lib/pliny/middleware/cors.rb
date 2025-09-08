@@ -50,7 +50,7 @@ module Pliny::Middleware
         "access-control-allow-headers" => allow_headers.join(", "),
         "access-control-allow-credentials" => "true",
         "access-control-max-age" => "1728000",
-        "access-control-expose-headers" => EXPOSE_HEADERS.join(", ")
+        "access-control-expose-headers" => EXPOSE_HEADERS.join(", "),
       }
     end
   end

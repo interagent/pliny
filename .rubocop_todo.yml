@@ -197,19 +197,6 @@ Style/TrailingCommaInArrayLiteral:
     - 'spec/commands/generator/base_spec.rb'
     - 'spec/db_support_spec.rb'
 
-# Offense count: 6
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyleForMultiline.
-# SupportedStylesForMultiline: comma, consistent_comma, diff_comma, no_comma
-Style/TrailingCommaInHashLiteral:
-  Exclude:
-    - 'lib/pliny/db_support.rb'
-    - 'lib/pliny/middleware/cors.rb'
-    - 'lib/pliny/middleware/instruments.rb'
-    - 'lib/pliny/request_store.rb'
-    - 'spec/error_reporters/rollbar_spec.rb'
-    - 'spec/request_store_spec.rb'
-
 # Offense count: 2
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: EnforcedStyle.
