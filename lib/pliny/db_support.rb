@@ -144,15 +144,15 @@ module Pliny
       end
 
       def barrier_row
-        "+#{'-' * (longest_status + PADDING)}+#{'-' * (longest_migration_name + PADDING)}+"
+        "+#{"-" * (longest_status + PADDING)}+#{"-" * (longest_migration_name + PADDING)}+"
       end
 
       def header_row
-        "|#{'STATUS'.center(longest_status + PADDING)}|#{'MIGRATION'.center(longest_migration_name + PADDING)}|"
+        "|#{"STATUS".center(longest_status + PADDING)}|#{"MIGRATION".center(longest_migration_name + PADDING)}|"
       end
 
       def status_row(migration_status)
-        "|#{STATUS_MAP[migration_status.status].center(longest_status + PADDING)}|#{' ' * (PADDING / 2)}#{migration_status.filename.ljust(longest_migration_name)}#{' ' * (PADDING / 2)}|"
+        "|#{STATUS_MAP[migration_status.status].center(longest_status + PADDING)}|#{" " * (PADDING / 2)}#{migration_status.filename.ljust(longest_migration_name)}#{" " * (PADDING / 2)}|"
       end
 
       private
