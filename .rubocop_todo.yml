@@ -56,16 +56,6 @@ Lint/Void:
   Exclude:
     - 'lib/pliny/log.rb'
 
-# Offense count: 3
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: lowercase, uppercase
-Naming/HeredocDelimiterCase:
-  Exclude:
-    - 'lib/pliny/helpers/serialize.rb'
-    - 'lib/pliny/middleware/versioning.rb'
-    - 'spec/middleware/versioning_spec.rb'
-
 # Offense count: 1
 Security/Eval:
   Exclude:

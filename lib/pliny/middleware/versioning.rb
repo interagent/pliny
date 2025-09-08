@@ -25,9 +25,9 @@ module Pliny::Middleware
       media_types.map! do |media_type|
         if accept_headers.include?(media_type.format)
           unless media_type.params["version"]
-            error = { id: :bad_version, message: <<~eos }
+            error = { id: :bad_version, message: <<~EOS }
               Please specify a version along with the MIME type. For example, `Accept: application/vnd.#{@app_name}+json; version=1`.
-            eos
+            EOS
             return [400, { "content-type" => "application/json; charset=utf-8" },
               [JSON.generate(error)]]
           end

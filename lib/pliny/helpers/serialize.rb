@@ -12,10 +12,10 @@ module Pliny::Helpers
         serializer_class = settings.serializer_class
 
         if serializer_class.nil?
-          raise <<~eos.strip
+          raise <<~EOS.strip
             No serializer has been specified for this endpoint. Please specify one with
             `serializer Serializers::ModelName` in the endpoint.
-          eos
+          EOS
         end
 
         env["pliny.serializer_arity"] = data.respond_to?(:size) ? data.size : 1
