@@ -178,8 +178,8 @@ describe Pliny::DbSupport do
     end
   end
 
-  describe 'MigrationStatusPresenter' do
-    let(:filename) { '1630551344_latest_change.rb' }
+  describe "MigrationStatusPresenter" do
+    let(:filename) { "1630551344_latest_change.rb" }
     let(:up_migration) { described_class::MigrationStatus.new(filename: "00#{filename}") }
     let(:down_migration) { described_class::MigrationStatus.new(filename: "0#{filename}") }
     let(:file_missing_migration) { described_class::MigrationStatus.new(filename: "000#{filename}") }
@@ -195,79 +195,79 @@ describe Pliny::DbSupport do
       file_missing_migration.present_on_disk = false
     end
 
-    describe '#barrier_row' do
-      it 'pads to the longest_migration name' do
-        expectation = '+--------------+--------------------------------+'
+    describe "#barrier_row" do
+      it "pads to the longest_migration name" do
+        expectation = "+--------------+--------------------------------+"
         assert_equal expectation, presenter.barrier_row
       end
     end
 
-    describe '#header_row' do
-      it 'pads to the longest migration name' do
-        expectation = '|    STATUS    |           MIGRATION            |'
+    describe "#header_row" do
+      it "pads to the longest migration name" do
+        expectation = "|    STATUS    |           MIGRATION            |"
         assert_equal expectation, presenter.header_row
       end
     end
 
-    describe '#header' do
-      let(:barrier) { '+--------------+--------------------------------+' }
-      let(:header) { '|    STATUS    |           MIGRATION            |' }
+    describe "#header" do
+      let(:barrier) { "+--------------+--------------------------------+" }
+      let(:header) { "|    STATUS    |           MIGRATION            |" }
 
-      it 'wraps the title in barriers' do
+      it "wraps the title in barriers" do
         assert_equal [barrier, header, barrier], presenter.header
       end
     end
 
-    describe '#footer' do
-      let(:barrier) { '+--------------+--------------------------------+' }
+    describe "#footer" do
+      let(:barrier) { "+--------------+--------------------------------+" }
 
-      it 'just a barrier' do
+      it "just a barrier" do
         assert_equal [barrier], presenter.footer
       end
     end
 
-    describe '#status_row' do
-      context 'an up migration' do
-        it 'shows the correct details' do
-          expectation = '|      UP      | 001630551344_latest_change.rb  |'
+    describe "#status_row" do
+      context "an up migration" do
+        it "shows the correct details" do
+          expectation = "|      UP      | 001630551344_latest_change.rb  |"
           assert_equal expectation, presenter.status_row(up_migration)
         end
       end
 
-      context 'a down migration' do
-        it 'shows the correct details' do
-          expectation = '|     DOWN     | 01630551344_latest_change.rb   |'
+      context "a down migration" do
+        it "shows the correct details" do
+          expectation = "|     DOWN     | 01630551344_latest_change.rb   |"
           assert_equal expectation, presenter.status_row(down_migration)
         end
       end
 
-      context 'a file missing migration' do
-        it 'shows the correct details' do
-          expectation = '| FILE MISSING | 0001630551344_latest_change.rb |'
+      context "a file missing migration" do
+        it "shows the correct details" do
+          expectation = "| FILE MISSING | 0001630551344_latest_change.rb |"
           assert_equal expectation, presenter.status_row(file_missing_migration)
         end
       end
     end
 
-    describe '#statuses' do
-      let(:up_expectation) { '|      UP      | 001630551344_latest_change.rb  |' }
-      let(:down_expectation) { '|     DOWN     | 01630551344_latest_change.rb   |' }
-      let(:file_missing_expectation) { '| FILE MISSING | 0001630551344_latest_change.rb |' }
+    describe "#statuses" do
+      let(:up_expectation) { "|      UP      | 001630551344_latest_change.rb  |" }
+      let(:down_expectation) { "|     DOWN     | 01630551344_latest_change.rb   |" }
+      let(:file_missing_expectation) { "| FILE MISSING | 0001630551344_latest_change.rb |" }
 
-      it 'returns strings' do
+      it "returns strings" do
         assert_equal [up_expectation, down_expectation, file_missing_expectation], presenter.statuses
       end
     end
 
-    describe '#rows' do
-      let(:barrier) { '+--------------+--------------------------------+' }
-      let(:header) { '|    STATUS    |           MIGRATION            |' }
-      let(:up_expectation) { '|      UP      | 001630551344_latest_change.rb  |' }
-      let(:down_expectation) { '|     DOWN     | 01630551344_latest_change.rb   |' }
-      let(:file_missing_expectation) { '| FILE MISSING | 0001630551344_latest_change.rb |' }
-      let(:footer) { '+--------------+--------------------------------+' }
+    describe "#rows" do
+      let(:barrier) { "+--------------+--------------------------------+" }
+      let(:header) { "|    STATUS    |           MIGRATION            |" }
+      let(:up_expectation) { "|      UP      | 001630551344_latest_change.rb  |" }
+      let(:down_expectation) { "|     DOWN     | 01630551344_latest_change.rb   |" }
+      let(:file_missing_expectation) { "| FILE MISSING | 0001630551344_latest_change.rb |" }
+      let(:footer) { "+--------------+--------------------------------+" }
 
-      it 'is the table as an array' do
+      it "is the table as an array" do
         expectation = [
           barrier,
           header,
@@ -282,8 +282,8 @@ describe Pliny::DbSupport do
       end
     end
 
-    describe '#to_s' do
-      it 'is the table as a string' do
+    describe "#to_s" do
+      it "is the table as a string" do
         expectation = <<~OUTPUT.chomp
           +--------------+--------------------------------+
           |    STATUS    |           MIGRATION            |
@@ -299,8 +299,8 @@ describe Pliny::DbSupport do
     end
   end
 
-  describe '#status' do
-    let(:filename) { '1630551344_latest_change.rb' }
+  describe "#status" do
+    let(:filename) { "1630551344_latest_change.rb" }
     let(:up_migration) { "00#{filename}" }
     let(:down_migration) { "0#{filename}" }
     let(:file_missing_migration) { "000#{filename}" }
@@ -341,7 +341,7 @@ describe Pliny::DbSupport do
       end
     end
 
-    it 'returns a table string' do
+    it "returns a table string" do
       expectation = <<~OUTPUT.chomp
         +--------------+--------------------------------+
         |    STATUS    |           MIGRATION            |

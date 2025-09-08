@@ -81,7 +81,7 @@ describe "Pliny integration test" do
 
     it "returns a migration in the DOWN state when not migrated" do
       bash "pliny-generate model artist"
-      migration_file = Dir.glob('db/migrate/*').first
+      migration_file = Dir.glob("db/migrate/*").first
 
       stdout, stderr = bash_with_output("rake db:migrate:status")
 
@@ -91,7 +91,7 @@ describe "Pliny integration test" do
 
     it "returns a migration in the UP state when not migrated" do
       bash "pliny-generate model artist"
-      migration_file = Dir.glob('db/migrate/*').first
+      migration_file = Dir.glob("db/migrate/*").first
       bash "rake db:migrate"
 
       stdout, stderr = bash_with_output("rake db:migrate:status")
@@ -102,7 +102,7 @@ describe "Pliny integration test" do
 
     it "returns a migration in the FILE MISSING state when the file is missing" do
       bash "pliny-generate model artist"
-      migration_file = Dir.glob('db/migrate/*').first
+      migration_file = Dir.glob("db/migrate/*").first
       bash "rake db:migrate"
 
       FileUtils.rm_f(migration_file)
@@ -115,7 +115,7 @@ describe "Pliny integration test" do
   end
 
   def bash_with_output(cmd)
-    bin = File.expand_path('../bin', File.dirname(__FILE__))
+    bin = File.expand_path("../bin", File.dirname(__FILE__))
     path = "#{bin}:#{ENV["PATH"]}"
     env = { "PATH" => path }
     stdout, stderr, status = Open3.capture3(env, cmd)
@@ -128,7 +128,7 @@ describe "Pliny integration test" do
   end
 
   def bash(cmd)
-    bin = File.expand_path('../bin', File.dirname(__FILE__))
+    bin = File.expand_path("../bin", File.dirname(__FILE__))
     path = "#{bin}:#{ENV["PATH"]}"
     env = { "PATH" => path }
     unless system(env, "#{cmd} > /dev/null")

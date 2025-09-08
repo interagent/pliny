@@ -26,7 +26,7 @@ module Pliny
     end
 
     def bool
-      ->(v) { v.to_s == 'true'}
+      ->(v) { v.to_s == "true"}
     end
 
     def string
@@ -90,10 +90,10 @@ module Pliny
 
     # PLINY_ENV is deprecated, but it might be still used by someone.
     def legacy_env
-      if ENV.key?('PLINY_ENV')
+      if ENV.key?("PLINY_ENV")
         warn "PLINY_ENV is deprecated in favour of APP_ENV, " \
              "update .env file or application configuration."
-        ENV['PLINY_ENV']
+        ENV["PLINY_ENV"]
       end
     end
   end

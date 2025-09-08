@@ -5,7 +5,7 @@ module Pliny
     def self.parse_env(file)
       env = {}
       File.open(file).each do |line|
-        line = line.gsub(/#.*$/, '').strip
+        line = line.gsub(/#.*$/, "").strip
         next if line.empty?
         var, value = line.split("=", 2)
         value.gsub!(/^['"](.*)['"]$/, '\1')

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'sinatra/router'
+require "sinatra/router"
 
 module Pliny
   class Router < Sinatra::Router

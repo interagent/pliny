@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'rollbar/exception_reporter'
-require 'rollbar/request_data_extractor'
+require "rollbar/exception_reporter"
+require "rollbar/request_data_extractor"
 
 module Pliny
   module ErrorReporters

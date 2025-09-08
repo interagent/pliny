@@ -10,7 +10,7 @@ describe Pliny::Metrics do
   end
 
   before do
-    allow(Config).to receive(:app_name).and_return('pliny')
+    allow(Config).to receive(:app_name).and_return("pliny")
   end
 
   around do |example|
@@ -71,7 +71,7 @@ describe Pliny::Metrics do
       end
 
       expect(test_backend).to have_received(:report_measures) do |opts|
-        assert(60 <= opts['pliny.foo'] && opts['pliny.foo'] <= 61)
+        assert(60 <= opts["pliny.foo"] && opts["pliny.foo"] <= 61)
       end
     end
 

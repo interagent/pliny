@@ -1,20 +1,20 @@
 # frozen_string_literal: true
 
-require 'pliny/commands/generator'
-require 'pliny/commands/generator/endpoint'
-require 'spec_helper'
+require "pliny/commands/generator"
+require "pliny/commands/generator/endpoint"
+require "spec_helper"
 
 describe Pliny::Commands::Generator::Endpoint do
   subject { Pliny::Commands::Generator::Endpoint.new(endpoint_name, {}, StringIO.new) }
-  let(:endpoint_name) { 'resource_history' }
+  let(:endpoint_name) { "resource_history" }
 
-  describe '#url_path' do
-    it 'builds a URL path' do
-      assert_equal '/resource-histories', subject.url_path
+  describe "#url_path" do
+    it "builds a URL path" do
+      assert_equal "/resource-histories", subject.url_path
     end
   end
 
-  describe 'template' do
+  describe "template" do
     before do
       # render the stub endpoint template to a string
       template = subject.render_template("endpoint.erb",

@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require 'fileutils'
-require 'pathname'
-require 'pliny/version'
-require 'uri'
-require 'erb'
-require 'ostruct'
+require "fileutils"
+require "pathname"
+require "pliny/version"
+require "uri"
+require "erb"
+require "ostruct"
 
 module Pliny::Commands
   class Creator
@@ -27,7 +27,7 @@ module Pliny::Commands
       FileUtils.copy_entry template_dir, app_dir
       FileUtils.rm_rf("#{app_dir}/.git")
       parse_erb_files
-      display 'Pliny app created. To start, run:'
+      display "Pliny app created. To start, run:"
       display "cd #{app_dir} && bin/setup"
     end
 
@@ -35,7 +35,7 @@ module Pliny::Commands
 
     def parse_erb_files
       Dir.glob("#{app_dir}/{*,.*}.erb").each do |file|
-        static_file = file.gsub(/\.erb$/, '')
+        static_file = file.gsub(/\.erb$/, "")
 
         template = ERB.new(File.read(file))
         context = OpenStruct.new(app_name: name)
@@ -57,7 +57,7 @@ module Pliny::Commands
     end
 
     def template_dir
-      File.expand_path('../../template', File.dirname(__FILE__))
+      File.expand_path("../../template", File.dirname(__FILE__))
     end
 
     def app_dir

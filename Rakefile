@@ -3,7 +3,7 @@
 $:.unshift File.expand_path("../lib", __FILE__)
 require "pliny/version"
 
-require 'rspec/core/rake_task'
+require "rspec/core/rake_task"
 RSpec::Core::RakeTask.new(:spec)
 task default: :spec
 
@@ -46,9 +46,9 @@ task :release do
   sh "rm pliny-#{new_version}.gem"
 end
 
-desc 'Open a irb/pry session preloaded with pliny'
+desc "Open a irb/pry session preloaded with pliny"
 task :console do
-  require 'pry'
-  require 'pliny'
+  require "pry"
+  require "pliny"
   Pry.start
 end

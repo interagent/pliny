@@ -18,11 +18,11 @@ module Pliny::Helpers
           eos
         end
 
-        env['pliny.serializer_arity'] = data.respond_to?(:size) ? data.size : 1
+        env["pliny.serializer_arity"] = data.respond_to?(:size) ? data.size : 1
 
         start = Time.now
         serializer_class.new(structure).serialize(data).tap do
-          env['pliny.serializer_timing'] = (Time.now - start).to_f
+          env["pliny.serializer_timing"] = (Time.now - start).to_f
         end
       end
     end

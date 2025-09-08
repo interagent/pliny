@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require 'active_support/inflector'
-require 'ostruct'
-require 'erb'
-require 'fileutils'
-require 'pliny'
+require "active_support/inflector"
+require "ostruct"
+require "erb"
+require "fileutils"
+require "pliny"
 
 module Pliny::Commands
   class Generator
@@ -34,7 +34,7 @@ module Pliny::Commands
       end
 
       def table_name
-        name.tableize.tr('/', '_')
+        name.tableize.tr("/", "_")
       end
 
       def display(msg)
@@ -43,7 +43,7 @@ module Pliny::Commands
 
       def render_template(template_file, vars = {})
         template_path = File.dirname(__FILE__) + "/../../templates/#{template_file}"
-        template = ERB.new(File.read(template_path), trim_mode: '>')
+        template = ERB.new(File.read(template_path), trim_mode: ">")
         context = OpenStruct.new(vars)
         template.result(context.instance_eval { binding })
       end
@@ -56,7 +56,7 @@ module Pliny::Commands
 
       def write_file(destination_path)
         FileUtils.mkdir_p(File.dirname(destination_path))
-        File.open(destination_path, 'w') do |f|
+        File.open(destination_path, "w") do |f|
           f.puts yield
         end
       end
@@ -64,7 +64,7 @@ module Pliny::Commands
       private
 
       def normalize_name(name)
-        name.underscore.tr(' ', '_')
+        name.underscore.tr(" ", "_")
       end
     end
   end

@@ -68,7 +68,7 @@ describe Pliny::Log do
   it "local context does not overwrite default context" do
     Pliny.default_context = { app: "pliny" }
     expect(@io).to receive(:print).with("app=not_pliny foo=bar\n")
-    Pliny.log(app: 'not_pliny', foo: "bar")
+    Pliny.log(app: "not_pliny", foo: "bar")
     assert Pliny.default_context[:app] == "pliny"
   end
 

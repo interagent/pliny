@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 require "optparse"
-require_relative '../lib/pliny/commands/creator'
+require_relative "../lib/pliny/commands/creator"
 
 OptionParser.new do |options|
   opts = {}
