@@ -29,7 +29,7 @@ module Pliny
     end
 
     class << self
-      alias :require_relative_glob :require_glob
+      alias_method :require_relative_glob, :require_glob
     end
   end
 end
