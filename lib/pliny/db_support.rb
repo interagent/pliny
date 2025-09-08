@@ -17,9 +17,9 @@ module Pliny
       @db = Sequel.connect(database_url)
       @db.test_connection
       @db.disconnect
-      return true
+      true
     rescue Sequel::DatabaseConnectionError
-      return false
+      false
     end
 
     def self.run(url, sequel_log_io = StringIO.new)
@@ -41,7 +41,7 @@ module Pliny
 
     def exists?(name)
       res = db.fetch("SELECT 1 FROM pg_database WHERE datname = ?", name)
-      return res.count > 0
+      res.count > 0
     end
 
     def create(name)

@@ -147,14 +147,6 @@ Style/RedundantRegexpCharacterClass:
     - 'spec/integration_spec.rb'
 
 # Offense count: 4
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: AllowMultipleReturnValues.
-Style/RedundantReturn:
-  Exclude:
-    - 'lib/pliny/db_support.rb'
-    - 'spec/integration_spec.rb'
-
-# Offense count: 4
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: ConvertCodeThatCanStartToReturnNil, AllowedMethods, MaxChainLength.
 # AllowedMethods: present?, blank?, presence, try, try!

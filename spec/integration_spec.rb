@@ -124,7 +124,7 @@ describe "Pliny integration test" do
       raise "Failed to run #{cmd}, error was #{stderr}"
     end
 
-    return stdout, stderr
+    [stdout, stderr]
   end
 
   def bash(cmd)
