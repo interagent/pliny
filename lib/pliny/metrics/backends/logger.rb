@@ -15,7 +15,7 @@ module Pliny
         private
 
         def self.add_prefix(type, metrics)
-          metrics.map { |k, v| [ "#{type}##{k}", v ] }.to_h
+          metrics.map { |k, v| ["#{type}##{k}", v] }.to_h
         end
       end
     end
