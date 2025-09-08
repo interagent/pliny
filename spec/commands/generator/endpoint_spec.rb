@@ -54,6 +54,5 @@ describe Pliny::Commands::Generator::Endpoint do
       assert_equal 200, last_response.status
       assert_equal Hash.new, JSON.parse(last_response.body)
     end
-
   end
 end

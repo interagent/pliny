@@ -4,7 +4,6 @@ require "spec_helper"
 require "pliny/config_helpers"
 
 describe Pliny::CastingConfigHelpers do
-
   describe "#rack_env" do
     it "is development if app_env is development" do
       config = Class.new do

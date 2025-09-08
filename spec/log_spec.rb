@@ -97,7 +97,6 @@ describe Pliny::Log do
   end
 
   describe "scrubbing" do
-
     it "allows a Proc to be assigned as a log scrubber" do
       Pliny.log_scrubber = -> (hash) { hash }
 
