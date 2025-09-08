@@ -46,7 +46,7 @@ module Pliny
     def array(method = nil)
       -> (v) do
         if v
-          v.split(",").map{|a| cast(a, method) }
+          v.split(",").map {|a| cast(a, method) }
         end
       end
     end
