@@ -7,12 +7,6 @@
 # versions of RuboCop, may require this file to be generated again.
 
 # Offense count: 1
-# Configuration parameters: MaximumRangeSize.
-Lint/MissingCopEnableDirective:
-  Exclude:
-    - 'lib/template/bin/run'
-
-# Offense count: 1
 Lint/RescueException:
   Exclude:
     - 'lib/pliny/error_reporters/rollbar.rb'

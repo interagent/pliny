@@ -6,3 +6,5 @@
 require_relative "../lib/application"
 
 eval ARGV.join(" ")
+
+# rubocop:enable Security/Eval
