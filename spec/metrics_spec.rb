@@ -71,7 +71,7 @@ describe Pliny::Metrics do
       end
 
       expect(test_backend).to have_received(:report_measures) do |opts|
-        assert(60 <= opts["pliny.foo"] && opts["pliny.foo"] <= 61)
+        assert(opts["pliny.foo"].between?(60, 61))
       end
     end
 
