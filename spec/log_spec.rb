@@ -98,7 +98,7 @@ describe Pliny::Log do
 
   describe "scrubbing" do
     it "allows a Proc to be assigned as a log scrubber" do
-      Pliny.log_scrubber = -> (hash) { hash }
+      Pliny.log_scrubber = ->(hash) { hash }
 
       begin
         Pliny.log_scrubber = Object.new
@@ -109,7 +109,7 @@ describe Pliny::Log do
 
     describe "when a scrubber is present" do
       before do
-        Pliny.log_scrubber = -> (hash) {
+        Pliny.log_scrubber = ->(hash) {
           Hash.new.tap do |h|
             hash.keys.each do |k|
               h[k] = "*SCRUBBED*"

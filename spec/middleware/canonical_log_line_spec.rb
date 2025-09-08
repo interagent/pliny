@@ -9,7 +9,7 @@ describe Pliny::Middleware::CanonicalLogLine do
         use Pliny::Middleware::RequestID
 
         use Pliny::Middleware::CanonicalLogLine,
-          emitter: -> (data) { Pliny.log_without_context(data) }
+          emitter: ->(data) { Pliny.log_without_context(data) }
 
         use Pliny::Middleware::RescueErrors, raise: false
 

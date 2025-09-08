@@ -8,7 +8,7 @@ Routes = Rack::Builder.new do
   use Pliny::Middleware::Metrics
   use Pliny::Middleware::Instruments
   use Pliny::Middleware::CanonicalLogLine,
-    emitter: -> (data) {
+    emitter: ->(data) {
       Pliny.log_with_default_context({ canonical_log_line: true }.merge(data))
     }
   use Pliny::Middleware::RescueErrors, raise: Config.raise_errors?

@@ -44,7 +44,7 @@ module Pliny
     # optional :notype, array
     # => ['a', 'b']
     def array(method = nil)
-      -> (v) do
+      ->(v) do
         if v
           v.split(",").map {|a| cast(a, method) }
         end
