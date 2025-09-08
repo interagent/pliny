@@ -81,12 +81,10 @@ module Pliny
           else
             :down
           end
+        elsif present_in_database
+          :file_missing
         else
-          if present_in_database
-            :file_missing
-          else
-            raise "error" # FIXME: better message
-          end
+          raise "error" # FIXME: better message
         end
       end
     end
