@@ -133,11 +133,11 @@ module Pliny
 
     def quote_string(v)
       if !v.include?('"')
-        %{"#{v}"}
+        %("#{v}")
       elsif !v.include?("'")
-        %{'#{v}'}
+        %('#{v}')
       else
-        %{"#{v.gsub('"', '\\"')}"}
+        %("#{v.gsub('"', '\\"')}")
       end
     end
 

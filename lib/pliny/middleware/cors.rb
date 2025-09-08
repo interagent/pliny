@@ -3,11 +3,11 @@
 module Pliny::Middleware
   class CORS
     ALLOW_METHODS =
-      %w(GET POST PUT PATCH DELETE OPTIONS).freeze
+      %w[GET POST PUT PATCH DELETE OPTIONS].freeze
     ALLOW_HEADERS =
-      %w(Content-Type Accept Authorization Cache-Control If-None-Match If-Modified-Since Origin).freeze
+      %w[Content-Type Accept Authorization Cache-Control If-None-Match If-Modified-Since Origin].freeze
     EXPOSE_HEADERS =
-      %w(Cache-Control Content-Language Content-Type Expires Last-Modified Pragma).freeze
+      %w[Cache-Control Content-Language Content-Type Expires Last-Modified Pragma].freeze
 
     @@additional_headers = []
 

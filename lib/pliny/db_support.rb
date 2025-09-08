@@ -45,7 +45,7 @@ module Pliny
     end
 
     def create(name)
-      db.run(%{CREATE DATABASE "#{name}"})
+      db.run(%(CREATE DATABASE "#{name}"))
     end
 
     def migrate(target = nil)
