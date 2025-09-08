@@ -132,7 +132,6 @@ module Pliny
       end
     end
   end
-
 end
 
 # Supress the "use RbConfig instead" warning
