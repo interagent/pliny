@@ -148,7 +148,7 @@ module Pliny
     def unparse_pair(k, v)
       v = v.call if v.is_a?(Proc)
 
-      if v == nil
+      if v.nil?
         nil
       elsif v == true
         k
