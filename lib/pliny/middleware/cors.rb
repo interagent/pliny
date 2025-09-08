@@ -2,7 +2,6 @@
 
 module Pliny::Middleware
   class CORS
-
     ALLOW_METHODS  =
       %w( GET POST PUT PATCH DELETE OPTIONS ).freeze
     ALLOW_HEADERS  =
