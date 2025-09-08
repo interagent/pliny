@@ -24,6 +24,7 @@ describe Pliny::Helpers::Serialize do
   context "with a serializer" do
     class Serializer
       def initialize(opts); end
+
       def serialize(data)
         data
       end
