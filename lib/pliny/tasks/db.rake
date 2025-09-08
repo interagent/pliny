@@ -167,7 +167,7 @@ begin
     end
 
     def name_from_uri(uri)
-      URI.parse(uri).path[1..-1]
+      URI.parse(uri).path[1..]
     end
   end
 rescue LoadError
