@@ -16,7 +16,7 @@ Pry.prompt = [
 
   proc do |target_self, nest_level, pry|
     basic_prompt(target_self, nest_level, pry) + "* "
-  end
+  end,
 ]
 
 Pry.start

@@ -275,7 +275,7 @@ describe Pliny::DbSupport do
           up_expectation,
           down_expectation,
           file_missing_expectation,
-          footer
+          footer,
         ]
 
         assert_equal expectation, presenter.rows

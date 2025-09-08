@@ -106,7 +106,7 @@ module Pliny
       STATUS_OPTIONS = [
         UP,
         DOWN,
-        FILE_MISSING
+        FILE_MISSING,
       ].freeze
 
       attr_reader :migration_statuses
@@ -127,7 +127,7 @@ module Pliny
         [
           barrier_row,
           header_row,
-          barrier_row
+          barrier_row,
         ]
       end
 
@@ -139,7 +139,7 @@ module Pliny
 
       def footer
         [
-          barrier_row
+          barrier_row,
         ]
       end
 

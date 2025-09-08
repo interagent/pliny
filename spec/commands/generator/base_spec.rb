@@ -15,7 +15,7 @@ describe Pliny::Commands::Generator::Base do
         "resource history",
         "resource-history",
         "resource_history",
-        "ResourceHistory"
+        "ResourceHistory",
       ].each do |argument|
         actual = generator(argument).name
         assert_equal "resource_history", actual

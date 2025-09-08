@@ -29,7 +29,7 @@ module Pliny::Middleware
               Please specify a version along with the MIME type. For example, `Accept: application/vnd.#{@app_name}+json; version=1`.
             EOS
             return [400, { "content-type" => "application/json; charset=utf-8" },
-              [JSON.generate(error)]]
+              [JSON.generate(error)],]
           end
 
           unless version

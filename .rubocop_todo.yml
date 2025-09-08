@@ -185,18 +185,6 @@ Style/StringLiteralsInInterpolation:
   Exclude:
     - 'lib/pliny/db_support.rb'
 
-# Offense count: 7
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyleForMultiline.
-# SupportedStylesForMultiline: comma, consistent_comma, diff_comma, no_comma
-Style/TrailingCommaInArrayLiteral:
-  Exclude:
-    - 'lib/pliny/db_support.rb'
-    - 'lib/pliny/middleware/versioning.rb'
-    - 'lib/template/bin/console'
-    - 'spec/commands/generator/base_spec.rb'
-    - 'spec/db_support_spec.rb'
-
 # Offense count: 2
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: EnforcedStyle.
