@@ -41,9 +41,7 @@ module Pliny::Commands
         context = OpenStruct.new(app_name: name)
         content = template.result(context.instance_eval { binding })
 
-        File.open(static_file, "w") do |f|
-          f.write content
-        end
+        File.write(static_file, content)
         FileUtils.rm(file)
       end
     end

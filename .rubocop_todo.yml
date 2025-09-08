@@ -75,12 +75,6 @@ Style/EmptyMethod:
   Exclude:
     - 'spec/helpers/serialize_spec.rb'
 
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-Style/FileWrite:
-  Exclude:
-    - 'lib/pliny/commands/creator.rb'
-
 # Offense count: 5
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: AllowSplatArgument.
