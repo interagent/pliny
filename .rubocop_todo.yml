@@ -163,13 +163,6 @@ Style/SelfAssignment:
   Exclude:
     - 'lib/pliny/errors.rb'
 
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: AllowIfMethodIsEmpty.
-Style/SingleLineMethods:
-  Exclude:
-    - 'spec/helpers/serialize_spec.rb'
-
 # Offense count: 4
 # This cop supports unsafe autocorrection (--autocorrect-all).
 Style/SlicingWithRange:
