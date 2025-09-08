@@ -22,8 +22,8 @@ module Pliny
 
       def initialize(message = nil, id = nil, status = nil)
         meta = Pliny::Errors::META[self.class]
-        message = message || meta[1] + "."
-        id = id || meta[1].downcase.tr(" ", "_").to_sym
+        message ||= meta[1] + "."
+        id ||= meta[1].downcase.tr(" ", "_").to_sym
         @status = status || meta[0]
         super(message, id)
       end
