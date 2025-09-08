@@ -27,7 +27,8 @@ describe Pliny::Metrics::Backends::Logger do
     it "logs multiple keys with values" do
       backend.report_counts('app.foo' => 1, 'app.bar' => 2)
       expect(io).to have_received(:print).with(
-        "count#app.foo=1 count#app.bar=2\n")
+        "count#app.foo=1 count#app.bar=2\n",
+      )
     end
   end
 
@@ -40,7 +41,8 @@ describe Pliny::Metrics::Backends::Logger do
     it "logs multiple keys with values" do
       backend.report_measures('pliny.foo' => 0.3, 'pliny.bar' => 0.5)
       expect(io).to have_received(:print).with(
-        "measure#pliny.foo=0.300 measure#pliny.bar=0.500\n")
+        "measure#pliny.foo=0.300 measure#pliny.bar=0.500\n",
+      )
     end
   end
 end

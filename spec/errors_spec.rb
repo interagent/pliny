@@ -11,7 +11,8 @@ describe Pliny::Errors do
 
   it "includes an HTTP error that will take generic parameters" do
     e = Pliny::Errors::HTTPStatusError.new(
-      "Custom HTTP error.", :custom_http_error, 499)
+      "Custom HTTP error.", :custom_http_error, 499
+    )
     assert_equal "Custom HTTP error.", e.message
     assert_equal :custom_http_error, e.id
     assert_equal 499, e.status

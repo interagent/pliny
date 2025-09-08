@@ -13,17 +13,6 @@ Layout/LeadingEmptyLines:
     - 'lib/template/Rakefile'
     - 'lib/template/lib/tasks/spec.rake'
 
-# Offense count: 6
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: symmetrical, new_line, same_line
-Layout/MultilineMethodCallBraceLayout:
-  Exclude:
-    - 'lib/pliny/log.rb'
-    - 'spec/errors_spec.rb'
-    - 'spec/metrics/backends/logger_spec.rb'
-    - 'spec/middleware/canonical_log_line_spec.rb'
-
 # Offense count: 7
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: EnforcedStyle.
