@@ -43,13 +43,6 @@ Lint/RescueException:
     - 'lib/pliny/error_reporters/rollbar.rb'
 
 # Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: CheckForMethodsWithNoSideEffects.
-Lint/Void:
-  Exclude:
-    - 'lib/pliny/log.rb'
-
-# Offense count: 1
 Security/Eval:
   Exclude:
     - 'spec/commands/generator/endpoint_spec.rb'

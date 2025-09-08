@@ -44,10 +44,9 @@ module Pliny
     def context(data, &block)
       old = local_context
       self.local_context = old.merge(data)
-      res = block.call
+      block.call
     ensure
       self.local_context = old
-      res
     end
 
     def default_context=(default_context)
