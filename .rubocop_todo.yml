@@ -6,21 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 49
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: AllowForAlignment, AllowBeforeTrailingComments, ForceEqualSignAlignment.
-Layout/ExtraSpacing:
-  Exclude:
-    - 'lib/pliny/commands/updater.rb'
-    - 'lib/pliny/errors.rb'
-    - 'lib/pliny/middleware/cors.rb'
-    - 'lib/template/config/config.rb'
-    - 'pliny.gemspec'
-    - 'spec/db_support_spec.rb'
-    - 'spec/error_reporters/rollbar_spec.rb'
-    - 'spec/error_reporters_spec.rb'
-    - 'spec/integration_spec.rb'
-
 # Offense count: 63
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: AllowMultipleStyles, EnforcedHashRocketStyle, EnforcedColonStyle, EnforcedLastArgumentHashStyle.

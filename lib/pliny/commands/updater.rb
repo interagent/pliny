@@ -23,7 +23,7 @@ module Pliny::Commands
       end
 
       version_current = get_current_version
-      version_target  = Gem::Version.new(Pliny::VERSION)
+      version_target = Gem::Version.new(Pliny::VERSION)
 
       if version_current == version_target
         display "Version #{version_current} is current, nothing to update."

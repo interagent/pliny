@@ -211,7 +211,7 @@ describe Pliny::DbSupport do
 
     describe '#header' do
       let(:barrier) { '+--------------+--------------------------------+' }
-      let(:header)  { '|    STATUS    |           MIGRATION            |' }
+      let(:header) { '|    STATUS    |           MIGRATION            |' }
 
       it 'wraps the title in barriers' do
         assert_equal [barrier, header, barrier], presenter.header
@@ -250,8 +250,8 @@ describe Pliny::DbSupport do
     end
 
     describe '#statuses' do
-      let(:up_expectation)           { '|      UP      | 001630551344_latest_change.rb  |' }
-      let(:down_expectation)         { '|     DOWN     | 01630551344_latest_change.rb   |' }
+      let(:up_expectation) { '|      UP      | 001630551344_latest_change.rb  |' }
+      let(:down_expectation) { '|     DOWN     | 01630551344_latest_change.rb   |' }
       let(:file_missing_expectation) { '| FILE MISSING | 0001630551344_latest_change.rb |' }
 
       it 'returns strings' do
@@ -260,12 +260,12 @@ describe Pliny::DbSupport do
     end
 
     describe '#rows' do
-      let(:barrier)                  { '+--------------+--------------------------------+' }
-      let(:header)                   { '|    STATUS    |           MIGRATION            |' }
-      let(:up_expectation)           { '|      UP      | 001630551344_latest_change.rb  |' }
-      let(:down_expectation)         { '|     DOWN     | 01630551344_latest_change.rb   |' }
+      let(:barrier) { '+--------------+--------------------------------+' }
+      let(:header) { '|    STATUS    |           MIGRATION            |' }
+      let(:up_expectation) { '|      UP      | 001630551344_latest_change.rb  |' }
+      let(:down_expectation) { '|     DOWN     | 01630551344_latest_change.rb   |' }
       let(:file_missing_expectation) { '| FILE MISSING | 0001630551344_latest_change.rb |' }
-      let(:footer)                   { '+--------------+--------------------------------+' }
+      let(:footer) { '+--------------+--------------------------------+' }
 
       it 'is the table as an array' do
         expectation = [

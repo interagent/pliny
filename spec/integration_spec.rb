@@ -115,7 +115,7 @@ describe "Pliny integration test" do
   end
 
   def bash_with_output(cmd)
-    bin  = File.expand_path('../bin', File.dirname(__FILE__))
+    bin = File.expand_path('../bin', File.dirname(__FILE__))
     path = "#{bin}:#{ENV["PATH"]}"
     env = { "PATH" => path }
     stdout, stderr, status = Open3.capture3(env, cmd)
@@ -128,7 +128,7 @@ describe "Pliny integration test" do
   end
 
   def bash(cmd)
-    bin  = File.expand_path('../bin', File.dirname(__FILE__))
+    bin = File.expand_path('../bin', File.dirname(__FILE__))
     path = "#{bin}:#{ENV["PATH"]}"
     env = { "PATH" => path }
     unless system(env, "#{cmd} > /dev/null")
