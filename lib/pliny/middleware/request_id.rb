@@ -50,7 +50,7 @@ module Pliny::Middleware
       # with no prefix, but Hermes went with one. Support both formats on
       # input.
       %w[HTTP_REQUEST_ID HTTP_X_REQUEST_ID].inject([]) do |request_ids, key|
-        if ids = env[key]
+        if (ids = env[key])
           request_ids += ids.split(",")
         end
         request_ids

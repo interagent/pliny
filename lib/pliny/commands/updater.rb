@@ -52,7 +52,7 @@ module Pliny::Commands
 
     def get_current_version
       File.read("./Gemfile.lock").split("\n").each do |line|
-        next unless pliny_version = line.match(/pliny \(([\d+.]+)\)/)
+        next unless (pliny_version = line.match(/pliny \(([\d+.]+)\)/))
         return Gem::Version.new(pliny_version[1])
       end
     end
