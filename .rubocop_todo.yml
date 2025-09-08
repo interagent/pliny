@@ -134,12 +134,6 @@ Style/RedundantInterpolation:
   Exclude:
     - 'lib/pliny/log.rb'
 
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-Style/RedundantRegexpArgument:
-  Exclude:
-    - 'lib/pliny/log.rb'
-
 # Offense count: 4
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: ConvertCodeThatCanStartToReturnNil, AllowedMethods, MaxChainLength.

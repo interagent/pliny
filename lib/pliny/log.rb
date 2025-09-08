@@ -137,7 +137,7 @@ module Pliny
       elsif !v.include?("'")
         %{'#{v}'}
       else
-        %{"#{v.gsub(/"/, '\\"')}"}
+        %{"#{v.gsub('"', '\\"')}"}
       end
     end
 
