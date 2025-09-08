@@ -18,7 +18,6 @@ describe Pliny::Commands::Generator::Schema do
     end
   end
 
-
   describe '#create' do
     context 'with new layout' do
       before do
