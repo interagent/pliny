@@ -1,7 +1,6 @@
 require:
  - rubocop-rspec
-AllCops:
-  TargetRubyVersion: 2.3
+
 # Offense count: 8
 # Configuration parameters: AllowHeredoc, AllowURI, URISchemes, IgnoreCopDirectives.
 # URISchemes: http, https

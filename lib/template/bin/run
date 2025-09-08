@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-# rubocop:disable Lint/Eval
+# rubocop:disable Security/Eval
 
 require_relative "../lib/application"
 
