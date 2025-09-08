@@ -34,25 +34,25 @@ describe Pliny::Commands::Generator::Endpoint do
     it "defines a stub POST /" do
       post "/artists"
       assert_equal 201, last_response.status
-      assert_equal Hash.new, JSON.parse(last_response.body)
+      assert_equal({}, JSON.parse(last_response.body))
     end
 
     it "defines a stub GET /:id" do
       get "/artists/123"
       assert_equal 200, last_response.status
-      assert_equal Hash.new, JSON.parse(last_response.body)
+      assert_equal({}, JSON.parse(last_response.body))
     end
 
     it "defines a stub PATCH /:id" do
       patch "/artists/123"
       assert_equal 200, last_response.status
-      assert_equal Hash.new, JSON.parse(last_response.body)
+      assert_equal({}, JSON.parse(last_response.body))
     end
 
     it "defines a stub DELETE /:id" do
       delete "/artists/123"
       assert_equal 200, last_response.status
-      assert_equal Hash.new, JSON.parse(last_response.body)
+      assert_equal({}, JSON.parse(last_response.body))
     end
   end
 end

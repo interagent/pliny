@@ -67,13 +67,6 @@ Style/ComparableBetween:
   Exclude:
     - 'spec/metrics_spec.rb'
 
-# Offense count: 5
-# This cop supports safe autocorrection (--autocorrect).
-Style/EmptyLiteral:
-  Exclude:
-    - 'spec/commands/generator/endpoint_spec.rb'
-    - 'spec/log_spec.rb'
-
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: EnforcedStyle.

@@ -110,7 +110,7 @@ describe Pliny::Log do
     describe "when a scrubber is present" do
       before do
         Pliny.log_scrubber = ->(hash) {
-          Hash.new.tap do |h|
+          {}.tap do |h|
             hash.keys.each do |k|
               h[k] = "*SCRUBBED*"
             end
