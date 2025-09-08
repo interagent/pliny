@@ -8,5 +8,5 @@ database_setup_proc = lambda do |conn|
 end
 
 DB = Sequel.connect(Config.database_url,
-                    max_connections: Config.db_pool,
-                    after_connect: database_setup_proc)
+  max_connections: Config.db_pool,
+  after_connect: database_setup_proc)

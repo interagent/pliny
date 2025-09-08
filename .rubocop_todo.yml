@@ -6,19 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 26
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle, IndentationWidth.
-# SupportedStyles: with_first_argument, with_fixed_indentation
-Layout/ArgumentAlignment:
-  Exclude:
-    - 'lib/pliny/commands/generator/endpoint.rb'
-    - 'lib/pliny/commands/generator/mediator.rb'
-    - 'lib/pliny/commands/generator/model.rb'
-    - 'lib/pliny/commands/generator/serializer.rb'
-    - 'lib/template/config/initializers/database.rb'
-    - 'lib/template/lib/routes.rb'
-
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: EnforcedStyleAlignWith, Severity.
