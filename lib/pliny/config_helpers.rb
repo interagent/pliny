@@ -26,7 +26,7 @@ module Pliny
     end
 
     def bool
-      ->(v) { v.to_s=='true'}
+      ->(v) { v.to_s == 'true'}
     end
 
     def string

@@ -13,16 +13,6 @@ Layout/LeadingEmptyLines:
     - 'lib/template/Rakefile'
     - 'lib/template/lib/tasks/spec.rake'
 
-# Offense count: 2
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: AllowForAlignment, EnforcedStyleForExponentOperator, EnforcedStyleForRationalLiterals.
-# SupportedStylesForExponentOperator: space, no_space
-# SupportedStylesForRationalLiterals: space, no_space
-Layout/SpaceAroundOperators:
-  Exclude:
-    - 'lib/pliny/config_helpers.rb'
-    - 'lib/pliny/middleware/metrics.rb'
-
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: EnforcedStyle, EnforcedStyleForEmptyBraces.
