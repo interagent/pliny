@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Endpoints
   class Root < Base
     get "/" do

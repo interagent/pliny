@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 unless ENV["TEST_LOGS"] == "true"
   module Pliny
     module Log

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "logger"
 require "sequel"
 require "sequel/extensions/migration"
@@ -91,9 +93,9 @@ module Pliny
 
     class MigrationStatusPresenter
       PADDING = 2
-      UP = "UP".freeze
-      DOWN = "DOWN".freeze
-      FILE_MISSING = "FILE MISSING".freeze
+      UP = "UP"
+      DOWN = "DOWN"
+      FILE_MISSING = "FILE MISSING"
 
       STATUS_MAP = {
         up: UP,
@@ -210,7 +212,7 @@ module Pliny
 
     private
 
-    MIGRATION_DIR = "./db/migrate".freeze
+    MIGRATION_DIR = "./db/migrate"
     private_constant :MIGRATION_DIR
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "pliny/error_reporters/rollbar"
 
 Pliny::ErrorReporters.error_reporters << Pliny::ErrorReporters::Rollbar

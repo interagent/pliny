@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "./config/config"
 
 environment Config.rack_env

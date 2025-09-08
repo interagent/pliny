@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Pliny
   module Utils
     def self.parse_env(file)

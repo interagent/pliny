@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Pliny::Helpers
   module Params
     def body_params

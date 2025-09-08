@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Initializer
   def self.run
     require_config

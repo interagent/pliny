@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'pliny/commands/generator/serializer'
 require 'spec_helper'
 

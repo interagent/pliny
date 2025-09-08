@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "spec_helper"
 require "rollbar"
 require "pliny/error_reporters/rollbar"

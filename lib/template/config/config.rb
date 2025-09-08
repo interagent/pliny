@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "pliny/config_helpers"
 
 # Access all config keys like the following:

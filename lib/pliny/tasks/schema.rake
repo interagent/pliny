@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 desc "Rebuild schema.json"
 task :schema do
   require 'pliny/commands/generator/schema'

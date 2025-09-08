@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Serializers
   class Base
     extend Pliny::Helpers::ZuluTime

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # please add changes here to core's Instruments as well
 
 module Pliny::Middleware

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Pliny::Helpers
   module ZuluTime
     def zulu_time(time)

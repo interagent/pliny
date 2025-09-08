@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Pliny::Middleware
   # Emits a "canonical log line", i.e. a single log line that contains as much
   # relevant information about a request as possible and which makes for a

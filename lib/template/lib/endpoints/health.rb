@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Endpoints
   class Health < Base
     namespace "/health" do

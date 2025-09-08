@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 
 # define our own version of the spec task because rspec might not be available
 # in the production environment, so we can't rely on RSpec::Core::RakeTask

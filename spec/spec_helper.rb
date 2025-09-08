@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # make sure this is set before Sinatra is required
 ENV["RACK_ENV"] = "test"
 

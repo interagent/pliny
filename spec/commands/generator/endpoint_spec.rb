@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'pliny/commands/generator'
 require 'pliny/commands/generator/endpoint'
 require 'spec_helper'

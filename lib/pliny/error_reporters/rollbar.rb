@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rollbar/exception_reporter'
 require 'rollbar/request_data_extractor'
 

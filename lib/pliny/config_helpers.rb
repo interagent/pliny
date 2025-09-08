@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Pliny
   module CastingConfigHelpers
     def mandatory(name, method=nil)

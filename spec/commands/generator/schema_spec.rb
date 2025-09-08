@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'pliny/commands/creator'
 require 'pliny/commands/generator'
 require 'pliny/commands/generator/schema'
