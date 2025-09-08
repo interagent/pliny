@@ -6,16 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 4
-# Configuration parameters: AllowedMethods.
-# AllowedMethods: enums
-Lint/ConstantDefinitionInBlock:
-  Exclude:
-    - 'spec/canonical_log_line_helpers_spec.rb'
-    - 'spec/helpers/serialize_spec.rb'
-    - 'spec/helpers/zulu_time_spec.rb'
-    - 'spec/middleware/rescue_errors_spec.rb'
-
 # Offense count: 1
 Lint/IneffectiveAccessModifier:
   Exclude:

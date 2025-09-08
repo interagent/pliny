@@ -2,18 +2,18 @@
 
 require "spec_helper"
 
-describe Pliny::Middleware::RescueErrors do
-  include Rack::Test::Methods
-
-  class BadMiddleware
-    def call(env)
-      if env["PATH_INFO"] == "/api-error"
-        raise Pliny::Errors::ServiceUnavailable
-      else
-        raise "Omg!"
-      end
+class BadMiddleware
+  def call(env)
+    if env["PATH_INFO"] == "/api-error"
+      raise Pliny::Errors::ServiceUnavailable
+    else
+      raise "Omg!"
     end
   end
+end
+
+describe Pliny::Middleware::RescueErrors do
+  include Rack::Test::Methods
 
   attr_reader :app
 

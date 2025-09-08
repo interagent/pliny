@@ -2,15 +2,15 @@
 
 require "spec_helper"
 
+class TestCanonicalLogLine
+  include Pliny::CanonicalLogLineHelpers
+
+  log_field :field_float, Float
+  log_field :field_integer, Integer
+  log_field :field_string, String
+end
+
 describe Pliny::CanonicalLogLineHelpers do
-  class TestCanonicalLogLine
-    include Pliny::CanonicalLogLineHelpers
-
-    log_field :field_float, Float
-    log_field :field_integer, Integer
-    log_field :field_string, String
-  end
-
   it "allows a field to be set" do
     line = TestCanonicalLogLine.new
     line.field_string = "foo"
