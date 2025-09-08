@@ -85,7 +85,7 @@ describe "Pliny integration test" do
 
       stdout, _ = bash_with_output("rake db:migrate:status")
 
-      statuses = Hash[stdout.to_s.split(/\+[-]+\+[-]+\+/)[2..-1].map { |s| s.tr("\n", "") }.select(&:present?).map { |s| s.split("|").map { |s| s.tr(" ", "") }.select(&:present?).reverse }]
+      statuses = Hash[stdout.to_s.split(/\+-+\+-+\+/)[2..-1].map { |s| s.tr("\n", "") }.select(&:present?).map { |s| s.split("|").map { |s| s.tr(" ", "") }.select(&:present?).reverse }]
       assert statuses[migration_file.split("/").last] == "DOWN"
     end
 
@@ -96,7 +96,7 @@ describe "Pliny integration test" do
 
       stdout, _ = bash_with_output("rake db:migrate:status")
 
-      statuses = Hash[stdout.to_s.split(/\+[-]+\+[-]+\+/)[2..-1].map { |s| s.tr("\n", "") }.select(&:present?).map { |s| s.split("|").map { |s| s.tr(" ", "") }.select(&:present?).reverse }]
+      statuses = Hash[stdout.to_s.split(/\+-+\+-+\+/)[2..-1].map { |s| s.tr("\n", "") }.select(&:present?).map { |s| s.split("|").map { |s| s.tr(" ", "") }.select(&:present?).reverse }]
       assert statuses[migration_file.split("/").last] == "UP"
     end
 
@@ -109,7 +109,7 @@ describe "Pliny integration test" do
 
       stdout, _ = bash_with_output("rake db:migrate:status")
 
-      statuses = Hash[stdout.to_s.split(/\+[-]+\+[-]+\+/)[2..-1].map { |s| s.tr("\n", "") }.select(&:present?).map { |s| s.split("|").map { |s| s.gsub(/(^[ ]+|[ ]+$)/, "") }.select(&:present?).reverse }]
+      statuses = Hash[stdout.to_s.split(/\+-+\+-+\+/)[2..-1].map { |s| s.tr("\n", "") }.select(&:present?).map { |s| s.split("|").map { |s| s.gsub(/(^ +| +$)/, "") }.select(&:present?).reverse }]
       assert statuses[migration_file.split("/").last] == "FILE MISSING"
     end
   end

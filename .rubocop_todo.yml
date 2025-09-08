@@ -140,12 +140,6 @@ Style/RedundantRegexpArgument:
   Exclude:
     - 'lib/pliny/log.rb'
 
-# Offense count: 8
-# This cop supports safe autocorrection (--autocorrect).
-Style/RedundantRegexpCharacterClass:
-  Exclude:
-    - 'spec/integration_spec.rb'
-
 # Offense count: 4
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: ConvertCodeThatCanStartToReturnNil, AllowedMethods, MaxChainLength.
