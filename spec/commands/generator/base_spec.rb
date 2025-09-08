@@ -101,7 +101,7 @@ describe Pliny::Commands::Generator::Base do
       assert_match /module Endpoints/, File.read(destination_path)
     end
   end
-  
+
   describe "#write_file" do
     let(:destination_path) { File.join(Dir.mktmpdir, "foo.txt") }
 
