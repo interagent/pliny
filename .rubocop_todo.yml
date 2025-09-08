@@ -146,12 +146,6 @@ Style/RedundantRegexpCharacterClass:
   Exclude:
     - 'spec/integration_spec.rb'
 
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-Style/RedundantRegexpEscape:
-  Exclude:
-    - 'lib/pliny/commands/updater.rb'
-
 # Offense count: 4
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: AllowMultipleReturnValues.
