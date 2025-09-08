@@ -83,7 +83,7 @@ describe "Pliny integration test" do
       bash "pliny-generate model artist"
       migration_file = Dir.glob("db/migrate/*").first
 
-      stdout, stderr = bash_with_output("rake db:migrate:status")
+      stdout, _ = bash_with_output("rake db:migrate:status")
 
       statuses = Hash[stdout.to_s.split(/\+[-]+\+[-]+\+/)[2..-1].map { |s| s.tr("\n", "") }.select(&:present?).map { |s| s.split("|").map { |s| s.tr(" ", "") }.select(&:present?).reverse }]
       assert statuses[migration_file.split("/").last] == "DOWN"
@@ -94,7 +94,7 @@ describe "Pliny integration test" do
       migration_file = Dir.glob("db/migrate/*").first
       bash "rake db:migrate"
 
-      stdout, stderr = bash_with_output("rake db:migrate:status")
+      stdout, _ = bash_with_output("rake db:migrate:status")
 
       statuses = Hash[stdout.to_s.split(/\+[-]+\+[-]+\+/)[2..-1].map { |s| s.tr("\n", "") }.select(&:present?).map { |s| s.split("|").map { |s| s.tr(" ", "") }.select(&:present?).reverse }]
       assert statuses[migration_file.split("/").last] == "UP"
@@ -107,7 +107,7 @@ describe "Pliny integration test" do
 
       FileUtils.rm_f(migration_file)
 
-      stdout, stderr = bash_with_output("rake db:migrate:status")
+      stdout, _ = bash_with_output("rake db:migrate:status")
 
       statuses = Hash[stdout.to_s.split(/\+[-]+\+[-]+\+/)[2..-1].map { |s| s.tr("\n", "") }.select(&:present?).map { |s| s.split("|").map { |s| s.gsub(/(^[ ]+|[ ]+$)/, "") }.select(&:present?).reverse }]
       assert statuses[migration_file.split("/").last] == "FILE MISSING"
