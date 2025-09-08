@@ -8,13 +8,6 @@
 
 # Offense count: 2
 # This cop supports safe autocorrection (--autocorrect).
-Layout/HeredocIndentation:
-  Exclude:
-    - 'lib/pliny/middleware/versioning.rb'
-    - 'spec/middleware/versioning_spec.rb'
-
-# Offense count: 2
-# This cop supports safe autocorrection (--autocorrect).
 Layout/LeadingEmptyLines:
   Exclude:
     - 'lib/template/Rakefile'

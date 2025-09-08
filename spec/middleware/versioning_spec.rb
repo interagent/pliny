@@ -30,8 +30,8 @@ describe Pliny::Middleware::Versioning do
 
   it "errors without a version specified on application/vnd.pliny+json" do
     get '/', {}, {'HTTP_ACCEPT' => 'application/vnd.pliny+json'}
-    error = { id: :bad_version, message: <<-eos }
-Please specify a version along with the MIME type. For example, `Accept: application/vnd.pliny+json; version=1`.
+    error = { id: :bad_version, message: <<~eos }
+      Please specify a version along with the MIME type. For example, `Accept: application/vnd.pliny+json; version=1`.
     eos
 
     assert_equal 400, last_response.status
