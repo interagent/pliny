@@ -26,7 +26,7 @@ module Pliny
     end
 
     def bool
-      ->(v) { v.to_s == "true"}
+      ->(v) { v.to_s == "true" }
     end
 
     def string
@@ -46,7 +46,7 @@ module Pliny
     def array(method = nil)
       ->(v) do
         if v
-          v.split(",").map {|a| cast(a, method) }
+          v.split(",").map { |a| cast(a, method) }
         end
       end
     end

@@ -59,7 +59,7 @@ describe Pliny::Metrics do
     end
 
     it "measures a block's execution time with a single key" do
-      metrics.measure(:foo) { }
+      metrics.measure(:foo) {}
       expect(test_backend).to have_received(:report_measures).once.with(
         "pliny.foo" => 0,
       )
@@ -76,7 +76,7 @@ describe Pliny::Metrics do
     end
 
     it "measures a block's execution time with multiple keys" do
-      metrics.measure(:foo, :bar) { }
+      metrics.measure(:foo, :bar) {}
       expect(test_backend).to have_received(:report_measures).once.with(
         "pliny.foo" => 0,
         "pliny.bar" => 0,
@@ -91,7 +91,7 @@ describe Pliny::Metrics do
     end
 
     it "measures a given value for multiple keys with a block" do
-      metrics.measure(:qux, :corge, value: 42) { }
+      metrics.measure(:qux, :corge, value: 42) {}
       expect(test_backend).to have_received(:report_measures).once.with(
         "pliny.qux" => 42,
         "pliny.corge" => 42,
