@@ -11,8 +11,8 @@ module Pliny::Middleware
 
       data = {
         instrumentation: true,
-        method:          env["REQUEST_METHOD"],
-        path:            env["PATH_INFO"]
+        method: env["REQUEST_METHOD"],
+        path: env["PATH_INFO"]
       }
 
       Pliny.log(data.merge(at: "start"))
@@ -25,10 +25,10 @@ module Pliny::Middleware
 
       elapsed = (Time.now - start).to_f
       Pliny.log(data.merge(
-        at:              "finish",
-        status:          status,
-        length:          headers["Content-Length"],
-        elapsed:         elapsed
+        at: "finish",
+        status: status,
+        length: headers["Content-Length"],
+        elapsed: elapsed
       ))
 
       [status, headers, response]

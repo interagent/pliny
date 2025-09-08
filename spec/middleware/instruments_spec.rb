@@ -27,17 +27,17 @@ describe Pliny::Middleware::Instruments do
   it "performs logging" do
     expect(Pliny).to receive(:log).with(hash_including(
       instrumentation: true,
-      at:              "start",
-      method:          "GET",
-      path:            "/apps/123",
+      at: "start",
+      method: "GET",
+      path: "/apps/123",
     ))
     expect(Pliny).to receive(:log).with(hash_including(
       instrumentation: true,
-      at:              "finish",
-      method:          "GET",
-      path:            "/apps/123",
+      at: "finish",
+      method: "GET",
+      path: "/apps/123",
       route_signature: "/apps/:id",
-      status:          201
+      status: 201
     ))
     get "/apps/123"
   end

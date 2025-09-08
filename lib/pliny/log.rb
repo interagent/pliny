@@ -22,7 +22,7 @@ module Pliny
         e.backtrace.reverse.each do |backtrace|
           log_to_stream(stderr || $stderr, merge_log_contexts(
             exception_id: exception_id,
-            backtrace:    backtrace
+            backtrace: backtrace
           ))
         end
       end
@@ -30,9 +30,9 @@ module Pliny
       # then log the exception message last so that it's as close to the end of
       # a log trace as possible
       data.merge!(
-        exception:    true,
-        class:        e.class.name,
-        message:      e.message,
+        exception: true,
+        class: e.class.name,
+        message: e.message,
         exception_id: exception_id
       )
 
