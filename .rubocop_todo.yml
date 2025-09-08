@@ -13,13 +13,6 @@ Layout/LeadingEmptyLines:
     - 'lib/template/Rakefile'
     - 'lib/template/lib/tasks/spec.rake'
 
-# Offense count: 9
-# This cop supports safe autocorrection (--autocorrect).
-Layout/SpaceInsidePercentLiteralDelimiters:
-  Exclude:
-    - 'lib/pliny/middleware/cors.rb'
-    - 'pliny.gemspec'
-
 # Offense count: 1
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: AllowInHeredoc.
