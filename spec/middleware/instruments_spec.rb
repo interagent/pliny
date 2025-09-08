@@ -37,7 +37,7 @@ describe Pliny::Middleware::Instruments do
       method: "GET",
       path: "/apps/123",
       route_signature: "/apps/:id",
-      status: 201
+      status: 201,
     ))
     get "/apps/123"
   end
@@ -45,7 +45,7 @@ describe Pliny::Middleware::Instruments do
   it "respects Pliny error status codes" do
     expect(Pliny).to receive(:log)
     expect(Pliny).to receive(:log).with(hash_including(
-      status: 404
+      status: 404,
     ))
     get "/error"
   end

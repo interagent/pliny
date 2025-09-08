@@ -7,7 +7,7 @@ task :spec do
   require "rspec/core"
   code = RSpec::Core::Runner.run(
     ["./spec"],
-    $stderr, $stdout
+    $stderr, $stdout,
   )
   exit(code) unless code.zero?
 end

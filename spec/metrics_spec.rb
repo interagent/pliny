@@ -43,7 +43,7 @@ describe Pliny::Metrics do
       metrics.count(:foo, :bar)
       expect(test_backend).to have_received(:report_counts).once.with(
         "pliny.foo" => 1,
-        "pliny.bar" => 1
+        "pliny.bar" => 1,
       )
     end
   end
@@ -61,7 +61,7 @@ describe Pliny::Metrics do
     it "measures a block's execution time with a single key" do
       metrics.measure(:foo) { }
       expect(test_backend).to have_received(:report_measures).once.with(
-        "pliny.foo" => 0
+        "pliny.foo" => 0,
       )
     end
 
@@ -79,14 +79,14 @@ describe Pliny::Metrics do
       metrics.measure(:foo, :bar) { }
       expect(test_backend).to have_received(:report_measures).once.with(
         "pliny.foo" => 0,
-        "pliny.bar" => 0
+        "pliny.bar" => 0,
       )
     end
 
     it "measures a given value for a single key without a block" do
       metrics.measure(:baz, value: 3.14)
       expect(test_backend).to have_received(:report_measures).once.with(
-        "pliny.baz" => 3.14
+        "pliny.baz" => 3.14,
       )
     end
 
@@ -94,14 +94,14 @@ describe Pliny::Metrics do
       metrics.measure(:qux, :corge, value: 42) { }
       expect(test_backend).to have_received(:report_measures).once.with(
         "pliny.qux" => 42,
-        "pliny.corge" => 42
+        "pliny.corge" => 42,
       )
     end
 
     it "measures a value of 0 when no key or block is provided" do
       metrics.measure(:waldo)
       expect(test_backend).to have_received(:report_measures).once.with(
-        "pliny.waldo" => 0
+        "pliny.waldo" => 0,
       )
     end
 
@@ -109,7 +109,7 @@ describe Pliny::Metrics do
       metrics.measure("metric.name", "another.name", value: 3.14, foo: :bar)
       expect(test_backend).to have_received(:report_measures).once.with(
         "pliny.metric.name" => 3.14,
-        "pliny.another.name" => 3.14
+        "pliny.another.name" => 3.14,
       )
     end
 
@@ -117,7 +117,7 @@ describe Pliny::Metrics do
       metrics.measure("metric.name", "another.name", { value: 3.14, foo: :bar })
       expect(test_backend).to have_received(:report_measures).once.with(
         "pliny.metric.name" => 3.14,
-        "pliny.another.name" => 3.14
+        "pliny.another.name" => 3.14,
       )
     end
   end

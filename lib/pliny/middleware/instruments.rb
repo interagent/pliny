@@ -28,7 +28,7 @@ module Pliny::Middleware
         at: "finish",
         status: status,
         length: headers["Content-Length"],
-        elapsed: elapsed
+        elapsed: elapsed,
       ))
 
       [status, headers, response]

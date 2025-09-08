@@ -19,7 +19,7 @@ describe Pliny::Commands::Generator::Endpoint do
       # render the stub endpoint template to a string
       template = subject.render_template("endpoint.erb",
         plural_class_name: "Artists",
-        url_path: "/artists")
+        url_path: "/artists",)
 
       # eval and assign it to rack_app so tests are pointing to it
       @rack_app = eval(template)

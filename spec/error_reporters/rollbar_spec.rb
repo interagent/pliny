@@ -31,7 +31,7 @@ describe Pliny::ErrorReporters::Rollbar do
       notify
       expect(::Rollbar).to have_received(:scoped).once.with(hash_including(
         request: instance_of(Proc),
-        custom: { step: :foo }
+        custom: { step: :foo },
       ))
     end
 

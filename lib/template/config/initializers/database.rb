@@ -9,4 +9,4 @@ end
 
 DB = Sequel.connect(Config.database_url,
   max_connections: Config.db_pool,
-  after_connect: database_setup_proc)
+  after_connect: database_setup_proc,)

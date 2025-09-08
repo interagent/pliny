@@ -347,27 +347,6 @@ Style/StringLiteralsInInterpolation:
   Exclude:
     - 'lib/pliny/db_support.rb'
 
-# Offense count: 32
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyleForMultiline.
-# SupportedStylesForMultiline: comma, consistent_comma, no_comma
-Style/TrailingCommaInArguments:
-  Exclude:
-    - 'lib/pliny/commands/generator/endpoint.rb'
-    - 'lib/pliny/commands/generator/mediator.rb'
-    - 'lib/pliny/commands/generator/model.rb'
-    - 'lib/pliny/commands/generator/serializer.rb'
-    - 'lib/pliny/log.rb'
-    - 'lib/pliny/middleware/instruments.rb'
-    - 'lib/template/config/initializers/database.rb'
-    - 'lib/template/lib/tasks/spec.rake'
-    - 'spec/canonical_log_line_helpers_spec.rb'
-    - 'spec/commands/generator/endpoint_spec.rb'
-    - 'spec/error_reporters/rollbar_spec.rb'
-    - 'spec/errors_spec.rb'
-    - 'spec/metrics_spec.rb'
-    - 'spec/middleware/instruments_spec.rb'
-
 # Offense count: 7
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: EnforcedStyleForMultiline.

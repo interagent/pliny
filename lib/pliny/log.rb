@@ -22,8 +22,8 @@ module Pliny
         e.backtrace.reverse.each do |backtrace|
           log_to_stream(stderr || $stderr, merge_log_contexts(
             exception_id: exception_id,
-            backtrace: backtrace
-          ))
+            backtrace: backtrace,
+          ),)
         end
       end
 
@@ -33,7 +33,7 @@ module Pliny
         exception: true,
         class: e.class.name,
         message: e.message,
-        exception_id: exception_id
+        exception_id: exception_id,
       )
 
       data[:status] = e.status if e.respond_to?(:status)
@@ -115,13 +115,13 @@ module Pliny
         begin
           res = yield
           log_to_stream(stream, data.merge(
-            at: "finish", elapsed: (Time.now - start).to_f
-          ))
+            at: "finish", elapsed: (Time.now - start).to_f,
+          ),)
           res
         rescue
           log_to_stream(stream, data.merge(
-            at: "exception", elapsed: (Time.now - start).to_f
-          ))
+            at: "exception", elapsed: (Time.now - start).to_f,
+          ),)
           raise $!
         end
       end

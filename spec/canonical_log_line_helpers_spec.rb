@@ -36,6 +36,6 @@ describe Pliny::CanonicalLogLineHelpers do
     line.field_integer = 42
     line.field_string = "foo"
     assert_equal({ field_float: 3.14, field_integer: 42, field_string: "foo" },
-      line.to_h)
+      line.to_h,)
   end
 end
