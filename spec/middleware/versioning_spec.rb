@@ -22,14 +22,14 @@ describe Pliny::Middleware::Versioning do
   end
 
   it "produces default version on application/json" do
-    get "/", {}, {"HTTP_ACCEPT" => "application/json"}
+    get "/", {}, { "HTTP_ACCEPT" => "application/json" }
     json = JSON.parse(last_response.body)
     assert_equal "application/json", json["HTTP_ACCEPT"]
     assert_equal "2", json["HTTP_X_API_VERSION"]
   end
 
   it "errors without a version specified on application/vnd.pliny+json" do
-    get "/", {}, {"HTTP_ACCEPT" => "application/vnd.pliny+json"}
+    get "/", {}, { "HTTP_ACCEPT" => "application/vnd.pliny+json" }
     error = { id: :bad_version, message: <<~eos }
       Please specify a version along with the MIME type. For example, `Accept: application/vnd.pliny+json; version=1`.
     eos
@@ -39,14 +39,14 @@ describe Pliny::Middleware::Versioning do
   end
 
   it "ignores a wrong app name" do
-    get "/", {}, {"HTTP_ACCEPT" => "application/vnd.chuck_norris+json"}
+    get "/", {}, { "HTTP_ACCEPT" => "application/vnd.chuck_norris+json" }
     json = JSON.parse(last_response.body)
     assert_equal "application/vnd.chuck_norris+json", json["HTTP_ACCEPT"]
     assert_equal "2", json["HTTP_X_API_VERSION"]
   end
 
   it "produces a version on application/vnd.pliny+json; version=3" do
-    get "/", {}, {"HTTP_ACCEPT" => "application/vnd.pliny+json; version=3"}
+    get "/", {}, { "HTTP_ACCEPT" => "application/vnd.pliny+json; version=3" }
     json = JSON.parse(last_response.body)
     assert_equal "application/json", json["HTTP_ACCEPT"]
     assert_equal "3", json["HTTP_X_API_VERSION"]
@@ -54,14 +54,14 @@ describe Pliny::Middleware::Versioning do
 
   # this behavior is pretty sketchy, but a pretty extreme edge case
   it "handles multiple MIME types" do
-    get "/", {}, {"HTTP_ACCEPT" => "application/vnd.pliny+json; version=3; q=0.5, text/xml"}
+    get "/", {}, { "HTTP_ACCEPT" => "application/vnd.pliny+json; version=3; q=0.5, text/xml" }
     json = JSON.parse(last_response.body)
     assert_equal "text/xml, application/json; q=0.5", json["HTTP_ACCEPT"]
     assert_equal "3", json["HTTP_X_API_VERSION"]
   end
 
   it "produces the priority version on multiple types" do
-    get "/", {}, {"HTTP_ACCEPT" => "application/vnd.pliny+json; version=4; q=0.5, application/vnd.pliny+json; version=3"}
+    get "/", {}, { "HTTP_ACCEPT" => "application/vnd.pliny+json; version=4; q=0.5, application/vnd.pliny+json; version=3" }
     json = JSON.parse(last_response.body)
     assert_equal "application/json, application/json; q=0.5", json["HTTP_ACCEPT"]
     assert_equal "3", json["HTTP_X_API_VERSION"]

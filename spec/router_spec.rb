@@ -33,7 +33,7 @@ describe Pliny::Router do
     end
 
     it "should run on API V3" do
-      get "/", {}, {"HTTP_ACCEPT" => "application/vnd.pliny+json; version=3"}
+      get "/", {}, { "HTTP_ACCEPT" => "application/vnd.pliny+json; version=3" }
       assert_equal "API V3", last_response.body
     end
   end

@@ -41,7 +41,7 @@ describe Pliny::ErrorReporters::Rollbar do
           id: SecureRandom.uuid,
           email: "foo@bar.com",
           username: "foo"
-        }}
+        } }
       end
 
       it "adds person to the rollbar notification" do
@@ -68,7 +68,7 @@ describe Pliny::ErrorReporters::Rollbar do
 
       it "reports to Rollbar without request data in the scope" do
         notify
-        expect(Rollbar).to have_received(:scoped).once.with({ custom: {step: :foo} })
+        expect(Rollbar).to have_received(:scoped).once.with({ custom: { step: :foo } })
       end
 
       it "delegates to #report_exception_to_rollbar" do
