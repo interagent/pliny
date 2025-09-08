@@ -104,7 +104,8 @@ describe Pliny::Log do
       begin
         Pliny.log_scrubber = Object.new
         fail
-      rescue ArgumentError; end
+      rescue ArgumentError
+      end
     end
 
     describe "when a scrubber is present" do
