@@ -13,13 +13,6 @@ Layout/LeadingEmptyLines:
     - 'lib/template/Rakefile'
     - 'lib/template/lib/tasks/spec.rake'
 
-# Offense count: 4
-# This cop supports safe autocorrection (--autocorrect).
-Lint/AmbiguousRegexpLiteral:
-  Exclude:
-    - 'spec/commands/generator/base_spec.rb'
-    - 'spec/helpers/params_spec.rb'
-
 # Offense count: 6
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: AllowSafeAssignment.

@@ -85,7 +85,7 @@ describe Pliny::Commands::Generator::Base do
   describe "#render_template" do
     it "renders template into a string" do
       template = generator("resource_history").render_template("endpoint.erb")
-      assert_match /module Endpoints/, template
+      assert_match(/module Endpoints/, template)
     end
   end
 
@@ -98,7 +98,7 @@ describe Pliny::Commands::Generator::Base do
 
     it "renders given template into a file by given path" do
       assert File.exist?(destination_path)
-      assert_match /module Endpoints/, File.read(destination_path)
+      assert_match(/module Endpoints/, File.read(destination_path))
     end
   end
 
@@ -116,7 +116,7 @@ describe Pliny::Commands::Generator::Base do
     end
 
     it "writes given content into a file" do
-      assert_match /Hello world/, File.read(destination_path)
+      assert_match(/Hello world/, File.read(destination_path))
     end
   end
 end
