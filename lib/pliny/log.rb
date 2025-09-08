@@ -156,7 +156,7 @@ module Pliny
       elsif v.is_a?(Time)
         "#{k}=#{v.iso8601}"
       else
-        v = "#{v}"
+        v = v.to_s
         v = replace_newlines(v)
         v = quote_string(v) if v =~ /\s/
 
