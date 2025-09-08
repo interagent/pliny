@@ -22,7 +22,7 @@ describe Pliny::Commands::Generator::Endpoint do
         url_path: "/artists",)
 
       # eval and assign it to rack_app so tests are pointing to it
-      @rack_app = eval(template)
+      @rack_app = eval(template) # rubocop:disable Security/Eval
     end
 
     it "defines a stub GET /" do

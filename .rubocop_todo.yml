@@ -7,11 +7,6 @@
 # versions of RuboCop, may require this file to be generated again.
 
 # Offense count: 1
-Security/Eval:
-  Exclude:
-    - 'spec/commands/generator/endpoint_spec.rb'
-
-# Offense count: 1
 # This cop supports unsafe autocorrection (--autocorrect-all).
 Style/ComparableBetween:
   Exclude:
