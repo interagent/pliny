@@ -59,7 +59,7 @@ describe Pliny::Middleware::Instruments do
   it "measures the request latency" do
     expect(Pliny::Metrics).to receive(:measure) do |key, opts|
       assert_equal(key, "requests.latency")
-      assert(opts[:value] > 4 && opts[:value] < 6)
+      assert_in_delta(5, opts[:value], 1)
     end
 
     get "/hello"
