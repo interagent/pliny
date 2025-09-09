@@ -21,6 +21,7 @@ describe Pliny::Commands::Creator do
       @gen.run!
       assert File.exist?("./foobar")
       assert File.exist?("./foobar/Gemfile")
+      assert File.exist?("./foobar/.rubocop.yml")
     end
 
     it "deletes the .git from it" do
