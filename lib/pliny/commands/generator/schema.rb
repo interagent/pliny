@@ -1,5 +1,7 @@
-require_relative 'base'
-require 'prmd'
+# frozen_string_literal: true
+
+require_relative "base"
+require "prmd"
 
 module Pliny::Commands
   class Generator

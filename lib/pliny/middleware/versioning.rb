@@ -1,8 +1,10 @@
-require 'http_accept'
+# frozen_string_literal: true
+
+require "http_accept"
 
 module Pliny::Middleware
   class Versioning
-    def initialize(app, options={})
+    def initialize(app, options = {})
       @app = app
       @default = options[:default] || raise("missing=default")
       @app_name = options[:app_name] || raise("missing=app_name")
@@ -22,17 +24,15 @@ module Pliny::Middleware
       version = nil
       media_types.map! do |media_type|
         if accept_headers.include?(media_type.format)
-          unless media_type.params['version']
-            error = { id: :bad_version, message: <<-eos }
-Please specify a version along with the MIME type. For example, `Accept: application/vnd.#{@app_name}+json; version=1`.
-            eos
+          unless media_type.params["version"]
+            error = { id: :bad_version, message: <<~EOS }
+              Please specify a version along with the MIME type. For example, `Accept: application/vnd.#{@app_name}+json; version=1`.
+            EOS
             return [400, { "content-type" => "application/json; charset=utf-8" },
-              [JSON.generate(error)]]
+              [JSON.generate(error)],]
           end
 
-          unless version
-            version = media_type.params["version"]
-          end
+          version ||= media_type.params["version"]
 
           # replace the MIME with a simplified version for easier
           # parsing down the stack
@@ -41,7 +41,7 @@ Please specify a version along with the MIME type. For example, `Accept: applica
         end
         media_type.to_s
       end
-      env['HTTP_ACCEPT'] = media_types.join(', ')
+      env["HTTP_ACCEPT"] = media_types.join(", ")
 
       version ||= @default
       set_api_version(env, version)

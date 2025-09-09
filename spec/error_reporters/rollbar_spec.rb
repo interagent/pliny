@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "spec_helper"
 require "rollbar"
 require "pliny/error_reporters/rollbar"
@@ -7,8 +9,8 @@ describe Pliny::ErrorReporters::Rollbar do
 
   describe "#notify" do
     let(:exception) { StandardError.new("Something went wrong") }
-    let(:context)   { { step: :foo } }
-    let(:rack_env)  { { "rack.input" => StringIO.new } }
+    let(:context) { { step: :foo } }
+    let(:rack_env) { { "rack.input" => StringIO.new } }
 
     subject(:notify) do
       reporter.notify(exception, context: context, rack_env: rack_env)
@@ -29,7 +31,7 @@ describe Pliny::ErrorReporters::Rollbar do
       notify
       expect(::Rollbar).to have_received(:scoped).once.with(hash_including(
         request: instance_of(Proc),
-        custom: { step: :foo }
+        custom: { step: :foo },
       ))
     end
 
@@ -38,8 +40,8 @@ describe Pliny::ErrorReporters::Rollbar do
         { "rollbar.person_data" => {
           id: SecureRandom.uuid,
           email: "foo@bar.com",
-          username: "foo"
-        }}
+          username: "foo",
+        } }
       end
 
       it "adds person to the rollbar notification" do
@@ -66,7 +68,7 @@ describe Pliny::ErrorReporters::Rollbar do
 
       it "reports to Rollbar without request data in the scope" do
         notify
-        expect(Rollbar).to have_received(:scoped).once.with({ custom: {step: :foo} })
+        expect(Rollbar).to have_received(:scoped).once.with({ custom: { step: :foo } })
       end
 
       it "delegates to #report_exception_to_rollbar" do

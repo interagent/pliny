@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "spec_helper"
 
 describe Pliny::Metrics do
@@ -8,7 +10,7 @@ describe Pliny::Metrics do
   end
 
   before do
-    allow(Config).to receive(:app_name).and_return('pliny')
+    allow(Config).to receive(:app_name).and_return("pliny")
   end
 
   around do |example|
@@ -41,7 +43,7 @@ describe Pliny::Metrics do
       metrics.count(:foo, :bar)
       expect(test_backend).to have_received(:report_counts).once.with(
         "pliny.foo" => 1,
-        "pliny.bar" => 1
+        "pliny.bar" => 1,
       )
     end
   end
@@ -57,9 +59,9 @@ describe Pliny::Metrics do
     end
 
     it "measures a block's execution time with a single key" do
-      metrics.measure(:foo) { }
+      metrics.measure(:foo) {}
       expect(test_backend).to have_received(:report_measures).once.with(
-        "pliny.foo" => 0
+        "pliny.foo" => 0,
       )
     end
 
@@ -69,37 +71,37 @@ describe Pliny::Metrics do
       end
 
       expect(test_backend).to have_received(:report_measures) do |opts|
-        assert(60 <= opts['pliny.foo'] && opts['pliny.foo'] <= 61)
+        assert(opts["pliny.foo"].between?(60, 61))
       end
     end
 
     it "measures a block's execution time with multiple keys" do
-      metrics.measure(:foo, :bar) { }
+      metrics.measure(:foo, :bar) {}
       expect(test_backend).to have_received(:report_measures).once.with(
         "pliny.foo" => 0,
-        "pliny.bar" => 0
+        "pliny.bar" => 0,
       )
     end
 
     it "measures a given value for a single key without a block" do
       metrics.measure(:baz, value: 3.14)
       expect(test_backend).to have_received(:report_measures).once.with(
-        "pliny.baz" => 3.14
+        "pliny.baz" => 3.14,
       )
     end
 
     it "measures a given value for multiple keys with a block" do
-      metrics.measure(:qux, :corge, value: 42) { }
+      metrics.measure(:qux, :corge, value: 42) {}
       expect(test_backend).to have_received(:report_measures).once.with(
         "pliny.qux" => 42,
-        "pliny.corge" => 42
+        "pliny.corge" => 42,
       )
     end
 
     it "measures a value of 0 when no key or block is provided" do
       metrics.measure(:waldo)
       expect(test_backend).to have_received(:report_measures).once.with(
-        "pliny.waldo" => 0
+        "pliny.waldo" => 0,
       )
     end
 
@@ -107,7 +109,7 @@ describe Pliny::Metrics do
       metrics.measure("metric.name", "another.name", value: 3.14, foo: :bar)
       expect(test_backend).to have_received(:report_measures).once.with(
         "pliny.metric.name" => 3.14,
-        "pliny.another.name" => 3.14
+        "pliny.another.name" => 3.14,
       )
     end
 
@@ -115,7 +117,7 @@ describe Pliny::Metrics do
       metrics.measure("metric.name", "another.name", { value: 3.14, foo: :bar })
       expect(test_backend).to have_received(:report_measures).once.with(
         "pliny.metric.name" => 3.14,
-        "pliny.another.name" => 3.14
+        "pliny.another.name" => 3.14,
       )
     end
   end

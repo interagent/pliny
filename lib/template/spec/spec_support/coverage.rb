@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # setting ENV["CI"] configures simplecov for continuous integration output
 # setting ENV["COVERAGE"] generates a report when running tests locally
 if ENV["COVERAGE"] || ENV["CI"]

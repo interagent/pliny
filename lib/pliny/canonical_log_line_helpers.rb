@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Pliny
   # Helpers to produce a canonical log line. This mostly amounts to a set of
   # accessors that do basic type checking combined with tracking an internal

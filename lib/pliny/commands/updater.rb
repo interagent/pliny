@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "fileutils"
 require "pathname"
 require "pliny/version"
@@ -21,7 +23,7 @@ module Pliny::Commands
       end
 
       version_current = get_current_version
-      version_target  = Gem::Version.new(Pliny::VERSION)
+      version_target = Gem::Version.new(Pliny::VERSION)
 
       if version_current == version_target
         display "Version #{version_current} is current, nothing to update."
@@ -50,7 +52,7 @@ module Pliny::Commands
 
     def get_current_version
       File.read("./Gemfile.lock").split("\n").each do |line|
-        next unless pliny_version = line.match(/pliny \(([\d+\.]+)\)/)
+        next unless (pliny_version = line.match(/pliny \(([\d+.]+)\)/))
         return Gem::Version.new(pliny_version[1])
       end
     end

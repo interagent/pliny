@@ -1,14 +1,16 @@
+# frozen_string_literal: true
+
 require "spec_helper"
 
+class TestCanonicalLogLine
+  include Pliny::CanonicalLogLineHelpers
+
+  log_field :field_float, Float
+  log_field :field_integer, Integer
+  log_field :field_string, String
+end
+
 describe Pliny::CanonicalLogLineHelpers do
-  class TestCanonicalLogLine
-    include Pliny::CanonicalLogLineHelpers
-
-    log_field :field_float, Float
-    log_field :field_integer, Integer
-    log_field :field_string, String
-  end
-
   it "allows a field to be set" do
     line = TestCanonicalLogLine.new
     line.field_string = "foo"
@@ -34,6 +36,6 @@ describe Pliny::CanonicalLogLineHelpers do
     line.field_integer = 42
     line.field_string = "foo"
     assert_equal({ field_float: 3.14, field_integer: 42, field_string: "foo" },
-      line.to_h)
+      line.to_h,)
   end
 end

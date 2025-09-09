@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # please add changes here to core's Instruments as well
 
 module Pliny::Middleware
@@ -47,8 +49,8 @@ module Pliny::Middleware
       # field as to whether it should be prefixed with `X-` or not. API went
       # with no prefix, but Hermes went with one. Support both formats on
       # input.
-      %w(HTTP_REQUEST_ID HTTP_X_REQUEST_ID).inject([]) do |request_ids, key|
-        if ids = env[key]
+      %w[HTTP_REQUEST_ID HTTP_X_REQUEST_ID].inject([]) do |request_ids, key|
+        if (ids = env[key])
           request_ids += ids.split(",")
         end
         request_ids

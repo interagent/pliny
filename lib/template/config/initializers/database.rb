@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 database_setup_proc = lambda do |conn|
   # identify postgres connections coming from this process in pg_stat_activity
   process_identifier = ENV["DYNO"] || File.basename($PROGRAM_NAME).gsub(/\W+/, "_")
@@ -6,5 +8,5 @@ database_setup_proc = lambda do |conn|
 end
 
 DB = Sequel.connect(Config.database_url,
-                    max_connections: Config.db_pool,
-                    after_connect: database_setup_proc)
+  max_connections: Config.db_pool,
+  after_connect: database_setup_proc,)

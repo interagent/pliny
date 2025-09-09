@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "logger"
 require "sequel"
 require "sequel/extensions/migration"
@@ -15,12 +17,12 @@ module Pliny
       @db = Sequel.connect(database_url)
       @db.test_connection
       @db.disconnect
-      return true
+      true
     rescue Sequel::DatabaseConnectionError
-      return false
+      false
     end
 
-    def self.run(url, sequel_log_io=StringIO.new)
+    def self.run(url, sequel_log_io = StringIO.new)
       logger = Logger.new(sequel_log_io)
       instance = new(url, logger)
       yield instance
@@ -39,11 +41,11 @@ module Pliny
 
     def exists?(name)
       res = db.fetch("SELECT 1 FROM pg_database WHERE datname = ?", name)
-      return res.count > 0
+      res.count > 0
     end
 
     def create(name)
-      db.run(%{CREATE DATABASE "#{name}"})
+      db.run(%(CREATE DATABASE "#{name}"))
     end
 
     def migrate(target = nil)
@@ -79,32 +81,30 @@ module Pliny
           else
             :down
           end
+        elsif present_in_database
+          :file_missing
         else
-          if present_in_database
-            :file_missing
-          else
-            raise "error" # FIXME: better message
-          end
+          raise "error" # FIXME: better message
         end
       end
     end
 
     class MigrationStatusPresenter
       PADDING = 2
-      UP = "UP".freeze
-      DOWN = "DOWN".freeze
-      FILE_MISSING = "FILE MISSING".freeze
+      UP = "UP"
+      DOWN = "DOWN"
+      FILE_MISSING = "FILE MISSING"
 
       STATUS_MAP = {
         up: UP,
         down: DOWN,
-        file_missing: FILE_MISSING
+        file_missing: FILE_MISSING,
       }.freeze
 
       STATUS_OPTIONS = [
         UP,
         DOWN,
-        FILE_MISSING
+        FILE_MISSING,
       ].freeze
 
       attr_reader :migration_statuses
@@ -125,7 +125,7 @@ module Pliny
         [
           barrier_row,
           header_row,
-          barrier_row
+          barrier_row,
         ]
       end
 
@@ -137,20 +137,20 @@ module Pliny
 
       def footer
         [
-          barrier_row
+          barrier_row,
         ]
       end
 
       def barrier_row
-        "+#{'-' * (longest_status + PADDING)}+#{'-' * (longest_migration_name + PADDING)}+"
+        "+#{"-" * (longest_status + PADDING)}+#{"-" * (longest_migration_name + PADDING)}+"
       end
 
       def header_row
-        "|#{'STATUS'.center(longest_status + PADDING)}|#{'MIGRATION'.center(longest_migration_name + PADDING)}|"
+        "|#{"STATUS".center(longest_status + PADDING)}|#{"MIGRATION".center(longest_migration_name + PADDING)}|"
       end
 
       def status_row(migration_status)
-        "|#{STATUS_MAP[migration_status.status].center(longest_status + PADDING)}|#{' ' * (PADDING / 2)}#{migration_status.filename.ljust(longest_migration_name)}#{' ' * (PADDING / 2)}|"
+        "|#{STATUS_MAP[migration_status.status].center(longest_status + PADDING)}|#{" " * (PADDING / 2)}#{migration_status.filename.ljust(longest_migration_name)}#{" " * (PADDING / 2)}|"
       end
 
       private
@@ -210,7 +210,7 @@ module Pliny
 
     private
 
-    MIGRATION_DIR = "./db/migrate".freeze
+    MIGRATION_DIR = "./db/migrate"
     private_constant :MIGRATION_DIR
   end
 end

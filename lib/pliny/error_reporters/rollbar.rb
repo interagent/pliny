@@ -1,5 +1,7 @@
-require 'rollbar/exception_reporter'
-require 'rollbar/request_data_extractor'
+# frozen_string_literal: true
+
+require "rollbar/exception_reporter"
+require "rollbar/request_data_extractor"
 
 module Pliny
   module ErrorReporters
@@ -24,7 +26,7 @@ module Pliny
           scope[:person] = proc { extract_person_data_from_controller(rack_env) }
         end
         scope
-      rescue Exception => e
+      rescue Exception => e # rubocop:disable Lint/RescueException
         report_exception_to_rollbar(rack_env, e)
         raise
       end

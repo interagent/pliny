@@ -1,4 +1,15 @@
+# frozen_string_literal: true
+
 require "spec_helper"
+
+class Serializer
+  def initialize(opts)
+  end
+
+  def serialize(data)
+    data
+  end
+end
 
 describe Pliny::Helpers::Serialize do
   context "without a serializer" do
@@ -20,13 +31,6 @@ describe Pliny::Helpers::Serialize do
   end
 
   context "with a serializer" do
-    class Serializer
-      def initialize(opts); end
-      def serialize(data)
-        data
-      end
-    end
-
     def app
       Sinatra.new do
         register Pliny::Helpers::Serialize

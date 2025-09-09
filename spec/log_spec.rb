@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "spec_helper"
 
 describe Pliny::Log do
@@ -66,7 +68,7 @@ describe Pliny::Log do
   it "local context does not overwrite default context" do
     Pliny.default_context = { app: "pliny" }
     expect(@io).to receive(:print).with("app=not_pliny foo=bar\n")
-    Pliny.log(app: 'not_pliny', foo: "bar")
+    Pliny.log(app: "not_pliny", foo: "bar")
     assert Pliny.default_context[:app] == "pliny"
   end
 
@@ -95,20 +97,20 @@ describe Pliny::Log do
   end
 
   describe "scrubbing" do
-
     it "allows a Proc to be assigned as a log scrubber" do
-      Pliny.log_scrubber = -> (hash) { hash }
+      Pliny.log_scrubber = ->(hash) { hash }
 
       begin
         Pliny.log_scrubber = Object.new
         fail
-      rescue ArgumentError; end
+      rescue ArgumentError
+      end
     end
 
     describe "when a scrubber is present" do
       before do
-        Pliny.log_scrubber = -> (hash) {
-          Hash.new.tap do |h|
+        Pliny.log_scrubber = ->(hash) {
+          {}.tap do |h|
             hash.keys.each do |k|
               h[k] = "*SCRUBBED*"
             end

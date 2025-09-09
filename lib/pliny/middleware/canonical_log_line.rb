@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Pliny::Middleware
   # Emits a "canonical log line", i.e. a single log line that contains as much
   # relevant information about a request as possible and which makes for a
@@ -75,7 +77,7 @@ module Pliny::Middleware
           # error
           #
 
-          if error = env["pliny.error"]
+          if (error = env["pliny.error"])
             line.error_class = error.class.name
             line.error_message = error.message
             if error.is_a?(Pliny::Errors::Error)
@@ -93,7 +95,7 @@ module Pliny::Middleware
           line.request_method = request.request_method
           line.request_path = request.path_info
           line.request_user_agent = request.user_agent
-          if route = env["sinatra.route"]
+          if (route = env["sinatra.route"])
             line.request_route_signature = route.split(" ").last
           end
 
@@ -101,7 +103,7 @@ module Pliny::Middleware
           # response
           #
 
-          if length = headers["Content-Length"]
+          if (length = headers["Content-Length"])
             line.response_length = length.to_i
           end
           line.response_status = status

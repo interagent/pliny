@@ -1,19 +1,21 @@
+# frozen_string_literal: true
+
 module Pliny
   class RollbarLogger
     def debug(message)
-      log('debug', message)
+      log("debug", message)
     end
 
     def info(message)
-      log('info', message)
+      log("info", message)
     end
 
     def warn(message)
-      log('warn', message)
+      log("warn", message)
     end
 
     def error(message)
-      log('error', message)
+      log("error", message)
     end
 
     def log(level, message)

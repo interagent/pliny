@@ -1,21 +1,21 @@
+# frozen_string_literal: true
+
 require "spec_helper"
+
+class BadMiddleware
+  def call(env)
+    if env["PATH_INFO"] == "/api-error"
+      raise Pliny::Errors::ServiceUnavailable
+    else
+      raise "Omg!"
+    end
+  end
+end
 
 describe Pliny::Middleware::RescueErrors do
   include Rack::Test::Methods
 
-  class BadMiddleware
-    def call(env)
-      if env["PATH_INFO"] == "/api-error"
-        raise Pliny::Errors::ServiceUnavailable
-      else
-        raise "Omg!"
-      end
-    end
-  end
-
-  def app
-    @app
-  end
+  attr_reader :app
 
   it "intercepts Pliny errors and renders" do
     @app = new_rack_app

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "spec_helper"
 require "open3"
 
@@ -79,41 +81,41 @@ describe "Pliny integration test" do
 
     it "returns a migration in the DOWN state when not migrated" do
       bash "pliny-generate model artist"
-      migration_file = Dir.glob('db/migrate/*').first
+      migration_file = Dir.glob("db/migrate/*").first
 
-      stdout, stderr = bash_with_output("rake db:migrate:status")
+      stdout, _ = bash_with_output("rake db:migrate:status")
 
-      statuses = Hash[stdout.to_s.split(/\+[-]+\+[-]+\+/)[2..-1].map { |s| s.tr("\n", "") }.select(&:present?).map { |s| s.split("|").map { |s| s.tr(" ", "") }.select(&:present?).reverse }]
+      statuses = stdout.to_s.split(/\+-+\+-+\+/)[2..].map { |s| s.tr("\n", "") }.select(&:present?).map { |s| s.split("|").map { |s| s.tr(" ", "") }.select(&:present?).reverse }.to_h
       assert statuses[migration_file.split("/").last] == "DOWN"
     end
 
     it "returns a migration in the UP state when not migrated" do
       bash "pliny-generate model artist"
-      migration_file = Dir.glob('db/migrate/*').first
+      migration_file = Dir.glob("db/migrate/*").first
       bash "rake db:migrate"
 
-      stdout, stderr = bash_with_output("rake db:migrate:status")
+      stdout, _ = bash_with_output("rake db:migrate:status")
 
-      statuses = Hash[stdout.to_s.split(/\+[-]+\+[-]+\+/)[2..-1].map { |s| s.tr("\n", "") }.select(&:present?).map { |s| s.split("|").map { |s| s.tr(" ", "") }.select(&:present?).reverse }]
+      statuses = stdout.to_s.split(/\+-+\+-+\+/)[2..].map { |s| s.tr("\n", "") }.select(&:present?).map { |s| s.split("|").map { |s| s.tr(" ", "") }.select(&:present?).reverse }.to_h
       assert statuses[migration_file.split("/").last] == "UP"
     end
 
     it "returns a migration in the FILE MISSING state when the file is missing" do
       bash "pliny-generate model artist"
-      migration_file = Dir.glob('db/migrate/*').first
+      migration_file = Dir.glob("db/migrate/*").first
       bash "rake db:migrate"
 
       FileUtils.rm_f(migration_file)
 
-      stdout, stderr = bash_with_output("rake db:migrate:status")
+      stdout, _ = bash_with_output("rake db:migrate:status")
 
-      statuses = Hash[stdout.to_s.split(/\+[-]+\+[-]+\+/)[2..-1].map { |s| s.tr("\n", "") }.select(&:present?).map { |s| s.split("|").map { |s| s.gsub(/(^[ ]+|[ ]+$)/, "") }.select(&:present?).reverse }]
+      statuses = stdout.to_s.split(/\+-+\+-+\+/)[2..].map { |s| s.tr("\n", "") }.select(&:present?).map { |s| s.split("|").map { |s| s.gsub(/(^ +| +$)/, "") }.select(&:present?).reverse }.to_h
       assert statuses[migration_file.split("/").last] == "FILE MISSING"
     end
   end
 
   def bash_with_output(cmd)
-    bin  = File.expand_path('../bin', File.dirname(__FILE__))
+    bin = File.expand_path("../bin", File.dirname(__FILE__))
     path = "#{bin}:#{ENV["PATH"]}"
     env = { "PATH" => path }
     stdout, stderr, status = Open3.capture3(env, cmd)
@@ -122,11 +124,11 @@ describe "Pliny integration test" do
       raise "Failed to run #{cmd}, error was #{stderr}"
     end
 
-    return stdout, stderr
+    [stdout, stderr]
   end
 
   def bash(cmd)
-    bin  = File.expand_path('../bin', File.dirname(__FILE__))
+    bin = File.expand_path("../bin", File.dirname(__FILE__))
     path = "#{bin}:#{ENV["PATH"]}"
     env = { "PATH" => path }
     unless system(env, "#{cmd} > /dev/null")

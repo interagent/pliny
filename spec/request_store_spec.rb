@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 require "spec_helper"
 
 describe Pliny::RequestStore do
   before do
     @env = {
-      "REQUEST_IDS" => ["abc", "def"]
+      "REQUEST_IDS" => ["abc", "def"],
     }
   end
 

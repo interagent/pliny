@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Pliny
   module Log
     def log(data, &block)
@@ -16,22 +18,20 @@ module Pliny
       exception_id = e.object_id
 
       # Log backtrace in reverse order for easier digestion.
-      if e.backtrace
-        e.backtrace.reverse.each do |backtrace|
-          log_to_stream(stderr || $stderr, merge_log_contexts(
-            exception_id: exception_id,
-            backtrace:    backtrace
-          ))
-        end
+      e.backtrace&.reverse&.each do |backtrace|
+        log_to_stream(stderr || $stderr, merge_log_contexts(
+          exception_id: exception_id,
+          backtrace: backtrace,
+        ),)
       end
 
       # then log the exception message last so that it's as close to the end of
       # a log trace as possible
       data.merge!(
-        exception:    true,
-        class:        e.class.name,
-        message:      e.message,
-        exception_id: exception_id
+        exception: true,
+        class: e.class.name,
+        message: e.message,
+        exception_id: exception_id,
       )
 
       data[:status] = e.status if e.respond_to?(:status)
@@ -42,10 +42,9 @@ module Pliny
     def context(data, &block)
       old = local_context
       self.local_context = old.merge(data)
-      res = block.call
+      block.call
     ensure
       self.local_context = old
-      res
     end
 
     def default_context=(default_context)
@@ -102,24 +101,26 @@ module Pliny
     end
 
     def log_to_stream(stream, data, &block)
-      unless block
-        data = log_scrubber.call(data) if log_scrubber
-        str = unparse(data)
-        stream.print(str + "\n")
-      else
+      if block
         data = data.dup
         start = Time.now
         log_to_stream(stream, data.merge(at: "start"))
         begin
           res = yield
           log_to_stream(stream, data.merge(
-            at: "finish", elapsed: (Time.now - start).to_f))
+            at: "finish", elapsed: (Time.now - start).to_f,
+          ),)
           res
         rescue
           log_to_stream(stream, data.merge(
-            at: "exception", elapsed: (Time.now - start).to_f))
+            at: "exception", elapsed: (Time.now - start).to_f,
+          ),)
           raise $!
         end
+      else
+        data = log_scrubber.call(data) if log_scrubber
+        str = unparse(data)
+        stream.print(str + "\n")
       end
     end
 
@@ -129,11 +130,11 @@ module Pliny
 
     def quote_string(v)
       if !v.include?('"')
-        %{"#{v}"}
+        %("#{v}")
       elsif !v.include?("'")
-        %{'#{v}'}
+        %('#{v}')
       else
-        %{"#{v.gsub(/"/, '\\"')}"}
+        %("#{v.gsub('"', '\\"')}")
       end
     end
 
@@ -144,7 +145,7 @@ module Pliny
     def unparse_pair(k, v)
       v = v.call if v.is_a?(Proc)
 
-      if v == nil
+      if v.nil?
         nil
       elsif v == true
         k
@@ -153,7 +154,7 @@ module Pliny
       elsif v.is_a?(Time)
         "#{k}=#{v.iso8601}"
       else
-        v = "#{v}"
+        v = v.to_s
         v = replace_newlines(v)
         v = quote_string(v) if v =~ /\s/
 

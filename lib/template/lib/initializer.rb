@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Initializer
   def self.run
     require_config
@@ -11,7 +13,7 @@ module Initializer
   end
 
   def self.require_lib
-    require! %w(
+    require! %w[
       lib/serializers/base
       lib/serializers/**/*
       lib/endpoints/base
@@ -19,13 +21,13 @@ module Initializer
       lib/mediators/base
       lib/mediators/**/*
       lib/routes
-    )
+    ]
   end
 
   def self.require_models
-    require! %w(
+    require! %w[
       lib/models/**/*
-    )
+    ]
   end
 
   def self.require_initializers

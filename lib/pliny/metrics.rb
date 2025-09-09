@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Pliny
   module Metrics
     extend self
@@ -7,7 +9,7 @@ module Pliny
     @backends = [Backends::Logger]
 
     def count(*names, value: 1)
-      counts = Hash[names.map { |n| ["#{Config.app_name}.#{n}", value] }]
+      counts = names.map { |n| ["#{Config.app_name}.#{n}", value] }.to_h
 
       backends.each do |backend|
         report_and_catch { backend.report_counts(counts) }
@@ -32,7 +34,7 @@ module Pliny
           0
         end
 
-      measures = Hash[inputs.map { |n| ["#{Config.app_name}.#{n}", measurement] }]
+      measures = inputs.map { |n| ["#{Config.app_name}.#{n}", measurement] }.to_h
 
       backends.each do |backend|
         report_and_catch { backend.report_measures(measures) }

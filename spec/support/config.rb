@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "pliny/config_helpers"
 
 # Supress the "use RbConfig instead" warning.

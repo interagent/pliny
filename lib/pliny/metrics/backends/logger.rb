@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Pliny
   module Metrics
     module Backends
@@ -10,11 +12,11 @@ module Pliny
           Pliny.log(add_prefix(:measure, measures))
         end
 
-        private
-
         def self.add_prefix(type, metrics)
-          metrics.map { |k, v| [ "#{type}##{k}", v ] }.to_h
+          metrics.map { |k, v| ["#{type}##{k}", v] }.to_h
         end
+
+        private_class_method :add_prefix
       end
     end
   end

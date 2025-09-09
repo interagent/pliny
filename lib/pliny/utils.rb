@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 module Pliny
   module Utils
     def self.parse_env(file)
       env = {}
       File.open(file).each do |line|
-        line = line.gsub(/#.*$/, '').strip
+        line = line.gsub(/#.*$/, "").strip
         next if line.empty?
         var, value = line.split("=", 2)
         value.gsub!(/^['"](.*)['"]$/, '\1')
@@ -27,7 +29,7 @@ module Pliny
     end
 
     class << self
-      alias :require_relative_glob :require_glob
+      alias_method :require_relative_glob, :require_glob
     end
   end
 end

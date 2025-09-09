@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "spec_helper"
 
 describe Pliny::Middleware::CanonicalLogLine do
@@ -7,7 +9,7 @@ describe Pliny::Middleware::CanonicalLogLine do
         use Pliny::Middleware::RequestID
 
         use Pliny::Middleware::CanonicalLogLine,
-          emitter: -> (data) { Pliny.log_without_context(data) }
+          emitter: ->(data) { Pliny.log_without_context(data) }
 
         use Pliny::Middleware::RescueErrors, raise: false
 
@@ -48,7 +50,8 @@ describe Pliny::Middleware::CanonicalLogLine do
 
   it "never fails a request on failure" do
     expect(Pliny).to receive(:log).with(
-      message: "Failed to emit canonical log line")
+      message: "Failed to emit canonical log line",
+    )
     expect(Pliny).to receive(:log_without_context) { |d| raise "bang!" }
 
     get "/apps/123"

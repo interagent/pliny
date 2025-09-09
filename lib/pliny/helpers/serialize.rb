@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Pliny::Helpers
   module Serialize
     def self.registered(base)
@@ -10,17 +12,17 @@ module Pliny::Helpers
         serializer_class = settings.serializer_class
 
         if serializer_class.nil?
-          raise <<~eos.strip
+          raise <<~EOS.strip
             No serializer has been specified for this endpoint. Please specify one with
             `serializer Serializers::ModelName` in the endpoint.
-          eos
+          EOS
         end
 
-        env['pliny.serializer_arity'] = data.respond_to?(:size) ? data.size : 1
+        env["pliny.serializer_arity"] = data.respond_to?(:size) ? data.size : 1
 
         start = Time.now
         serializer_class.new(structure).serialize(data).tap do
-          env['pliny.serializer_timing'] = (Time.now - start).to_f
+          env["pliny.serializer_timing"] = (Time.now - start).to_f
         end
       end
     end

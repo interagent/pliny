@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Pliny::Middleware
   class RescueErrors
     def initialize(app, options = {})
