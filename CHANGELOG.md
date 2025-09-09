@@ -3,6 +3,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+
+### Removed
+
+- Deprecated `PLINY_ENV` environment variable support in favor of `APP_ENV` to align with Sinatra conventions (https://github.com/interagent/pliny/pull/373)
+
 ## [1.2.0] - 2025-02-10
 ### Added
 - Add support for Ruby 3.3 and 3.4 ([#366](https://github.com/interagent/pliny/pull/3366))
