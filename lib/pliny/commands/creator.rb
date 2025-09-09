@@ -26,6 +26,7 @@ module Pliny::Commands
 
       FileUtils.copy_entry template_dir, app_dir
       FileUtils.rm_rf("#{app_dir}/.git")
+      FileUtils.mv("#{app_dir}/.rubocop_template.yml", "#{app_dir}/.rubocop.yml")
       parse_erb_files
       display "Pliny app created. To start, run:"
       display "cd #{app_dir} && bin/setup"
