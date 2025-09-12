@@ -18,6 +18,7 @@ Gem::Specification.new do |gem|
   gem.required_ruby_version = ">= 3.2"
 
   gem.add_dependency "activesupport",  ">= 7.0", "< 9.0"
+  gem.add_dependency "multi_json",     "~> 1.9",  ">= 1.9.3"
   gem.add_dependency "prmd",           "~> 0.11", ">= 0.11.4"
 
   gem.add_dependency "sinatra",        ">= 2.0", "< 5.0"
@@ -34,6 +35,7 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency "pry-byebug"
   gem.add_development_dependency "pg",             "~> 1.0", "< 2.0"
   gem.add_development_dependency "rollbar",        "~> 3.2"
+  gem.add_development_dependency "sentry-ruby"
   gem.add_development_dependency "sequel",         "~> 5.4", "< 6.0"
   gem.add_development_dependency "rubocop",        "~> 0.52", ">= 0.52.1"
 end
