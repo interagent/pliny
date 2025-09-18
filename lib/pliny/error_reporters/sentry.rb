@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "sentry-ruby"
-
 module Pliny
   module ErrorReporters
     class Sentry
