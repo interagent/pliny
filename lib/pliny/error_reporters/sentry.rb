@@ -35,11 +35,7 @@ module Pliny
       end
 
       def extract_person_data_from_controller(env)
-        if env.key?("sentry.person_data")
-          env["sentry.person_data"] || {}
-        else
-          {}
-        end
+        env["sentry.person_data"] || {}
       end
     end
   end
