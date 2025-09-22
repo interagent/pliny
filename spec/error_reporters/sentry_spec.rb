@@ -43,7 +43,6 @@ describe Pliny::ErrorReporters::Sentry do
       expect(::Sentry).to have_received(:capture_exception).with(exception)
     end
 
-
     context "given a rack_env with sentry.person_data" do
       let(:rack_env) { { "sentry.person_data" => { id: 123, email: "test@example.com", username: "testuser" }, "rack.input" => StringIO.new } }
 
@@ -80,6 +79,5 @@ describe Pliny::ErrorReporters::Sentry do
         expect(::Sentry).to have_received(:capture_exception).with(exception)
       end
     end
-
   end
 end
