@@ -9,6 +9,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 - Remove deprecated `PLINY_ENV` environment variable support in favor of `APP_ENV` to align with Sinatra conventions (https://github.com/interagent/pliny/pull/373)
 
+## [1.3.0] - 2025-09-29
+### Added
+- Error reporting for Sentry
+
 ## [1.2.0] - 2025-02-10
 ### Added
 - Add support for Ruby 3.3 and 3.4 ([#366](https://github.com/interagent/pliny/pull/3366))
