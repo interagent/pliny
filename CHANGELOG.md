@@ -3,13 +3,19 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [2.0.0] - 2025-09-29
+
+### Changed
+- Update minimum required version of sinatra from 2 to 3 (https://github.com/interagent/pliny/pull/370)
+- Update templates for new projects to reflect new version requirements (https://github.com/interagent/pliny/pull/370
+- ensure Ruby 3.5 compatibility (https://github.com/interagent/pliny/pull/370)
+- added RuboCop as a linter for pliny itself (https://github.com/interagent/pliny/pull/370)
+- fixed all linting errors from RuboCop (lots of PR's)
 
 ### Changed
 - Gemfile template updated with the latest available dependencies (https://github.com/interagent/pliny/pull/379)
 
 ### Removed
-
 - Remove deprecated `PLINY_ENV` environment variable support in favor of `APP_ENV` to align with Sinatra conventions (https://github.com/interagent/pliny/pull/373)
 
 ## [1.3.0] - 2025-09-29
