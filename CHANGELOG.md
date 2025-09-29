@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ### Removed
 
 - Remove deprecated `PLINY_ENV` environment variable support in favor of `APP_ENV` to align with Sinatra conventions (https://github.com/interagent/pliny/pull/373)
+
 ## [1.3.0] - 2025-09-29
 ### Added
 - Error reporting for Sentry
