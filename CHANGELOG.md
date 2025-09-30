@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## [Unreleased]
 
+### Changed
+- Gemfile template updated with the latest available dependencies (https://github.com/interagent/pliny/pull/379)
+
 ### Removed
 
 - Remove deprecated `PLINY_ENV` environment variable support in favor of `APP_ENV` to align with Sinatra conventions (https://github.com/interagent/pliny/pull/373)
